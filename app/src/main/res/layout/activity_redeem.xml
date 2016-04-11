@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    tools:context="caringsolution.app.oss.democontacts.Register">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerInParent="true"
+        android:layout_marginLeft="10dp"
+        android:orientation="vertical"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp">
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="20dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:gravity="left"
+            android:singleLine="true"
+            android:text="Redeem Your Code"
+            android:textColor="@color/colorpink"
+            android:textColorHint="@color/input_hint"
+            android:textSize="25sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:gravity="left"
+            android:singleLine="true"
+            android:text="Enter your code below"
+            android:textColor="@color/black"
+            android:textColorHint="@color/input_hint"
+            android:textSize="18sp" />
+
+
+        <EditText
+            android:id="@+id/redeem_code"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:gravity="left"
+            android:hint="Code"
+            android:inputType="text"
+            android:padding="10dp"
+            android:singleLine="true"
+            android:textColor="@color/black"
+
+            android:textColorHint="@color/input_hint" />
+
+
+        <!-- Login Button -->
+
+        <Button
+            android:id="@+id/btn_continue"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dip"
+            android:background="@drawable/btn_rectangle"
+            android:text="Continue"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
+
+
+        <!-- Link to Login Screen -->
+
+
+    </LinearLayout>
+</RelativeLayout>

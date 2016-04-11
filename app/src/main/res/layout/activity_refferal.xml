@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    tools:context="caringsolution.app.oss.democontacts.Register">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp">
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="60dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:gravity="center"
+            android:singleLine="true"
+            android:text="Reffered By"
+            android:textColor="@color/colorpink"
+            android:textColorHint="@color/input_hint"
+            android:textSize="25sp" />
+
+
+        <EditText
+            android:id="@+id/otp_code"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:gravity="center"
+            android:inputType="phone"
+            android:padding="10dp"
+            android:singleLine="true"
+
+            android:textColor="@color/black" />
+
+
+        <!-- Login Button -->
+
+        <Button
+            android:id="@+id/refferal_submit"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dip"
+            android:layout_marginRight="20dip"
+            android:layout_marginTop="20dip"
+            android:background="@drawable/btn_rectangle"
+            android:text="Submit"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="30dp" />
+        <!--<TextView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginBottom="20dp"-->
+        <!--android:gravity="center"-->
+        <!--android:text="Aleady registered with e-mail?"-->
+        <!--android:textSize="18sp"-->
+        <!--android:singleLine="true"-->
+        <!--android:textColor="@color/input_login"-->
+        <!--android:textColorHint="@color/input_register_hint" />-->
+
+
+        <!-- Link to Login Screen -->
+
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_margin="7dp"
+        android:text="Skip"
+        android:textColor="@color/colorpink"
+        android:textSize="18sp" />
+
+</RelativeLayout>
