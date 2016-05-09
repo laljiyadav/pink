@@ -1,122 +1,58 @@
-<?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
 
-    tools:context="caringsolution.app.oss.democontacts.Register">
-
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="10dp"
-        android:orientation="vertical"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp">
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="20dp" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:gravity="left"
-            android:singleLine="true"
-            android:text="Recharge"
-            android:textColor="@color/colorpink"
-            android:textColorHint="@color/input_hint"
-            android:textSize="25sp" />
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:gravity="left"
-            android:orientation="horizontal"
-            android:weightSum="1">
+            android:orientation="vertical">
 
-            <EditText
-                android:id="@+id/recharge_country_code"
-                android:layout_width="0dp"
+            <android.support.design.widget.AppBarLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.25"
-                android:hint="+91"
-                android:padding="10dp"
-                android:singleLine="true"
-                android:textColor="@color/black"
-                android:textColorHint="@color/input_hint" />
+                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
+                <include layout="@layout/toolbar"></include>
 
-            <EditText
-                android:id="@+id/recharge_phone"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.75"
-                android:hint="995373737"
-                android:padding="10dp"
-                android:singleLine="true"
-                android:textColor="@color/black"
-                android:textColorHint="@color/input_hint" />
+                <TextView
+                    android:id="@+id/tab11"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:enabled="false"
+                    android:gravity="center"
+                    android:text="Recharge or Pay bill for"
+                    android:textColor="@color/black"
+                    android:textSize="20sp" />
+
+                <android.support.design.widget.TabLayout
+                    android:id="@+id/tabs"
+                    style="@style/MyCustomTabLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    app:tabGravity="fill"
+                    app:tabMode="fixed" />
+
+            </android.support.design.widget.AppBarLayout>
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/viewpager"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:layout_marginTop="10dp"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
 
         </LinearLayout>
+    </ScrollView>
 
+</LinearLayout>
 
-        <EditText
-            android:id="@+id/recharge_operator"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:gravity="left"
-            android:hint="Operator"
-            android:inputType="text"
-            android:padding="10dp"
-            android:singleLine="true"
-            android:textColor="@color/black"
-
-            android:textColorHint="@color/input_hint" />
-
-        <EditText
-            android:id="@+id/recharge_amount"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:gravity="left"
-            android:hint="Enter Amount"
-            android:inputType="text"
-            android:padding="10dp"
-            android:singleLine="true"
-            android:textColor="@color/black"
-
-            android:textColorHint="@color/input_hint" />
-
-        <CheckBox
-            android:id="@+id/recharge_fastforward"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="left|center"
-            android:text="Fast forward it" />
-
-
-        <!-- Login Button -->
-
-        <Button
-            android:id="@+id/recharge_proceed"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dip"
-            android:background="@drawable/btn_rectangle"
-            android:padding="15dp"
-            android:text="Proceed"
-            android:textColor="@color/white"
-            android:textSize="20sp" />
-
-
-        <!-- Link to Login Screen -->
-
-
-    </LinearLayout>
-</RelativeLayout>

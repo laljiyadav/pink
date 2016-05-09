@@ -1,4 +1,4 @@
-package others;
+package com.pinkstar.main.data;
 
 
 import android.annotation.SuppressLint;
@@ -130,7 +130,7 @@ public class Parser {
             is.close();
 
             result=sb.toString();
-            Log.e("log_tag", "result" + result);
+            //Log.e("log_tag", "result" + result);
 
         }
         catch(Exception e)
@@ -151,7 +151,7 @@ public class Parser {
         }
         return json_data;
     }
-    public JSONObject getJSONFromUrl3(String url) {
+    public String getJSONFromUrl3(String url) {
         // Making HTTP request
         StrictMode.setThreadPolicy(policy);
 
@@ -187,7 +187,7 @@ public class Parser {
             is.close();
 
             result=sb.toString();
-           // Log.e("log_tag", "result1" + sb);
+           //Log.e("log_tag", "result1" + result);
            // Log.e("log_tag", "result" + result);
 
         }
@@ -197,18 +197,8 @@ public class Parser {
         }
 
 
-        try{
-            json_data = new JSONObject(result);
-            Log.e("log", "result" + json_data);
 
-        }
-
-        catch(JSONException e)
-        {
-              Log.e("log_tag", "Error parsing data " + e.toString());
-
-        }
-        return json_data;
+        return result;
     }
     public JSONObject getJSONFromUrl2(String url, ArrayList<NameValuePair> nameValuePairs) {
         // Making HTTP request

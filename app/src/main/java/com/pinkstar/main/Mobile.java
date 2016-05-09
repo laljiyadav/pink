@@ -6,9 +6,11 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.Html;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
@@ -18,17 +20,19 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.pinkstar.main.data.Apis;
+import com.pinkstar.main.data.Parser;
+import com.pinkstar.main.data.SaveSharedPreference;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-
-import others.Apis;
-import others.Parser;
 
 
 public class Mobile extends Activity implements View.OnClickListener {
@@ -37,7 +41,7 @@ public class Mobile extends Activity implements View.OnClickListener {
     JSONObject json;
     ArrayAdapter ad;
     ArrayList<String> std = new ArrayList<String>();
-    String url = Apis.Base, message, mobile, std_code;
+    String url = Apis.Base, message, mobile, std_code, udata;
     private TextView mobile_skip, mobile_terms, code;
 
     @Override
@@ -50,6 +54,7 @@ public class Mobile extends Activity implements View.OnClickListener {
         mobile_terms = (TextView) findViewById(R.id.mobile_terms);
 
         code.setText("+91");
+        alertDialog("Allow &#34;Pink Star&#34; to access your location while you use this app?","Location is required","Don't Allow","Allow");
 
         mobile_num.addTextChangedListener(new TextWatcher() {
             @Override
@@ -62,14 +67,23 @@ public class Mobile extends Activity implements View.OnClickListener {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
                 //Toast.makeText(getApplicationContext(), "hello"+count, Toast.LENGTH_SHORT).show();
-                if (mobile_num.getText().length() < 10) {
+                if (mobile_num.getText().toString().equals("0")) {
+                    mobile_num.setError("Enter Valid Number");
+                    mobile_num.setText("");
+                } else {
 
-                } else if (mobile_num.getText().length() == 10) {
-                   // Toast.makeText(getApplicationContext(), "hello", Toast.LENGTH_SHORT).show();
-                    mobile = mobile_num.getText().toString();
-                    std_code = code.getText().toString();
-                    new AttempLogin().execute();
+                    if (mobile_num.getText().length() < 10) {
 
+                    } else if (mobile_num.getText().length() == 10) {
+                        // Toast.makeText(getApplicationContext(), "hello", Toast.LENGTH_SHORT).show();
+
+
+                        mobile = mobile_num.getText().toString();
+                        std_code = code.getText().toString();
+                        alertDialog("Is this the right mobile number?", std_code + "-" + mobile, "No,go Back", "Yes");
+                        //new AttempLogin().execute();
+
+                    }
                 }
             }
 
@@ -96,7 +110,7 @@ public class Mobile extends Activity implements View.OnClickListener {
                 // startActivity(new Intent(Mobile.this, Register.class));
                 break;
             case R.id.mobile_terms:
-                 startActivity(new Intent(Mobile.this, TermWeb.class));
+                startActivity(new Intent(Mobile.this, TermWeb.class));
                 break;
             case R.id.code:
                 sdtCode();
@@ -128,19 +142,54 @@ public class Mobile extends Activity implements View.OnClickListener {
 
 
             StringBuilder strBuilder = new StringBuilder(url);
-            strBuilder.append("mobile="+std_code+"-"+ mobile);
+            strBuilder.append("mobile=" + std_code + "-" + mobile);
             strBuilder.append("&resend=" + 0);
             strBuilder.append("&rquest=validateNum");
 
-            Log.e("Log_tag", "" + strBuilder.toString());
 
             // Create an array
             Parser perser = new Parser();
             json = perser.getJSONFromUrl1(strBuilder.toString());
-            Log.e("Log_tag", "" + json);
+
             try {
 
+                udata = json.getString("udata");
+                JSONArray jsaary = json.getJSONArray("result");
+                if (udata.equals("0")) {
+                    for (int i = 0; i < jsaary.length(); i++) {
+                        JSONObject js = jsaary.getJSONObject(i);
+                        SaveSharedPreference.setMobile(Mobile.this, std_code + "-" + mobile);
+                        SaveSharedPreference.setUserID(Mobile.this, js.getString("token_id"));
+                        SaveSharedPreference.setUSERSSN(Mobile.this, js.getString("otp"));
+                        message = js.getString("mobile_verify");
 
+                    }
+
+                    if (message.equals("0")) {
+                        startActivity(new Intent(Mobile.this, OTP.class));
+                    }
+                    if (message.equals("1")) {
+                        startActivity(new Intent(Mobile.this, Password.class));
+                    }
+                }
+
+                if (udata.equals("1")) {
+                    for (int i = 0; i < jsaary.length(); i++) {
+                        JSONObject js = jsaary.getJSONObject(i);
+                        SaveSharedPreference.setMobile(Mobile.this, std_code + "-" + mobile);
+                        SaveSharedPreference.setUserID(Mobile.this, js.getString("token_id"));
+                        SaveSharedPreference.setUSERSSN(Mobile.this, js.getString("otp"));
+                        message = js.getString("mobile_verify");
+
+                    }
+
+                    if (message.equals("0")) {
+                        startActivity(new Intent(Mobile.this, OTP.class));
+                    }
+                    if (message.equals("1")) {
+                        startActivity(new Intent(Mobile.this, Password.class));
+                    }
+                }
 
 
             } catch (Exception e) {
@@ -153,6 +202,13 @@ public class Mobile extends Activity implements View.OnClickListener {
         @Override
         protected void onPostExecute(String args) {
             mProgressDialog.dismiss();
+
+           /* if (udata.equals("1")) {
+                startActivity(new Intent(Mobile.this, Password.class));
+            }*/
+            if (udata.equals("2")) {
+                getAlert("Number is not valid");
+            }
 
 
         }
@@ -226,6 +282,66 @@ public class Mobile extends Activity implements View.OnClickListener {
         } catch (Exception e) {
 
         }
+
+    }
+
+    public void alertDialog(String txt_val,String txt_val1,String btn,String btn1) {
+
+
+        final Dialog dialog2 = new Dialog(Mobile.this);
+        dialog2.requestWindowFeature(Window.FEATURE_NO_TITLE); //before
+        dialog2.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        dialog2.setContentView(R.layout.dialog_location);
+        WindowManager.LayoutParams lp = dialog2.getWindow().getAttributes();
+        Window window = dialog2.getWindow();
+        lp.copyFrom(window.getAttributes());
+        lp.width = WindowManager.LayoutParams.WRAP_CONTENT;
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        window.setAttributes(lp);
+        lp.gravity = Gravity.CENTER;
+
+
+        TextView txt=(TextView)dialog2.findViewById(R.id.txt_text);
+        TextView txt1=(TextView)dialog2.findViewById(R.id.txt_text1);
+
+        final Button dont=(Button)dialog2.findViewById(R.id.dont);
+        final Button allow=(Button)dialog2.findViewById(R.id.allow);
+
+
+        txt.setText(Html.fromHtml(txt_val));
+        txt1.setText(txt_val1);
+        dont.setText(btn);
+        allow.setText(btn1);
+
+        dont.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (dont.getText().toString().equalsIgnoreCase("Don't Allow")) {
+                    dialog2.dismiss();
+                } else   {
+                    dialog2.dismiss();
+
+                }
+
+            }
+        });
+
+        allow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                 if (allow.getText().toString().equalsIgnoreCase("Allow")) {
+
+                }
+                 else {
+                     dialog2.dismiss();
+                     new AttempLogin().execute();
+                 }
+            }
+        });
+
+
+        dialog2.show();
+
 
     }
 

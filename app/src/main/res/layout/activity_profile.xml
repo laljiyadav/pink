@@ -1,84 +1,264 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:weightSum="1"
+    android:background="@color/white"
     tools:context="com.pinkstar.main.Profile">
 
-    <RelativeLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.4"
-        android:background="@color/colorpink">
+        android:layout_height="match_parent">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/img"
-            android:layout_centerHorizontal="true"
-            android:layout_margin="7dp"
-            android:text="Taranjeet Singh"
-            android:textColor="@color/white"
-            android:textSize="18sp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:weightSum="1">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:background="@color/colorpink">
+
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Vasudev Kaushik"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    android:layout_marginBottom="20dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true" />
 
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:layout_margin="7dp"
-            android:text="Edit"
-            android:textColor="@color/white"
-            android:textSize="18sp" />
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Save"
+                    android:textColor="@color/white"
+                    android:textSize="24sp" />
 
-        <ImageView
-            android:id="@+id/img"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:background="@mipmap/ic_launcher" />
+                <de.hdodenhof.circleimageview.CircleImageView
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/img"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/eiffel_tower"
+                    />
 
-    </RelativeLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.6"
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginBottom="20dp"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <ImageView
+                        android:id="@+id/star"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_marginRight="10dp"
+                        android:src="@drawable/star"
+
+                        ></ImageView>
+
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/textView3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"
+                    android:text="200"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:visibility="gone"
+
+                    />
+
+                <!-- <ImageView
+                     android:id="@+id/imageView"
+                     android:layout_width="40dp"
+                     android:layout_height="30dp"
+                     android:layout_alignParentLeft="true"
+                     android:layout_alignParentStart="true"
+                     android:layout_alignTop="@+id/textView2"
+                     android:layout_marginLeft="10dp"
+                     android:background="@drawable/arrow" />
+         -->
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <EditText
+                        android:id="@+id/call"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@color/white"
+                        android:drawableLeft="@drawable/call"
+                        android:drawablePadding="10dp"
+                        android:padding="5dp"
+                        android:text="+91 9718858541"
+                        android:textColor="@color/input_hint"
+                        android:textSize="16sp" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_margin="5dp"
+                        android:background="#999999" />
+
+                    <EditText
+                        android:id="@+id/message"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:background="@color/white"
+                        android:drawableLeft="@drawable/email"
+                        android:drawablePadding="10dp"
+                        android:padding="5dp"
+                        android:text="sudhirkumar6892@gmail.com"
+                        android:textColor="@color/input_hint"
+                        android:textSize="16sp" />
+
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_margin="5dp"
+                        android:background="#999999" />
+
+                    <TextView
+                        android:id="@+id/birth"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:gravity="center_vertical"
+                        android:layout_marginRight="5dp"
+                        android:background="@color/white"
+                        android:drawableLeft="@drawable/birth"
+                        android:drawablePadding="10dp"
+                        android:padding="5dp"
+                        android:text="21-02-1993"
+                        android:textColor="@color/input_hint"
+                        android:textSize="16sp" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_margin="5dp"
+                        android:background="#999999" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:background="@color/white"
+                        android:weightSum="1">
+
+                        <TextView
+                            android:id="@+id/gender"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="5dp"
+                            android:layout_weight="0.7"
+                            android:gravity="center_vertical"
+                            android:background="@color/white"
+                            android:drawableLeft="@drawable/gender"
+                            android:drawablePadding="10dp"
+                            android:hint="Gender"
+                            android:padding="5dp"
+                            android:textColor="@color/input_hint"
+                            android:textSize="16sp" />
+
+                        <ToggleButton
+                            android:id="@+id/toggleButton1"
+                            android:layout_width="0dp"
+                            android:layout_weight="0.3"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/toggle"
+                            android:layout_marginRight="10dp"
+                            android:checked="false"
+                            android:text=""
+                            android:textOff=""
+                            android:textOn="" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_margin="5dp"
+                        android:background="#999999" />
+
+
+                    <TextView
+                        android:id="@+id/annversary"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:background="@color/white"
+                        android:gravity="center_vertical"
+                        android:drawableLeft="@drawable/birth"
+                        android:drawablePadding="10dp"
+                        android:padding="5dp"
+                        android:text="21-02-201676"
+                        android:textColor="@color/input_hint"
+                        android:textSize="16sp" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_margin="5dp"
+                        android:background="#999999" />
+
+
+                </LinearLayout>
+
+
+            </RelativeLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <!--<LinearLayout
+        android:id="@+id/star_lin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="10dp"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/call"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:padding="5dp"
-            android:drawableLeft="@android:drawable/stat_sys_phone_call_forward"
-            android:text="Call"
-            android:drawablePadding="10dp"
-            android:textColor="@color/input_hint"
-            android:textSize="20sp" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_margin="5dp"
-            android:background="#999999" />
-
-        <TextView
-            android:id="@+id/message"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:padding="5dp"
-            android:drawablePadding="10dp"
-            android:drawableLeft="@android:drawable/sym_call_outgoing"
-            android:text="Message"
-            android:textColor="@color/input_hint"
-            android:textSize="20sp" />
-
-    </LinearLayout>
-
-</LinearLayout>
+        <include layout="@layout/startool"></include>
+    </LinearLayout>-->
+</FrameLayout>

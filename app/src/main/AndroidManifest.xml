@@ -3,6 +3,8 @@
     package="com.pinkstar.main">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -20,16 +22,21 @@
         <activity android:name=".Reset_Password" />
         <activity android:name=".Register" />
         <activity android:name=".MainActivity" />
-        <activity android:name=".Login" />
-        <activity android:name=".Recharge" />
         <activity android:name=".Redeem" />
         <activity android:name=".ChangePassword" />
         <activity android:name=".OTP" />
         <activity android:name=".Refferal" />
         <activity android:name=".Verification" />
+        <activity android:name=".Account" />
+        <activity android:name=".Recharge" />
+        <activity android:name=".TermWeb" />
+        <activity android:name=".Password" />
         <activity android:name=".Profile" />
-        <activity android:name=".Options" />
-        <activity android:name=".TermWeb"></activity>
+        <activity android:name=".Sendstar" />
+        <activity android:name=".Search" />
+        <activity android:name=".MyWallet" />
+        <activity android:name=".NearBy" />
+        <activity android:name=".HomeDetail"></activity>
     </application>
 
 </manifest>

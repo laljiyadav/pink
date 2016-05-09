@@ -5,7 +5,18 @@
     android:layout_height="match_parent"
     android:background="@color/white">
 
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/lin"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/star"/>
+
     <LinearLayout
+        android:id="@+id/lin"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
@@ -13,7 +24,6 @@
         android:orientation="vertical"
         android:paddingLeft="20dp"
         android:paddingRight="20dp">
-
 
 
         <TextView
@@ -36,27 +46,28 @@
             <TextView
                 android:id="@+id/code"
                 android:layout_width="0dp"
+                android:layout_height="40dp"
                 android:layout_weight="0.2"
-                android:layout_height="match_parent"
-                android:gravity="center|bottom"
+                android:gravity="center"
                 android:singleLine="true"
+                android:layout_gravity="bottom"
                 android:text="+91"
                 android:textColor="@color/black"
                 android:textColorHint="@color/black"
                 android:textSize="20sp" />
 
             <View
-                android:layout_width="2dp"
-                android:layout_height="30dp"
+                android:layout_width="1dp"
+                android:layout_height="40dp"
                 android:layout_gravity="bottom"
-                android:background="@color/black"/>
+                android:background="@color/black" />
 
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/input_layout_password"
                 android:layout_width="0dp"
+                android:layout_height="50dp"
                 android:layout_marginLeft="10dp"
-                android:layout_weight="0.8"
-                android:layout_height="40dp">
+                android:layout_weight="0.8">
 
                 <EditText
                     android:id="@+id/mobile_num"
@@ -65,7 +76,7 @@
                     android:layout_marginRight="20dp"
                     android:background="@color/white"
                     android:gravity="center"
-                    android:hint="Mobile No."
+                    android:hint="Mobile number"
                     android:inputType="phone"
                     android:singleLine="true"
                     android:textColor="@color/black"
@@ -74,10 +85,10 @@
             </android.support.design.widget.TextInputLayout>
         </LinearLayout>
 
-      <View
-          android:layout_width="match_parent"
-          android:layout_height="2dp"
-          android:background="@color/black"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/black" />
 
         <Space
             android:layout_width="match_parent"
@@ -105,8 +116,8 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_margin="10dp"
-        android:text="Terms &amp; Conditiions"
-        android:textColor="@color/colorpink"
+        android:text="By logging in,I agree to all T &amp; C"
+        android:textColor="#dd8f8b8b"
         android:textSize="18sp" />
 
 </RelativeLayout>
