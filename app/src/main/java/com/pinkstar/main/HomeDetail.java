@@ -79,7 +79,7 @@ public class HomeDetail extends AppCompatActivity implements View.OnClickListene
                 map = new HashMap<String, String>();
                 JSONObject object = array.getJSONObject(i);
                 map.put("image", object.getString("image_url"));
-
+//// this for getting image from url
                 offerList.add(map);
 
             }
