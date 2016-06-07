@@ -2,6 +2,7 @@ package com.pinkstar.main;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 
 import com.pinkstar.main.data.Apis;
 import com.pinkstar.main.data.Dialogs;
+import com.pinkstar.main.data.GPSTracker;
 import com.pinkstar.main.data.Parser;
 import com.pinkstar.main.data.SaveSharedPreference;
 
@@ -24,6 +26,7 @@ public class Password extends Activity {
     String pass, udata, url = Apis.Base;
     JSONObject json;
     TextView forgot;
+    GPSTracker gpsTracker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +40,16 @@ public class Password extends Activity {
                 startActivity(new Intent(Password.this, Reset_Password.class));
             }
         });
+
+        gpsTracker = new GPSTracker(Password.this);
+        Location location = gpsTracker.getLocation();
+
+        if (location == null) {
+            Dialogs.alertDialog(Password.this,"Allow &#34;Pink Star&#34; to access your location while you use this app?", "Location is required", "Don't Allow", "Allow");
+        }
+        else {
+
+        }
 
         pas_submit = (Button) findViewById(R.id.btnpass);
         ed_pass = (EditText) findViewById(R.id.ed_pass);

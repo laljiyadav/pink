@@ -7,8 +7,10 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
+import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.text.Editable;
 import android.text.Html;
 import android.text.TextWatcher;
@@ -26,6 +28,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.pinkstar.main.data.Apis;
+import com.pinkstar.main.data.GPSTracker;
 import com.pinkstar.main.data.Parser;
 import com.pinkstar.main.data.SaveSharedPreference;
 
@@ -43,6 +46,7 @@ public class Mobile extends Activity implements View.OnClickListener {
     ArrayList<String> std = new ArrayList<String>();
     String url = Apis.Base, message, mobile, std_code, udata;
     private TextView mobile_skip, mobile_terms, code;
+    GPSTracker gpsTracker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,8 +58,14 @@ public class Mobile extends Activity implements View.OnClickListener {
         mobile_terms = (TextView) findViewById(R.id.mobile_terms);
 
         code.setText("+91");
-        alertDialog("Allow &#34;Pink Star&#34; to access your location while you use this app?","Location is required","Don't Allow","Allow");
+        gpsTracker = new GPSTracker(Mobile.this);
+        Location location = gpsTracker.getLocation();
 
+        if (location == null) {
+            alertDialog("Allow &#34;Pink Star&#34; to access your location while you use this app?", "Location is required", "Don't Allow", "Allow");
+        } else {
+
+        }
         mobile_num.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -150,47 +160,87 @@ public class Mobile extends Activity implements View.OnClickListener {
             // Create an array
             Parser perser = new Parser();
             json = perser.getJSONFromUrl1(strBuilder.toString());
+            Log.e("json", "" + json);
 
             try {
 
                 udata = json.getString("udata");
-                JSONArray jsaary = json.getJSONArray("result");
-                if (udata.equals("0")) {
-                    for (int i = 0; i < jsaary.length(); i++) {
-                        JSONObject js = jsaary.getJSONObject(i);
+                Object itme = json.get("result");
+
+                if (itme instanceof JSONArray) {
+                    JSONArray jsaary = json.getJSONArray("result");
+                    if (udata.equals("0")) {
+                        for (int i = 0; i < jsaary.length(); i++) {
+                            JSONObject js = jsaary.getJSONObject(i);
+                            SaveSharedPreference.setMobile(Mobile.this, std_code + "-" + mobile);
+                            SaveSharedPreference.setUserID(Mobile.this, js.getString("token_id"));
+                            SaveSharedPreference.setUSERSSN(Mobile.this, js.getString("otp"));
+                            message = js.getString("mobile_verify");
+                            Log.e("json", "ifffff");
+                        }
+
+                        if (message.equals("0")) {
+                            startActivity(new Intent(Mobile.this, OTP.class));
+                        }
+                        if (message.equals("1")) {
+                            startActivity(new Intent(Mobile.this, Password.class));
+                        }
+                    }
+
+
+                    if (udata.equals("1")) {
+                        for (int i = 0; i < jsaary.length(); i++) {
+                            JSONObject js = jsaary.getJSONObject(i);
+                            SaveSharedPreference.setMobile(Mobile.this, std_code + "-" + mobile);
+                            SaveSharedPreference.setUserID(Mobile.this, js.getString("token_id"));
+                            SaveSharedPreference.setUSERSSN(Mobile.this, js.getString("otp"));
+                            message = js.getString("mobile_verify");
+
+                        }
+
+                        if (message.equals("0")) {
+                            startActivity(new Intent(Mobile.this, OTP.class));
+                        }
+                        if (message.equals("1")) {
+                            startActivity(new Intent(Mobile.this, Password.class));
+                        }
+                    }
+                } else {
+
+
+                    if (udata.equals("0")) {
+                        JSONObject js = json.getJSONObject("result");
+                        SaveSharedPreference.setMobile(Mobile.this, std_code + "-" + mobile);
+                        SaveSharedPreference.setUserID(Mobile.this, js.getString("token_id"));
+                        SaveSharedPreference.setUSERSSN(Mobile.this, js.getString("otp"));
+                        message = js.getString("mobile_verify");
+                        Log.e("json", "elseeee");
+
+                        if (message.equals("0")) {
+                            startActivity(new Intent(Mobile.this, OTP.class));
+                        }
+                        if (message.equals("1")) {
+                            startActivity(new Intent(Mobile.this, Password.class));
+                        }
+                    }
+
+
+                    if (udata.equals("1")) {
+                        JSONObject js = json.getJSONObject("result");
                         SaveSharedPreference.setMobile(Mobile.this, std_code + "-" + mobile);
                         SaveSharedPreference.setUserID(Mobile.this, js.getString("token_id"));
                         SaveSharedPreference.setUSERSSN(Mobile.this, js.getString("otp"));
                         message = js.getString("mobile_verify");
 
-                    }
 
-                    if (message.equals("0")) {
-                        startActivity(new Intent(Mobile.this, OTP.class));
-                    }
-                    if (message.equals("1")) {
-                        startActivity(new Intent(Mobile.this, Password.class));
+                        if (message.equals("0")) {
+                            startActivity(new Intent(Mobile.this, OTP.class));
+                        }
+                        if (message.equals("1")) {
+                            startActivity(new Intent(Mobile.this, Password.class));
+                        }
                     }
                 }
-
-                if (udata.equals("1")) {
-                    for (int i = 0; i < jsaary.length(); i++) {
-                        JSONObject js = jsaary.getJSONObject(i);
-                        SaveSharedPreference.setMobile(Mobile.this, std_code + "-" + mobile);
-                        SaveSharedPreference.setUserID(Mobile.this, js.getString("token_id"));
-                        SaveSharedPreference.setUSERSSN(Mobile.this, js.getString("otp"));
-                        message = js.getString("mobile_verify");
-
-                    }
-
-                    if (message.equals("0")) {
-                        startActivity(new Intent(Mobile.this, OTP.class));
-                    }
-                    if (message.equals("1")) {
-                        startActivity(new Intent(Mobile.this, Password.class));
-                    }
-                }
-
 
             } catch (Exception e) {
                 Log.e("Log_Exception", e.toString());
@@ -285,7 +335,7 @@ public class Mobile extends Activity implements View.OnClickListener {
 
     }
 
-    public void alertDialog(String txt_val,String txt_val1,String btn,String btn1) {
+    public void alertDialog(String txt_val, String txt_val1, String btn, String btn1) {
 
 
         final Dialog dialog2 = new Dialog(Mobile.this);
@@ -301,11 +351,11 @@ public class Mobile extends Activity implements View.OnClickListener {
         lp.gravity = Gravity.CENTER;
 
 
-        TextView txt=(TextView)dialog2.findViewById(R.id.txt_text);
-        TextView txt1=(TextView)dialog2.findViewById(R.id.txt_text1);
+        TextView txt = (TextView) dialog2.findViewById(R.id.txt_text);
+        TextView txt1 = (TextView) dialog2.findViewById(R.id.txt_text1);
 
-        final Button dont=(Button)dialog2.findViewById(R.id.dont);
-        final Button allow=(Button)dialog2.findViewById(R.id.allow);
+        final Button dont = (Button) dialog2.findViewById(R.id.dont);
+        final Button allow = (Button) dialog2.findViewById(R.id.allow);
 
 
         txt.setText(Html.fromHtml(txt_val));
@@ -317,8 +367,8 @@ public class Mobile extends Activity implements View.OnClickListener {
             @Override
             public void onClick(View v) {
                 if (dont.getText().toString().equalsIgnoreCase("Don't Allow")) {
-                    dialog2.dismiss();
-                } else   {
+
+                } else {
                     dialog2.dismiss();
 
                 }
@@ -329,13 +379,20 @@ public class Mobile extends Activity implements View.OnClickListener {
         allow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                 if (allow.getText().toString().equalsIgnoreCase("Allow")) {
+                if (allow.getText().toString().equalsIgnoreCase("Allow")) {
+                    GPSTracker gpsTracker = new GPSTracker(Mobile.this);
+                    Location location = gpsTracker.getLocation();
+                    if (location == null) {
+                        Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                        startActivity(intent);
+                    } else {
+                        dialog2.dismiss();
+                    }
 
+                } else {
+                    dialog2.dismiss();
+                    new AttempLogin().execute();
                 }
-                 else {
-                     dialog2.dismiss();
-                     new AttempLogin().execute();
-                 }
             }
         });
 

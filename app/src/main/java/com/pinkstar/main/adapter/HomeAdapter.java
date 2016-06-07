@@ -2,6 +2,7 @@ package com.pinkstar.main.adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.location.Location;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.pinkstar.main.R;
+import com.pinkstar.main.data.GPSTracker;
 import com.pinkstar.main.other.ImageLoader;
 
 import java.util.ArrayList;
@@ -21,6 +23,8 @@ public class HomeAdapter extends BaseAdapter {
     Context c;
     ArrayList<HashMap<String,String>> map;
     ImageLoader imageLoader;
+    GPSTracker gpsTracker;
+    double lat,lang,lat1,lang1;
 
 
     public HomeAdapter(Context context, ArrayList<HashMap<String,String>> map ){
@@ -29,6 +33,7 @@ public class HomeAdapter extends BaseAdapter {
         this.c = context;
         this.map =map;
         imageLoader=new ImageLoader(context);
+        gpsTracker=new GPSTracker(context);
 
 
     }
@@ -58,12 +63,36 @@ public class HomeAdapter extends BaseAdapter {
         TextView name = (TextView) row.findViewById(R.id.listname);
         ImageView img = (ImageView) row.findViewById(R.id.imagelist);
 
-        name.setText(map .get(position).get("company_name"));
-        per.setText(map.get(position).get("ps_discount")+"%");
+        name.setText(map.get(position).get("company_name"));
+        per.setText(map.get(position).get("ps_discount") + "%");
         imageLoader.DisplayImage(map.get(position).get("image_url"), img);
+        Location location=gpsTracker.getLocation();
+        lat=location.getLatitude();
+        lang=location.getLongitude();
+        lat1=Double.parseDouble(map.get(position).get("lat"));
+        lang1=Double.parseDouble(map.get(position).get("long"));
+
+        kms.setText(""+(int)distance(lat,lang,lat1,lang1)+"Km");
 
 
         return row;
        /* return null;*/
+    }
+
+    private double distance(double lat1, double lon1, double lat2, double lon2) {
+        double theta = lon1 - lon2;
+        double dist = Math.sin(deg2rad(lat1)) * Math.sin(deg2rad(lat2)) + Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.cos(deg2rad(theta));
+        dist = Math.acos(dist);
+        dist = rad2deg(dist);
+        dist = dist * 60 * 1.1515;
+        return (dist);
+    }
+
+    private double deg2rad(double deg) {
+        return (deg * Math.PI / 180.0);
+    }
+
+    private double rad2deg(double rad) {
+        return (rad * 180.0 / Math.PI);
     }
 }

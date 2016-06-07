@@ -3,6 +3,7 @@ package com.pinkstar.main;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -17,11 +18,11 @@ public class Account extends AppCompatActivity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account);
         ac_profile = (TextView) findViewById(R.id.ac_profile);
-        ac_order = (TextView) findViewById(R.id.ac_profile);
-        ac_stars = (TextView) findViewById(R.id.ac_profile);
-        ac_change = (TextView) findViewById(R.id.ac_profile);
-        ac_invite = (TextView) findViewById(R.id.ac_profile);
-        ac_share = (TextView) findViewById(R.id.ac_profile);
+        ac_order = (TextView) findViewById(R.id.ac_order);
+        ac_stars = (TextView) findViewById(R.id.ac_stars);
+        ac_change = (TextView) findViewById(R.id.ac_change);
+        ac_invite = (TextView) findViewById(R.id.ac_invite);
+        ac_share = (TextView) findViewById(R.id.ac_share);
         logout = (Button) findViewById(R.id.logout);
 
         ac_profile.setOnClickListener(this);
@@ -42,7 +43,7 @@ public class Account extends AppCompatActivity implements View.OnClickListener {
             startActivity(new Intent(Account.this, Profile.class));
         }
         if (v == ac_order) {
-            startActivity(new Intent(Account.this, Profile.class));
+           // startActivity(new Intent(Account.this, Profile.class));
 
         }
         if (v == ac_stars) {
@@ -54,11 +55,17 @@ public class Account extends AppCompatActivity implements View.OnClickListener {
 
         }
         if (v == ac_invite) {
-            startActivity(new Intent(Account.this, Profile.class));
+            Intent sharingIntent = new Intent(Intent.ACTION_SEND);
+            sharingIntent.setType("image/png");
+            sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, Html.fromHtml("<p>This is the text that will be shared.</p>"));
+            startActivity(Intent.createChooser(sharingIntent,"Share using"));
 
         }
         if (v == ac_share) {
-            startActivity(new Intent(Account.this, Profile.class));
+            Intent sharingIntent = new Intent(Intent.ACTION_SEND);
+            sharingIntent.setType("image/png");
+            sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, Html.fromHtml("<p>This is the text that will be shared.</p>"));
+            startActivity(Intent.createChooser(sharingIntent,"Share using"));
 
         }
         if (v == logout) {

@@ -9,18 +9,20 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.location.Location;
+import android.provider.Settings;
+import android.text.Html;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.pinkstar.main.Account;
 import com.pinkstar.main.MyWallet;
 import com.pinkstar.main.NearBy;
@@ -55,15 +57,6 @@ public class Dialogs {
         }
     }
 
-    public static Object getJsonToClassObject(String jsonStr,Class<?> classs){
-        try{
-            Gson gson = new GsonBuilder().create();
-            return (Object)gson.fromJson(jsonStr, classs);
-        }catch(Exception e){
-            e.printStackTrace();
-            return null;
-        }
-    }
 
     public static void showDialog(Context context,String msg){
         final AlertDialog alertDialog = new AlertDialog.Builder(context).create();
@@ -75,6 +68,74 @@ public class Dialogs {
             }
         });
         alertDialog.show();
+    }
+
+    public static void alertDialog(final Context context,String txt_val, String txt_val1, String btn, String btn1) {
+
+
+        final Dialog dialog2 = new Dialog(context);
+        dialog2.requestWindowFeature(Window.FEATURE_NO_TITLE); //before
+        dialog2.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        dialog2.setContentView(R.layout.dialog_location);
+        WindowManager.LayoutParams lp = dialog2.getWindow().getAttributes();
+        Window window = dialog2.getWindow();
+        lp.copyFrom(window.getAttributes());
+        lp.width = WindowManager.LayoutParams.WRAP_CONTENT;
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        window.setAttributes(lp);
+        lp.gravity = Gravity.CENTER;
+
+
+        TextView txt = (TextView) dialog2.findViewById(R.id.txt_text);
+        TextView txt1 = (TextView) dialog2.findViewById(R.id.txt_text1);
+
+        final Button dont = (Button) dialog2.findViewById(R.id.dont);
+        final Button allow = (Button) dialog2.findViewById(R.id.allow);
+
+
+        txt.setText(Html.fromHtml(txt_val));
+        txt1.setText(txt_val1);
+        dont.setText(btn);
+        allow.setText(btn1);
+
+        dont.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (dont.getText().toString().equalsIgnoreCase("Don't Allow")) {
+
+
+                } else {
+                    dialog2.dismiss();
+
+                }
+
+            }
+        });
+
+        allow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (allow.getText().toString().equalsIgnoreCase("Allow")) {
+                    GPSTracker gpsTracker=new GPSTracker(context);
+                    Location location=gpsTracker.getLocation();
+                    if(location==null) {
+                        Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                        context.startActivity(intent);
+                    }
+                    else {
+                        dialog2.dismiss();
+                    }
+
+                } else {
+                    dialog2.dismiss();
+                }
+            }
+        });
+
+
+        dialog2.show();
+
+
     }
 
     public static void star_dialog(final Context context)

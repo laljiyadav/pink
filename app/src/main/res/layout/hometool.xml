@@ -9,7 +9,7 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/imageView2"
+        android:id="@+id/phn"
         android:background="@drawable/w_phn"
         android:layout_alignParentRight="true"
         android:layout_centerInParent="true"
@@ -19,12 +19,12 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/imageView3"
+        android:id="@+id/route"
         android:background="@drawable/route"
         android:layout_marginRight="30dp"
-        android:layout_alignTop="@+id/imageView2"
-        android:layout_toLeftOf="@+id/imageView2"
-        android:layout_toStartOf="@+id/imageView2" />
+        android:layout_alignTop="@+id/phn"
+        android:layout_toLeftOf="@+id/phn"
+        android:layout_toStartOf="@+id/phn" />
 
 
 </RelativeLayout>

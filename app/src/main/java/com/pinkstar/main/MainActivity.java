@@ -3,6 +3,7 @@ package com.pinkstar.main;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
+import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -10,7 +11,6 @@ import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -21,6 +21,7 @@ import com.pinkstar.main.adapter.HomeAdapter;
 import com.pinkstar.main.adapter.OfferAdapter;
 import com.pinkstar.main.data.Apis;
 import com.pinkstar.main.data.Dialogs;
+import com.pinkstar.main.data.GPSTracker;
 import com.pinkstar.main.data.Parser;
 import com.pinkstar.main.data.SaveSharedPreference;
 
@@ -51,6 +52,8 @@ public class MainActivity extends Activity {
     JSONArray jsonArray;
     int j = 0;
     LinearLayout top_tabs;
+    GPSTracker gpsTracker;
+    boolean flag = false;
 
 
     @Override
@@ -69,13 +72,43 @@ public class MainActivity extends Activity {
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                startActivity(new Intent(MainActivity.this, HomeDetail.class));
+                if (flag) {
+
+                    Intent in = new Intent(MainActivity.this, HomeDetail.class);
+                    in.putExtra("company", tempvenderList.get(position).get("company_name"));
+                    in.putExtra("img_array", tempvenderList.get(position).get("img_array"));
+                    in.putExtra("unique_id", tempvenderList.get(position).get("unique_id"));
+
+                    startActivity(in);
+                } else {
+                    Intent in = new Intent(MainActivity.this, HomeDetail.class);
+                    in.putExtra("company", venderList.get(position).get("company_name"));
+                    in.putExtra("img_array", venderList.get(position).get("img_array"));
+                    in.putExtra("unique_id", venderList.get(position).get("unique_id"));
+
+                    startActivity(in);
+                }
             }
         });
         list1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                startActivity(new Intent(MainActivity.this, HomeDetail.class));
+
+                if (flag) {
+
+                    Intent in = new Intent(MainActivity.this, HomeDetail.class);
+                    in.putExtra("company", tempvenderList1.get(position).get("company_name"));
+                    in.putExtra("img_array", tempvenderList1.get(position).get("img_array"));
+                    in.putExtra("unique_id", tempvenderList1.get(position).get("unique_id"));
+
+                    startActivity(in);
+                } else {
+                    Intent in = new Intent(MainActivity.this, HomeDetail.class);
+                    in.putExtra("company", venderList1.get(position).get("company_name"));
+                    in.putExtra("img_array", venderList1.get(position).get("img_array"));
+                    in.putExtra("unique_id", venderList1.get(position).get("unique_id"));
+                    startActivity(in);
+                }
             }
         });
 
@@ -106,8 +139,14 @@ public class MainActivity extends Activity {
             }
         };
 
+        gpsTracker = new GPSTracker(MainActivity.this);
+        Location location = gpsTracker.getLocation();
 
-        new AttempProfile().execute();
+        if (location == null) {
+            Dialogs.alertDialog(MainActivity.this, "Allow &#34;Pink Star&#34; to access your location while you use this app?", "Location is required", "Don't Allow", "Allow");
+        } else {
+            new AttempProfile().execute();
+        }
 
 
     }
@@ -302,11 +341,13 @@ public class MainActivity extends Activity {
                     JSONArray dis = discount.getJSONArray("discount");
                     JSONArray ima = image.getJSONArray("images");
                     map1.put("company_name", info.getString("company_name"));
+                    map1.put("unique_id", info.getString("unique_id"));
                     map1.put("category", info.getString("category"));
                     map1.put("lat", info.getString("latitude"));
                     map1.put("long", info.getString("longitude"));
                     map1.put("ps_discount", dis.getJSONArray(0).getJSONObject(0).getString("ps_discount"));
                     map1.put("ps_vdiscount", dis.getJSONArray(0).getJSONObject(0).getString("ps_vdiscount"));
+                    map1.put("img_array", "" + ima);
 
                     for (int h = 0; h < ima.length(); h++) {
                         if (ima.getJSONObject(h).getString("type").equals("home")) {
@@ -395,7 +436,7 @@ public class MainActivity extends Activity {
 
 
                     //Toast.makeText(getApplicationContext(), "" + tabs.get(index), Toast.LENGTH_LONG).show();
-
+                    flag = true;
                     sort(tabs.get(index));
                 }
             });
