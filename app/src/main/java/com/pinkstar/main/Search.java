@@ -1,15 +1,19 @@
 package com.pinkstar.main;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.pinkstar.main.adapter.CityAdapter;
 import com.pinkstar.main.data.Apis;
 import com.pinkstar.main.data.Dialogs;
 import com.pinkstar.main.data.Parser;
+import com.pinkstar.main.data.SaveSharedPreference;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -30,7 +34,14 @@ public class Search extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
         city_list = (ListView) findViewById(R.id.city_list);
-
+        city_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent nearbycityIntent = new Intent(Search.this,CityNearBY.class);
+                nearbycityIntent.putExtra("search_selected_city",city_array.get(position).get("city").toString());
+                startActivity(nearbycityIntent);
+            }
+        });
         new AttempSearch().execute();
 
 
@@ -98,4 +109,6 @@ public class Search extends Activity {
 
         }
     }
+  /*
+*/
 }
