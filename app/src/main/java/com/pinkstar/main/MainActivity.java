@@ -183,6 +183,7 @@ public class MainActivity extends Activity {
                     for (int i = 0; i < jarray.length(); i++) {
                         JSONObject js = jarray.getJSONObject(i);
                         SaveSharedPreference.setUserName(MainActivity.this, js.getString("first_name"));
+                        SaveSharedPreference.setLastName(MainActivity.this,js.getString("last_name"));
                         SaveSharedPreference.setUserEMAIL(MainActivity.this, js.getString("email"));
                         SaveSharedPreference.setBirth(MainActivity.this, js.getString("dob"));
                         SaveSharedPreference.setAnnversary(MainActivity.this, js.getString("anniversary"));

@@ -33,14 +33,18 @@ import com.pinkstar.main.data.SaveSharedPreference;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
+import org.apache.http.NameValuePair;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 public class Profile extends Activity implements View.OnClickListener {
@@ -56,8 +60,8 @@ public class Profile extends Activity implements View.OnClickListener {
     Uri fileUri;
     String encodedSting, udata, url = Apis.Base;
     JSONObject json;
-    String email, mobile, dob, annversary, gender, name;
-    EditText et_number, et_email;
+    String email, mobile, dob, annversary, gender, fisrt_name, last_name;
+    EditText et_number, et_email, et_first, et_last;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,13 +78,17 @@ public class Profile extends Activity implements View.OnClickListener {
         txt_birth = (TextView) findViewById(R.id.txt_birth);
         et_number = (EditText) findViewById(R.id.ed_number);
         et_email = (EditText) findViewById(R.id.ed_email);
+        et_first = (EditText) findViewById(R.id.ed_first);
+        et_last = (EditText) findViewById(R.id.ed_last);
 
-        txt_fullaname.setText(SaveSharedPreference.getUserName(Profile.this));
+        txt_fullaname.setText(SaveSharedPreference.getUserName(Profile.this) + " " + SaveSharedPreference.getLastName(Profile.this));
+        et_first.setText(SaveSharedPreference.getUserName(Profile.this));
+        et_last.setText(SaveSharedPreference.getLastName(Profile.this));
         txt_birth.setText(SaveSharedPreference.getBirth(Profile.this));
         txt_annversary.setText(SaveSharedPreference.getAnnversary(Profile.this));
-        et_number.setText(SaveSharedPreference.getMobile(Profile.this).replace("+91-",""));
+        et_number.setText(SaveSharedPreference.getMobile(Profile.this).replace("+91-", ""));
         et_email.setText(SaveSharedPreference.getUserEMAIL(Profile.this));
-        txt_gender.setText(SaveSharedPreference.getUserIMAGE(Profile.this));
+        txt_gender.setText(SaveSharedPreference.getGender(Profile.this));
 
         if (SaveSharedPreference.getGender(Profile.this).equalsIgnoreCase("Female")) {
             toggleButton.setChecked(false);
@@ -111,6 +119,7 @@ public class Profile extends Activity implements View.OnClickListener {
 
         } else {
             new ImageDownloader().execute(SaveSharedPreference.getUserIMAGE(Profile.this));
+            Log.e("blank", "Blank");
         }
 
 
@@ -187,9 +196,16 @@ public class Profile extends Activity implements View.OnClickListener {
         dob = txt_birth.getText().toString();
         annversary = txt_annversary.getText().toString();
         gender = txt_gender.getText().toString();
-        name = txt_fullaname.getText().toString().replace(" ", "");
+        fisrt_name = et_last.getText().toString();
+        last_name = et_last.getText().toString();
 
-        if (email.equals("")) {
+        if (fisrt_name.equals("")) {
+            Dialogs.showCenterToast(Profile.this, "Enter First Name");
+            return false;
+        } else if (last_name.equals("")) {
+            Dialogs.showCenterToast(Profile.this, "Enter Last Name");
+            return false;
+        } else if (email.equals("")) {
             Dialogs.showCenterToast(Profile.this, "Enter Email");
             return false;
         } else if (!email.matches(EMAIL_PATTERN)) {
@@ -229,24 +245,25 @@ public class Profile extends Activity implements View.OnClickListener {
         protected String doInBackground(Void... params) {
 
 
-            StringBuilder strBuilder = new StringBuilder(url);
-            strBuilder.append("first_name=" + name);
-            strBuilder.append("&last_name=" + "");
-            strBuilder.append("&dob=" + dob);
-            strBuilder.append("&gender=" + gender);
-            strBuilder.append("&email=" + email);
-            strBuilder.append("&anniversary=" + annversary);
-            strBuilder.append("&image_name=" + "");
-            strBuilder.append("&image_text=" + encodedSting);
-            strBuilder.append("&rquest=update_profile_details");
-            strBuilder.append("&mobile=" + SaveSharedPreference.getMobile(Profile.this));
-            strBuilder.append("&token_id=" + SaveSharedPreference.getUserID(Profile.this));
+            ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 
-            Log.e("Log_tag", "" + strBuilder.toString());
+
+            nameValuePairs.add(new BasicNameValuePair("email", email));
+            nameValuePairs.add(new BasicNameValuePair("first_name", fisrt_name));
+            nameValuePairs.add(new BasicNameValuePair("last_name", last_name));
+            nameValuePairs.add(new BasicNameValuePair("dob", dob));
+            nameValuePairs.add(new BasicNameValuePair("gender", gender));
+            nameValuePairs.add(new BasicNameValuePair("anniversary", annversary));
+            nameValuePairs.add(new BasicNameValuePair("image_name", ""));
+            nameValuePairs.add(new BasicNameValuePair("image_text", encodedSting));
+            nameValuePairs.add(new BasicNameValuePair("rquest", "update_profile_details"));
+            nameValuePairs.add(new BasicNameValuePair("mobile", SaveSharedPreference.getMobile(Profile.this)));
+            nameValuePairs.add(new BasicNameValuePair("token_id", SaveSharedPreference.getUserID(Profile.this)));
+            Log.e("Log_tag", "" + nameValuePairs);
 
             // Create an array
             Parser perser = new Parser();
-            json = perser.getJSONFromUrl1(strBuilder.toString());
+            json = perser.getJSONFromUrl(url, nameValuePairs);
             Log.e("Log_tag", "" + json);
             try {
 
@@ -266,6 +283,7 @@ public class Profile extends Activity implements View.OnClickListener {
             try {
                 if (udata.equals("1")) {
                     Dialogs.showCenterToast(Profile.this, "Profile is successfully update");
+                    new AttempProf().execute();
 
                 } else if (udata.equals("0")) {
                     Dialogs.showCenterToast(Profile.this, "Profile is not updated");
@@ -303,6 +321,81 @@ public class Profile extends Activity implements View.OnClickListener {
                     e.printStackTrace();
                 }
 
+            }
+        }
+    }
+
+    private class AttempProf extends AsyncTask<Void, Integer, String> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+            Dialogs.showProDialog(Profile.this, "Wait...");
+        }
+
+        @Override
+        protected String doInBackground(Void... params) {
+
+            StringBuilder strBuilder = new StringBuilder(url);
+            strBuilder.append("token_id=" + SaveSharedPreference.getUserID(Profile.this));
+            strBuilder.append("&rquest=get_profile_details");
+            strBuilder.append("&mobile=" + SaveSharedPreference.getMobile(Profile.this));
+
+
+            // Create an array
+            Parser perser = new Parser();
+            json = perser.getJSONFromUrl1(strBuilder.toString());
+
+            Log.e("JSon",""+json);
+            try {
+
+                udata = json.getString("udata");
+                JSONArray jarray = json.getJSONArray("result");
+                if (udata.equals("1")) {
+                    for (int i = 0; i < jarray.length(); i++) {
+                        JSONObject js = jarray.getJSONObject(i);
+                        SaveSharedPreference.setUserName(Profile.this, js.getString("first_name"));
+                        SaveSharedPreference.setLastName(Profile.this, js.getString("last_name"));
+                        SaveSharedPreference.setUserEMAIL(Profile.this, js.getString("email"));
+                        SaveSharedPreference.setBirth(Profile.this, js.getString("dob"));
+                        SaveSharedPreference.setAnnversary(Profile.this, js.getString("anniversary"));
+                        SaveSharedPreference.setUserIMAGE(Profile.this, js.getString("image_url"));
+                        SaveSharedPreference.setTotal(Profile.this, js.getString("balance_star"));
+                        SaveSharedPreference.setBalStar(Profile.this, js.getString("redeemable_star"));
+                        SaveSharedPreference.setGender(Profile.this, js.getString("gender"));
+
+
+
+                    }
+
+                }
+
+
+            } catch (Exception e) {
+                Log.e("Log_Exception", e.toString());
+
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String args) {
+            Dialogs.dismissDialog();
+
+            txt_fullaname.setText(SaveSharedPreference.getUserName(Profile.this) + " " + SaveSharedPreference.getLastName(Profile.this));
+            et_first.setText(SaveSharedPreference.getUserName(Profile.this));
+            et_last.setText(SaveSharedPreference.getLastName(Profile.this));
+            txt_birth.setText(SaveSharedPreference.getBirth(Profile.this));
+            txt_annversary.setText(SaveSharedPreference.getAnnversary(Profile.this));
+            et_number.setText(SaveSharedPreference.getMobile(Profile.this).replace("+91-", ""));
+            et_email.setText(SaveSharedPreference.getUserEMAIL(Profile.this));
+            txt_gender.setText(SaveSharedPreference.getGender(Profile.this));
+
+            if (SaveSharedPreference.getGender(Profile.this).equalsIgnoreCase("Female")) {
+                toggleButton.setChecked(false);
+            } else {
+                toggleButton.setChecked(true);
             }
         }
     }

@@ -79,6 +79,7 @@ public class HomeDetail extends AppCompatActivity implements View.OnClickListene
                 map = new HashMap<String, String>();
                 JSONObject object = array.getJSONObject(i);
                 map.put("image", object.getString("image_url"));
+//// this for getting image from url
 
                 offerList.add(map);
 
@@ -135,6 +136,7 @@ public class HomeDetail extends AppCompatActivity implements View.OnClickListene
                 Toast.makeText(getApplicationContext(), "Your call has failed...",
                         Toast.LENGTH_LONG).show();
                 e.printStackTrace();
+                Log.e("Exception ",": "+e);
             }
 
         }

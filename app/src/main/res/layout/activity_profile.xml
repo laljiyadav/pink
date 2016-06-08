@@ -49,8 +49,7 @@
                     android:id="@+id/img"
                     android:layout_width="120dp"
                     android:layout_height="120dp"
-                    android:layout_centerInParent="true"
-                     />
+                    android:layout_centerInParent="true" />
 
 
                 <LinearLayout
@@ -112,18 +111,68 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
+
                     <EditText
-                        android:id="@+id/ed_number"
+                        android:id="@+id/ed_first"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
                         android:layout_marginRight="5dp"
                         android:layout_marginTop="10dp"
                         android:background="@color/white"
+                        android:drawableLeft="@drawable/user"
+                        android:drawablePadding="10dp"
+                        android:hint="First Name"
+                        android:inputType="text"
+                        android:maxLength="10"
+                        android:padding="5dp"
+                        android:text=""
+                        android:textColor="@color/input_hint"
+                        android:textSize="16sp" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_margin="5dp"
+                        android:background="#999999" />
+
+                    <EditText
+                        android:id="@+id/ed_last"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:background="@color/white"
+                        android:drawableLeft="@drawable/user"
+                        android:drawablePadding="10dp"
+                        android:hint="Last Name"
+                        android:inputType="text"
+                        android:maxLength="10"
+                        android:padding="5dp"
+                        android:text="9718858541"
+
+                        android:textColor="@color/input_hint"
+                        android:textSize="16sp" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_margin="5dp"
+                        android:background="#999999" />
+
+                    <EditText
+                        android:id="@+id/ed_number"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:background="@color/white"
                         android:drawableLeft="@drawable/call"
                         android:drawablePadding="10dp"
-                        android:padding="5dp"
+                        android:hint="Mobile No"
+                        android:inputType="number"
                         android:maxLength="10"
+                        android:padding="5dp"
                         android:text="9718858541"
                         android:textColor="@color/input_hint"
                         android:textSize="16sp" />
@@ -143,6 +192,8 @@
                         android:background="@color/white"
                         android:drawableLeft="@drawable/email"
                         android:drawablePadding="10dp"
+                        android:hint="Email"
+                        android:inputType="textEmailAddress"
                         android:padding="5dp"
                         android:text="sudhirkumar6892@gmail.com"
                         android:textColor="@color/input_hint"
