@@ -227,7 +227,7 @@ public class Mobile extends Activity implements View.OnClickListener {
 
                     if (udata.equals("1")) {
                         JSONObject js = json.getJSONObject("result");
-                        SaveSharedPreference.setMobile(Mobile.this, std_code + "-" + mobile);
+                        SaveSharedPreference.setMobile(Mobile.this, "+"+std_code + "-" + mobile);
                         SaveSharedPreference.setUserID(Mobile.this, js.getString("token_id"));
                         SaveSharedPreference.setUSERSSN(Mobile.this, js.getString("otp"));
                         message = js.getString("mobile_verify");

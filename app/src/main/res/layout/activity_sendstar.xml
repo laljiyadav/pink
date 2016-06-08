@@ -84,7 +84,7 @@
             android:layout_height="match_parent"
             android:background="@color/white"
             android:gravity="center"
-            android:hint="Amount"
+            android:hint="Stars"
             android:inputType="number"
             android:maxLength="5"
             android:paddingTop="5dp"
@@ -103,7 +103,7 @@
 
 
     <Button
-        android:id="@+id/mob_proceed"
+        android:id="@+id/send_btn"
         android:layout_width="fill_parent"
         android:layout_height="50dp"
         android:layout_marginLeft="50dip"

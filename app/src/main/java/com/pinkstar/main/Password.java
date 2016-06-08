@@ -101,7 +101,7 @@ public class Password extends Activity {
                 if (udata.equals("1")) {
                     for (int i = 0; i < jsaary.length(); i++) {
                         JSONObject js = jsaary.getJSONObject(i);
-                        SaveSharedPreference.setMobile(Password.this, js.getString("std_code") + "-" + js.getString("mobile"));
+                        SaveSharedPreference.setMobile(Password.this, "+"+js.getString("std_code") + "-" + js.getString("mobile"));
                         SaveSharedPreference.setUserID(Password.this, js.getString("token_id"));
                         SaveSharedPreference.setUSERSSN(Password.this, js.getString("otp"));
 

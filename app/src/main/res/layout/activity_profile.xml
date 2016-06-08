@@ -22,19 +22,19 @@
                 android:background="@color/colorpink">
 
                 <TextView
-                    android:id="@+id/textView"
+                    android:id="@+id/txt_fullname"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="20dp"
                     android:text="Vasudev Kaushik"
                     android:textColor="@color/white"
-                    android:textSize="20sp"
-                    android:layout_marginBottom="20dp"
-                    android:layout_alignParentBottom="true"
-                    android:layout_centerHorizontal="true" />
+                    android:textSize="20sp" />
 
 
                 <TextView
-                    android:id="@+id/textView2"
+                    android:id="@+id/txt_save"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
@@ -45,15 +45,12 @@
                     android:textColor="@color/white"
                     android:textSize="24sp" />
 
-                <de.hdodenhof.circleimageview.CircleImageView
-                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
                     android:id="@+id/img"
                     android:layout_width="120dp"
                     android:layout_height="120dp"
                     android:layout_centerInParent="true"
-                    android:src="@drawable/eiffel_tower"
-                    />
-
+                     />
 
 
                 <LinearLayout
@@ -116,7 +113,7 @@
                     android:orientation="vertical">
 
                     <EditText
-                        android:id="@+id/call"
+                        android:id="@+id/ed_number"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
@@ -126,7 +123,8 @@
                         android:drawableLeft="@drawable/call"
                         android:drawablePadding="10dp"
                         android:padding="5dp"
-                        android:text="+91 9718858541"
+                        android:maxLength="10"
+                        android:text="9718858541"
                         android:textColor="@color/input_hint"
                         android:textSize="16sp" />
 
@@ -137,7 +135,7 @@
                         android:background="#999999" />
 
                     <EditText
-                        android:id="@+id/message"
+                        android:id="@+id/ed_email"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
@@ -158,15 +156,15 @@
                         android:background="#999999" />
 
                     <TextView
-                        android:id="@+id/birth"
+                        android:id="@+id/txt_birth"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
-                        android:gravity="center_vertical"
                         android:layout_marginRight="5dp"
                         android:background="@color/white"
                         android:drawableLeft="@drawable/birth"
                         android:drawablePadding="10dp"
+                        android:gravity="center_vertical"
                         android:padding="5dp"
                         android:text="21-02-1993"
                         android:textColor="@color/input_hint"
@@ -181,22 +179,22 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
                         android:background="@color/white"
+                        android:orientation="horizontal"
                         android:weightSum="1">
 
                         <TextView
-                            android:id="@+id/gender"
+                            android:id="@+id/txt_gender"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="5dp"
                             android:layout_marginRight="5dp"
                             android:layout_weight="0.7"
-                            android:gravity="center_vertical"
                             android:background="@color/white"
                             android:drawableLeft="@drawable/gender"
                             android:drawablePadding="10dp"
-                            android:hint="Gender"
+                            android:gravity="center_vertical"
+                            android:hint="Female"
                             android:padding="5dp"
                             android:textColor="@color/input_hint"
                             android:textSize="16sp" />
@@ -204,10 +202,10 @@
                         <ToggleButton
                             android:id="@+id/toggleButton1"
                             android:layout_width="0dp"
-                            android:layout_weight="0.3"
                             android:layout_height="wrap_content"
-                            android:background="@drawable/toggle"
                             android:layout_marginRight="10dp"
+                            android:layout_weight="0.3"
+                            android:background="@drawable/toggle"
                             android:checked="false"
                             android:text=""
                             android:textOff=""
@@ -222,15 +220,15 @@
 
 
                     <TextView
-                        android:id="@+id/annversary"
+                        android:id="@+id/txt_anneversary"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
                         android:layout_marginRight="5dp"
                         android:background="@color/white"
-                        android:gravity="center_vertical"
                         android:drawableLeft="@drawable/birth"
                         android:drawablePadding="10dp"
+                        android:gravity="center_vertical"
                         android:padding="5dp"
                         android:text="21-02-201676"
                         android:textColor="@color/input_hint"

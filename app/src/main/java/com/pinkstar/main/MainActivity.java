@@ -173,6 +173,8 @@ public class MainActivity extends Activity {
             // Create an array
             Parser perser = new Parser();
             json = perser.getJSONFromUrl1(strBuilder.toString());
+
+            Log.e("JSon",""+json);
             try {
 
                 udata = json.getString("udata");
