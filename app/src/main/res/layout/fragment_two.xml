@@ -22,15 +22,16 @@
             android:orientation="horizontal"
             android:weightSum="1">
 
-            <EditText
+            <TextView
                 android:id="@+id/dth_oprater"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_marginTop="5dp"
                 android:layout_weight="0.98"
                 android:background="@color/white"
+                android:drawableRight="@drawable/forword"
                 android:gravity="center_vertical"
-                android:hint="Mobile"
+                android:hint="Select Operator"
                 android:inputType="number"
                 android:paddingLeft="10dp"
                 android:singleLine="true"
@@ -56,14 +57,13 @@
             android:orientation="vertical">
 
             <EditText
-                android:id="@+id/dth_operater"
+                android:id="@+id/dth_samart"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:background="@color/white"
-                android:drawableRight="@drawable/forword"
                 android:gravity="center_vertical"
-                android:hint="Operater"
+                android:hint="Smart Card Number"
                 android:paddingLeft="10dp"
                 android:singleLine="true"
                 android:textColor="@color/black"
@@ -104,6 +104,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0.4"
+                android:visibility="gone"
                 android:orientation="vertical">
 
                 <TextView

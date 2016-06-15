@@ -58,7 +58,9 @@
             android:value="AIzaSyBFGtHLovyweXiRNZ0YWDlbDvTDk3Kyg4Y" />
 
         <activity android:name=".MapActivity" />
-        <activity android:name=".CityNearBY"></activity>
+        <activity android:name=".CityNearBY" />
+        <activity android:name=".Operater" />
+        <activity android:name=".Browser_plas"></activity>
     </application>
 
 </manifest>

@@ -35,6 +35,7 @@ public class Recharge extends ActionBarActivity {
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
 
+
     }
 
 

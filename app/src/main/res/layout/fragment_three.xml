@@ -50,7 +50,7 @@
             android:weightSum="1">
 
             <EditText
-                android:id="@+id/data_oprater"
+                android:id="@+id/data_mobile"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_marginTop="5dp"
@@ -87,7 +87,7 @@
             android:layout_marginTop="10dp"
             android:orientation="vertical">
 
-            <EditText
+            <TextView
                 android:id="@+id/data_operater"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"

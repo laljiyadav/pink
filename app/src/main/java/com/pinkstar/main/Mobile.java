@@ -161,6 +161,7 @@ public class Mobile extends Activity implements View.OnClickListener {
             Parser perser = new Parser();
             json = perser.getJSONFromUrl1(strBuilder.toString());
             Log.e("json", "" + json);
+            Log.e("json", "" + strBuilder.toString());
 
             try {
 

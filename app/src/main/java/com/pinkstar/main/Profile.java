@@ -347,7 +347,7 @@ public class Profile extends Activity implements View.OnClickListener {
             Parser perser = new Parser();
             json = perser.getJSONFromUrl1(strBuilder.toString());
 
-            Log.e("JSon",""+json);
+            Log.e("JSon", "" + json);
             try {
 
                 udata = json.getString("udata");
@@ -364,7 +364,6 @@ public class Profile extends Activity implements View.OnClickListener {
                         SaveSharedPreference.setTotal(Profile.this, js.getString("balance_star"));
                         SaveSharedPreference.setBalStar(Profile.this, js.getString("redeemable_star"));
                         SaveSharedPreference.setGender(Profile.this, js.getString("gender"));
-
 
 
                     }
@@ -412,7 +411,7 @@ public class Profile extends Activity implements View.OnClickListener {
         protected void onPostExecute(Bitmap result) {
             Log.i("Async-Example", "onPostExecute Called");
             //drawer_image.setImageBitmap(result);
-
+            Log.e("bitmap", "" + result);
             profileimage.setImageBitmap(result);
         }
 
