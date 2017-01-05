@@ -5,6 +5,10 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
 
     <permission
         android:name="com.pinkstar.main.permission.MAPS_RECEIVE"
@@ -23,44 +27,133 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/star"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Mobile">
+        <activity
+            android:name=".Splash"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Reset_Password" />
-        <activity android:name=".Register" />
-        <activity android:name=".MainActivity" />
-        <activity android:name=".Redeem" />
-        <activity android:name=".ChangePassword" />
-        <activity android:name=".OTP" />
-        <activity android:name=".Refferal" />
-        <activity android:name=".Verification" />
-        <activity android:name=".Account" />
-        <activity android:name=".Recharge" />
-        <activity android:name=".TermWeb" />
-        <activity android:name=".Password" />
-        <activity android:name=".Profile" />
-        <activity android:name=".Sendstar" />
-        <activity android:name=".Search" />
-        <activity android:name=".MyWallet" />
-        <activity android:name=".NearBy" />
-        <activity android:name=".HomeDetail" />
+        <activity
+            android:name=".Reset_Password"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Register"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MainActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Redeem"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ChangePassword"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".OTP"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Refferal"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Verification"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Account"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Recharge"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".TermWeb"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Password"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Profile"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Sendstar"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Search"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MyWallet"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".NearBy"
+            android:label="NearBy"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".HomeDetail"
+            android:screenOrientation="portrait" />
 
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="AIzaSyBFGtHLovyweXiRNZ0YWDlbDvTDk3Kyg4Y" />
 
-        <activity android:name=".MapActivity" />
-        <activity android:name=".CityNearBY" />
-        <activity android:name=".Operater" />
-        <activity android:name=".Browser_plas"></activity>
+        <activity
+            android:name=".MapActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".CityNearBY"
+            android:label="City"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Operater"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Browser_plas"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".OrderActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".EstoreDetail"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".PurchageActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".CameraActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Mobile"
+            android:screenOrientation="portrait" />
+
+        <service android:name=".notification.FirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+        <service android:name=".notification.MyFirebaseInstanceIDService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            </intent-filter>
+        </service>
+
+        <activity
+            android:name="com.facebook.FacebookActivity"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" />
+
+        <activity android:name=".OfferDetail" />
+        <activity android:name=".MarkerActivity"></activity>
     </application>
 
 </manifest>

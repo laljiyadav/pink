@@ -8,11 +8,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.pinkstar.main.R;
 import com.pinkstar.main.data.GPSTracker;
-import com.pinkstar.main.other.ImageLoader;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,14 +24,12 @@ import java.util.HashMap;
 public class CityNearByAdapter extends BaseAdapter {
     ArrayList<HashMap<String, String>> citynearArrayList;
     Context context;
-    ImageLoader imageLoader;
     GPSTracker gpsTracker;
     double lat, lang, lang1, lat1;
 
     public CityNearByAdapter(Context context, ArrayList<HashMap<String, String>> citynearArrayList) {
         this.context = context;
         this.citynearArrayList = citynearArrayList;
-        imageLoader = new ImageLoader(context);
         gpsTracker = new GPSTracker(context);
 
     }
@@ -58,10 +57,27 @@ public class CityNearByAdapter extends BaseAdapter {
         TextView kms = (TextView) convertView.findViewById(R.id.kilo);
         TextView name = (TextView) convertView.findViewById(R.id.listname);
         ImageView img = (ImageView) convertView.findViewById(R.id.imagelist);
+        final ProgressBar progress=(ProgressBar)convertView.findViewById(R.id.progressBar);
 
-        name.setText(citynearArrayList.get(position).get("company_name"));
-        per.setText(citynearArrayList.get(position).get("ps_discount") + "%");
-        imageLoader.DisplayImage(citynearArrayList.get(position).get("image_url"), img);
+        name.setText(citynearArrayList.get(position).get("company_display_name"));
+        per.setText(citynearArrayList.get(position).get("discount_amount") + "%");
+
+        Picasso.with(context)
+                .load(citynearArrayList.get(position).get("image_url"))
+                .into(img,  new com.squareup.picasso.Callback() {
+                    @Override
+                    public void onSuccess() {
+                        if (progress != null) {
+                            progress .setVisibility(View.GONE);
+                        }
+                    }
+
+                    @Override
+                    public void onError() {
+
+
+                    }
+                });
         Location location = gpsTracker.getLocation();
         lat = location.getLatitude();
         lang = location.getLongitude();

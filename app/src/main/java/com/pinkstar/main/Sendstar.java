@@ -1,5 +1,6 @@
 package com.pinkstar.main;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
@@ -21,10 +22,14 @@ import com.pinkstar.main.data.Dialogs;
 import com.pinkstar.main.data.Parser;
 import com.pinkstar.main.data.SaveSharedPreference;
 
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONObject;
 
-public class Sendstar extends AppCompatActivity implements View.OnClickListener {
-    ImageView send_contact;
+import java.util.ArrayList;
+
+public class Sendstar extends Activity implements View.OnClickListener {
+    ImageView send_contact, star_img;
     EditText send_mobile, et_stars;
     private static final int REQUEST_CODE = 1;
     Button send_btn;
@@ -37,7 +42,14 @@ public class Sendstar extends AppCompatActivity implements View.OnClickListener 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sendstar);
 
+        inIt();
+
+    }
+
+    public void inIt() {
+
         send_contact = (ImageView) findViewById(R.id.send_contact);
+        star_img = (ImageView) findViewById(R.id.star_img);
         send_mobile = (EditText) findViewById(R.id.send_mobile);
         et_stars = (EditText) findViewById(R.id.amount);
         send_btn = (Button) findViewById(R.id.send_btn);
@@ -45,7 +57,14 @@ public class Sendstar extends AppCompatActivity implements View.OnClickListener 
         send_contact.setOnClickListener(this);
         send_btn.setOnClickListener(this);
 
+        star_img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Dialogs.star_dialog(Sendstar.this);
+            }
+        });
 
+        Dialogs.Touch(Sendstar.this, star_img);
     }
 
     @Override
@@ -73,6 +92,7 @@ public class Sendstar extends AppCompatActivity implements View.OnClickListener 
             }
         }
     }
+
 
     @Override
     public void onClick(View v) {
@@ -139,25 +159,32 @@ public class Sendstar extends AppCompatActivity implements View.OnClickListener 
         protected String doInBackground(Void... params) {
 
 
-            StringBuilder strBuilder = new StringBuilder(url);
-            strBuilder.append("stars=" + stars);
-            strBuilder.append("&shareno=" + mobile);
-            strBuilder.append("&rquest=transferstar");
-            strBuilder.append("&mobile=" + SaveSharedPreference.getMobile(Sendstar.this));
-            strBuilder.append("&token_id=" + SaveSharedPreference.getUserID(Sendstar.this));
+            ArrayList<NameValuePair> strBuilder = new ArrayList<NameValuePair>();
+
+            strBuilder.add(new BasicNameValuePair("transfer_stars", stars));
+            strBuilder.add(new BasicNameValuePair("transfer_number", mobile));
+            strBuilder.add(new BasicNameValuePair("rquest", "starTransfer"));
+            strBuilder.add(new BasicNameValuePair("mobile", SaveSharedPreference.getMobile(Sendstar.this)));
+            strBuilder.add(new BasicNameValuePair("token_id", SaveSharedPreference.getUSERAuth(Sendstar.this)));
+            strBuilder.add(new BasicNameValuePair("api_token", Apis.Api_Token));
 
             Log.e("Log_tag", "" + strBuilder.toString());
 
             // Create an array
             Parser perser = new Parser();
-            json = perser.getJSONFromUrl1(strBuilder.toString());
+            json = perser.getJSONFromUrl(url, strBuilder);
             Log.e("Log_tag", "" + json);
             try {
 
-                udata = json.getString("udata");
+                udata = json.getString("uData");
                 if (udata.equals("1")) {
-                    SaveSharedPreference.setTotal(Sendstar.this, json.getJSONArray("result").getJSONObject(0).getString("balance_star"));
-                    SaveSharedPreference.setBalStar(Sendstar.this, json.getJSONArray("result").getJSONObject(0).getString("redeemable_star"));
+                    SaveSharedPreference.setTotal(Sendstar.this, json.getJSONObject("star").getString("balance_star"));
+                    SaveSharedPreference.setBalStar(Sendstar.this, json.getJSONObject("star").getString("redeemable_star"));
+
+                }
+                if (udata.equals("8")) {
+                    SaveSharedPreference.setTotal(Sendstar.this, json.getJSONObject("star").getString("balance_star"));
+                    SaveSharedPreference.setBalStar(Sendstar.this, json.getJSONObject("star").getString("redeemable_star"));
 
                 }
 
@@ -174,7 +201,10 @@ public class Sendstar extends AppCompatActivity implements View.OnClickListener 
             Dialogs.dismissDialog();
             try {
                 if (udata.equals("1")) {
-                    Dialogs.showCenterToast(Sendstar.this, json.getString("status"));
+                    Dialogs.showCenterToast(Sendstar.this, json.getJSONObject("result").getString("message"));
+                    finish();
+                } else if (udata.equals("8")) {
+                    Dialogs.showCenterToast(Sendstar.this, json.getJSONObject("result").getString("message"));
                 } else {
                     Dialogs.showCenterToast(Sendstar.this, "Server Error");
                 }

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/reletive"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/total"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="215dp"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:id="@+id/first"
+            android:layout_width="0dp"
+            android:layout_height="70dp"
+            android:layout_weight="1">
+
+            <ImageView
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_marginLeft="5dp"
+                android:adjustViewBounds="true"
+                android:background="@drawable/bg_round"
+                android:scaleType="fitXY" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/second"
+            android:layout_width="0dp"
+            android:layout_height="70dp"
+            android:layout_weight="1">
+
+            <ImageView
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_marginLeft="30dp"
+                android:adjustViewBounds="true"
+                android:background="@drawable/bg_round"
+                android:scaleType="fitXY" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/bottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="bottom|center"
+        android:layout_marginBottom="0dp">
+
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginBottom="5dp"
+            android:adjustViewBounds="true"
+            android:background="@drawable/bg_round"
+            android:scaleType="fitXY" />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="170dp"
+        android:layout_toRightOf="@+id/bottom"
+        android:paddingRight="10dp"
+        android:text="Use this icon to \n call this vendor"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        android:visibility="gone" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom|right"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@+id/bottom"
+        android:paddingBottom="50dp"
+        android:paddingRight="10dp"
+        android:text="Use this icon to \n upload your bill"
+        android:textColor="@color/white"
+        android:textSize="14sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="170dp"
+        android:paddingRight="10dp"
+        android:text="Use this icon to see\nyour route to this vendor"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/img_hand"
+        android:layout_width="80dp"
+        android:layout_height="120dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerInParent="true"
+        android:adjustViewBounds="true"
+        android:background="@drawable/handicon2"
+        android:scaleType="fitXY" />
+
+</RelativeLayout>

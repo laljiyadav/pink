@@ -10,7 +10,7 @@
         android:id="@+id/head"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="@color/colorAccent"
+        android:background="@color/colorpink"
         android:text="Operators"
         android:textStyle="bold"
         android:textColor="@color/white"
@@ -23,11 +23,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/head"
-        android:layout_marginBottom="70dp">
+        android:layout_marginBottom="0dp">
 
     </ExpandableListView>
 
-    <ImageView
+    <!--<ImageView
         android:id="@+id/star_img"
         android:layout_width="60dp"
         android:layout_height="60dp"
@@ -36,6 +36,6 @@
         android:layout_marginBottom="10dp"
         android:layout_marginLeft="10dp"
         android:background="@drawable/radio"
-        android:src="@drawable/star" />
+        android:src="@drawable/star" />-->
 
 </RelativeLayout>

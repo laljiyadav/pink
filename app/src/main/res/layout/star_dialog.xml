@@ -1,28 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginLeft="10dp"
-    android:layout_marginRight="10dp"
+    android:layout_height="match_parent"
+    android:layout_marginLeft="30dp"
+    android:layout_marginRight="30dp"
     android:paddingTop="10dp">
 
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="match_parent"
+        android:layout_width="300dp"
         android:layout_height="300dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="false"
+        android:layout_centerHorizontal="true"
+        android:layout_centerInParent="true"
         android:layout_marginLeft="13dp"
         android:layout_marginTop="0dp"
-        android:background="@drawable/star1" />
+        android:background="@drawable/icon_3003x" />
 
     <TextView
         android:id="@+id/star_near"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
+        android:layout_alignLeft="@+id/star_search"
+        android:layout_alignStart="@+id/star_search"
+        android:layout_alignTop="@+id/imageView"
         android:layout_marginTop="10dp"
         android:drawableTop="@drawable/near"
         android:text="Near By"
@@ -34,18 +35,20 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/imageView"
         android:layout_alignStart="@+id/imageView"
-        android:layout_below="@+id/star_near"
-        android:layout_marginTop="54dp"
+        android:layout_alignTop="@+id/star_search"
+        android:layout_marginTop="-30dp"
         android:drawableTop="@drawable/web"
         android:text="Home"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="@color/black"
+        android:textSize="16sp" />
 
     <TextView
         android:id="@+id/star_redeem"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
+        android:layout_alignEnd="@+id/imageView"
+        android:layout_alignRight="@+id/imageView"
         android:layout_alignTop="@+id/star_home"
         android:drawableTop="@drawable/near"
         android:text="Redeem"
@@ -57,7 +60,7 @@
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/imageView"
         android:layout_marginBottom="20dp"
-        android:layout_marginRight="15dp"
+        android:layout_marginRight="05dp"
         android:layout_toLeftOf="@+id/star_redeem"
         android:layout_toStartOf="@+id/star_redeem"
         android:drawableTop="@drawable/near"
@@ -70,10 +73,10 @@
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/imageView"
         android:layout_marginBottom="20dp"
-        android:layout_marginLeft="20dp"
+        android:layout_marginLeft="5dp"
         android:layout_toEndOf="@+id/star_home"
         android:layout_toRightOf="@+id/star_home"
-        android:drawableTop="@drawable/web"
+        android:drawableTop="@drawable/account"
         android:text="Account"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
@@ -82,7 +85,6 @@
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_centerInParent="true"
-        android:src="@drawable/search"
-         />
+        android:src="@drawable/search" />
 
 </RelativeLayout>

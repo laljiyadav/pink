@@ -2,19 +2,29 @@ package com.pinkstar.main;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.PointF;
+import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 
 import com.pinkstar.main.adapter.CityAdapter;
 import com.pinkstar.main.data.Apis;
 import com.pinkstar.main.data.Dialogs;
+import com.pinkstar.main.data.GPSTracker;
 import com.pinkstar.main.data.Parser;
 import com.pinkstar.main.data.SaveSharedPreference;
 
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -28,22 +38,54 @@ public class Search extends Activity {
     ArrayList<HashMap<String, String>> city_array = new ArrayList<HashMap<String, String>>();
     ListView city_list;
     CityAdapter adapter;
+    GPSTracker gpsTracker;
+    Location location;
+    ImageView star_img;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
+
+        inIt();
+    }
+
+    public void inIt() {
+        gpsTracker = new GPSTracker(Search.this);
+        location = gpsTracker.getLocation();
+
+
         city_list = (ListView) findViewById(R.id.city_list);
+        star_img = (ImageView) findViewById(R.id.star_img);
+
+
+        star_img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Dialogs.star_dialog(Search.this);
+            }
+        });
+
+
+        Dialogs.Touch(Search.this, star_img);
+
         city_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent nearbycityIntent = new Intent(Search.this,CityNearBY.class);
-                nearbycityIntent.putExtra("search_selected_city",city_array.get(position).get("city").toString());
-                startActivity(nearbycityIntent);
+
+                if (location == null) {
+                    Dialogs.alertDialog(Search.this, "Allow &#34;Pink Star&#34; to access your location while you use this app?", "Location is required", "Don't Allow", "Allow");
+
+
+                } else {
+                    Intent nearbycityIntent = new Intent(Search.this, CityNearBY.class);
+                    nearbycityIntent.putExtra("search_selected_city", city_array.get(position).get("city"));
+                    startActivity(nearbycityIntent);
+                }
             }
         });
         new AttempSearch().execute();
-
 
     }
 
@@ -60,30 +102,30 @@ public class Search extends Activity {
         @Override
         protected String doInBackground(Void... params) {
 
-            // http://pinkstarapp.com/api/restservices.php?email=%@&password=%@&rquest=email_signup
-            StringBuilder strBuilder = new StringBuilder(url);
-            strBuilder.append("rquest=city_list");
+            ArrayList<NameValuePair> strBuilder = new ArrayList<NameValuePair>();
+            strBuilder.add(new BasicNameValuePair("rquest", "searchCity"));
+            strBuilder.add(new BasicNameValuePair("mobile", SaveSharedPreference.getMobile(Search.this)));
+            strBuilder.add(new BasicNameValuePair("api_token", Apis.Api_Token));
 
             Log.e("Log_tag", "" + strBuilder.toString());
 
             // Create an array
             Parser perser = new Parser();
-            json = perser.getJSONFromUrl1(strBuilder.toString());
-            Log.e("Log_tag", "" + json);
+            json = perser.getJSONFromUrl(url, strBuilder);
+
             try {
 
-                udata = json.getString("udata");
-                JSONArray jarray = json.getJSONArray("result");
-                if (udata.equals("1")) {
+                udata = json.getString("uData");
 
+                if (udata.equals("1")) {
+                    JSONArray jarray = json.getJSONArray("result");
                     HashMap<String, String> map;
                     for (int i = 0; i < jarray.length(); i++) {
                         JSONObject object = jarray.getJSONObject(i);
                         map = new HashMap<String, String>();
 
-                        map.put("city", object.getString("CityName"));
-                        map.put("citycount", object.getString("CityCount"));
-                        map.put("cityloc", object.getString("CityLoc"));
+                        map.put("city", object.getString("city"));
+
 
                         city_array.add(map);
                     }

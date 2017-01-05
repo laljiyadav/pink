@@ -61,6 +61,6 @@ public class CityAdapter extends BaseAdapter {
 
 
         return row;
-       /* return null;*/
+
     }
 }

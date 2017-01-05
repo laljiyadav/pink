@@ -9,9 +9,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.pinkstar.main.Operater;
 import com.pinkstar.main.R;
 import com.pinkstar.main.adapter.BrawseAdapter;
 import com.pinkstar.main.adapter.ExpandableListAdapter;
@@ -29,18 +31,31 @@ import java.util.HashMap;
 public class TopUp extends Fragment {
 
     ListView list;
-    JSONObject json;
-    String url = Apis.Base;
-    ArrayList<HashMap<String, String>> array_two = new ArrayList<HashMap<String, String>>();
+    public static String amount = "", amount1 = "";
+    private int page;
     BrawseAdapter adapter;
+    ArrayList<HashMap<String, String>> title;
 
     public TopUp() {
         // Required empty public constructor
     }
 
+    public static Fragment newInstance(int page, ArrayList<HashMap<String, String>> hashMaps, Fragment fragment) {
+        //TopUp fragmentFirst = new TopUp();
+        Bundle args = new Bundle();
+        args.putInt("someInt", page);
+        args.putSerializable("someTitle", hashMaps);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        page = getArguments().getInt("someInt", 0);
+        title = (ArrayList<HashMap<String, String>>) getArguments().getSerializable("someTitle");
+
 
     }
 
@@ -52,72 +67,31 @@ public class TopUp extends Fragment {
         final View view = inflater.inflate(R.layout.fragment_top_up, container, false);
         list = (ListView) view.findViewById(R.id.list);
 
-        new AttempTopUP().execute();
+        Log.e("some", "" + page);
+        Log.e("title", "" + title);
+        adapter = new BrawseAdapter(getActivity(), title);
+        list.setAdapter(adapter);
+
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (Operater.type.equals("prepaid") || Operater.type.equals("postpaid")) {
+                    amount = title.get(position).get("amount");
+
+                } else if (Operater.type.equals("datacard")) {
+                    amount1 = title.get(position).get("amount");
+                }
+
+                getActivity().finish();
+
+            }
+        });
+
+
         return view;
 
 
     }
 
-    private class AttempTopUP extends AsyncTask<Void, Integer, String> {
 
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-
-            Dialogs.showProDialog(getActivity(), "Wait...");
-        }
-
-        @Override
-        protected String doInBackground(Void... params) {
-
-            // http://pinkstarapp.com/api/restservices.php?rquest=plan_list&operator=28&circle=17&plancode=2G
-            StringBuilder builder = new StringBuilder(url);
-            builder.append("rquest=plan_list");
-            builder.append("&operator=28");
-            builder.append("&circle=17");
-
-            try {
-                Parser perser = new Parser();
-                json = perser.getJSONFromUrl1(builder.toString());
-                Log.e("Json_list", "" + json);
-                JSONArray result = json.getJSONArray("result");
-
-
-                HashMap<String, String> map;
-                for (int i = 0; i < result.length(); i++) {
-                    map = new HashMap<String, String>();
-                    JSONObject js = result.getJSONObject(i);
-
-                    if (js.getString("Detail").contains("Talktime")) {
-
-                        map.put("amount", js.getString("Amount"));
-                        map.put("validity", js.getString("Validity"));
-                        map.put("detail", js.getString("Detail"));
-
-                        array_two.add(map);
-                    }
-
-
-                }
-
-
-            } catch (Exception e) {
-
-            }
-
-
-            return null;
-
-        }
-
-        @Override
-        protected void onPostExecute(String args) {
-            // Locate the listview in listview_main.xml
-            Dialogs.dismissDialog();
-
-            adapter = new BrawseAdapter(getActivity(), array_two);
-            list.setAdapter(adapter);
-
-        }
-    }
 }

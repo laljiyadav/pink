@@ -1,10 +1,143 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
+    android:orientation="vertical"
     tools:context="com.pinkstar.main.Profile">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:background="@color/colorpink">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="10dp"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <EditText
+                android:id="@+id/ed_first"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:hint="First Name"
+                android:gravity="right|center"
+                android:inputType="text"
+                android:maxLength="10"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:paddingLeft="5dp"
+                android:text=""
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/ed_last"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="0dp"
+                android:layout_marginRight="5dp"
+                android:layout_weight="1"
+                android:hint="Last Name"
+                android:inputType="text"
+                android:gravity="left|center"
+                android:maxLength="10"
+                android:background="@android:color/transparent"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:paddingRight="5dp"
+                android:text=""
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/txt_save"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="10dp"
+            android:text="Save"
+            android:textColor="@color/white"
+            android:textSize="24sp" />
+
+        <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/img"
+            android:layout_width="140dp"
+            android:layout_height="140dp"
+            android:layout_centerInParent="true"
+            android:src="@drawable/prodef" />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyleSmall"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_centerInParent="true"
+            />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="20dp"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/star"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/star"
+
+                ></ImageView>
+
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:text="200"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:visibility="gone"
+
+            />
+
+        <!-- <ImageView
+             android:id="@+id/imageView"
+             android:layout_width="40dp"
+             android:layout_height="30dp"
+             android:layout_alignParentLeft="true"
+             android:layout_alignParentStart="true"
+             android:layout_alignTop="@+id/textView2"
+             android:layout_marginLeft="10dp"
+             android:background="@drawable/arrow" />
+ -->
+
+    </RelativeLayout>
+
 
     <ScrollView
         android:layout_width="match_parent"
@@ -18,91 +151,6 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="250dp"
-                android:background="@color/colorpink">
-
-                <TextView
-                    android:id="@+id/txt_fullname"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginBottom="20dp"
-                    android:text="Vasudev Kaushik"
-                    android:textColor="@color/white"
-                    android:textSize="20sp" />
-
-
-                <TextView
-                    android:id="@+id/txt_save"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginTop="10dp"
-                    android:text="Save"
-                    android:textColor="@color/white"
-                    android:textSize="24sp" />
-
-                <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
-                    android:id="@+id/img"
-                    android:layout_width="120dp"
-                    android:layout_height="120dp"
-                    android:layout_centerInParent="true" />
-
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginBottom="20dp"
-                    android:orientation="vertical"
-                    android:visibility="gone">
-
-                    <ImageView
-                        android:id="@+id/star"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:layout_marginRight="10dp"
-                        android:src="@drawable/star"
-
-                        ></ImageView>
-
-
-                </LinearLayout>
-
-                <TextView
-                    android:id="@+id/textView3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="10dp"
-                    android:text="200"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textColor="@color/black"
-                    android:textSize="20sp"
-                    android:visibility="gone"
-
-                    />
-
-                <!-- <ImageView
-                     android:id="@+id/imageView"
-                     android:layout_width="40dp"
-                     android:layout_height="30dp"
-                     android:layout_alignParentLeft="true"
-                     android:layout_alignParentStart="true"
-                     android:layout_alignTop="@+id/textView2"
-                     android:layout_marginLeft="10dp"
-                     android:background="@drawable/arrow" />
-         -->
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white">
 
@@ -111,54 +159,6 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
-
-                    <EditText
-                        android:id="@+id/ed_first"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginRight="5dp"
-                        android:layout_marginTop="10dp"
-                        android:background="@color/white"
-                        android:drawableLeft="@drawable/user"
-                        android:drawablePadding="10dp"
-                        android:hint="First Name"
-                        android:inputType="text"
-                        android:maxLength="10"
-                        android:padding="5dp"
-                        android:text=""
-                        android:textColor="@color/input_hint"
-                        android:textSize="16sp" />
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_margin="5dp"
-                        android:background="#999999" />
-
-                    <EditText
-                        android:id="@+id/ed_last"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginRight="5dp"
-                        android:background="@color/white"
-                        android:drawableLeft="@drawable/user"
-                        android:drawablePadding="10dp"
-                        android:hint="Last Name"
-                        android:inputType="text"
-                        android:maxLength="10"
-                        android:padding="5dp"
-                        android:text="9718858541"
-
-                        android:textColor="@color/input_hint"
-                        android:textSize="16sp" />
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_margin="5dp"
-                        android:background="#999999" />
 
                     <EditText
                         android:id="@+id/ed_number"
@@ -180,7 +180,7 @@
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:layout_margin="5dp"
+                        android:layout_margin="3dp"
                         android:background="#999999" />
 
                     <EditText
@@ -203,7 +203,7 @@
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:layout_margin="5dp"
+                        android:layout_margin="3dp"
                         android:background="#999999" />
 
                     <TextView
@@ -217,7 +217,8 @@
                         android:drawablePadding="10dp"
                         android:gravity="center_vertical"
                         android:padding="5dp"
-                        android:text="21-02-1993"
+                        android:text=""
+                        android:hint="Birth Date"
                         android:textColor="@color/input_hint"
                         android:textSize="16sp" />
 
@@ -240,7 +241,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="5dp"
                             android:layout_marginRight="5dp"
-                            android:layout_weight="0.7"
+                            android:layout_weight="1"
                             android:background="@color/white"
                             android:drawableLeft="@drawable/gender"
                             android:drawablePadding="10dp"
@@ -252,10 +253,9 @@
 
                         <ToggleButton
                             android:id="@+id/toggleButton1"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
+                            android:layout_width="70dp"
+                            android:layout_height="35dp"
                             android:layout_marginRight="10dp"
-                            android:layout_weight="0.3"
                             android:background="@drawable/toggle"
                             android:checked="false"
                             android:text=""
@@ -266,7 +266,7 @@
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:layout_margin="5dp"
+                        android:layout_margin="3dp"
                         android:background="#999999" />
 
 
@@ -281,15 +281,17 @@
                         android:drawablePadding="10dp"
                         android:gravity="center_vertical"
                         android:padding="5dp"
-                        android:text="21-02-201676"
+                        android:text="Anneversary Date"
                         android:textColor="@color/input_hint"
-                        android:textSize="16sp" />
+                        android:textSize="16sp"
+                        android:visibility="visible" />
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:layout_margin="5dp"
-                        android:background="#999999" />
+                        android:background="#999999"
+                        android:visibility="visible" />
 
 
                 </LinearLayout>
@@ -310,4 +312,4 @@
 
         <include layout="@layout/startool"></include>
     </LinearLayout>-->
-</FrameLayout>
+</LinearLayout>

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:padding="10dp"
+        android:layout_height="180dp">
+
+        <ImageView
+            android:id="@+id/imagelist"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:adjustViewBounds="true"
+            android:layout_marginBottom="40dp"
+            android:scaleType="fitXY" />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyleSmall"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="30dp"
+            />
+        <TextView
+            android:id="@+id/listname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="40dp"
+            android:background="#50000000"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:maxEms="20"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:singleLine="true"
+            android:text="Text"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_gravity="center_horizontal|bottom"
+            android:orientation="horizontal"
+            android:background="@color/gray"
+            android:weightSum="2">
+
+            <TextView
+                android:id="@+id/grid_first"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="left|top"
+                android:layout_marginBottom="5dp"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:drawableRight="@drawable/small"
+                android:gravity="center"
+                android:paddingLeft="5dp"
+                android:paddingRight="10dp"
+                android:singleLine="true"
+                android:text="60%"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/black"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/grid_second"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_horizontal|top|right"
+                android:layout_marginBottom="5dp"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:drawableRight="@drawable/small"
+                android:gravity="center"
+                android:paddingLeft="5dp"
+                android:paddingRight="10dp"
+                android:singleLine="true"
+                android:text="677km"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/black"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+    </FrameLayout>
+
+
+</LinearLayout>

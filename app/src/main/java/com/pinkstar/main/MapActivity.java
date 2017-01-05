@@ -9,6 +9,8 @@ import android.util.Log;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
@@ -30,11 +32,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class MapActivity extends FragmentActivity {
+public class MapActivity extends FragmentActivity implements OnMapReadyCallback {
 
     GoogleMap map;
-    String company,address;
-    double lat,lang,lat1,lang1;
+    String company, address;
+    double lat, lang, lat1, lang1;
     GPSTracker gpsTracker;
     Location location;
 
@@ -44,60 +46,23 @@ public class MapActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
 
-        lat=getIntent().getExtras().getDouble("lat");
-        lang=getIntent().getExtras().getDouble("lang");
-        company=getIntent().getExtras().getString("company");
-        address=getIntent().getExtras().getString("add");
 
-        gpsTracker=new GPSTracker(MapActivity.this);
-        location=gpsTracker.getLocation();
+        inIt();
 
-        // Initializing
+    }
 
-        // Getting reference to SupportMapFragment of the activity_main
-        SupportMapFragment fm = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.google_map);
+    public void inIt() {
+        lat = getIntent().getExtras().getDouble("lat");
+        lang = getIntent().getExtras().getDouble("lang");
+        company = getIntent().getExtras().getString("company");
+        address = getIntent().getExtras().getString("add");
 
-        // Getting Map for the SupportMapFragment
-        map = fm.getMap();
+        gpsTracker = new GPSTracker(MapActivity.this);
+        location = gpsTracker.getLocation();
 
-        if (map != null) {
-
-            // Enable MyLocation Button in the Map
-            //map.setMyLocationEnabled(true);
-
-
-            LatLng origin = new LatLng(location.getLatitude(),location.getLongitude());
-            LatLng dest = new LatLng(lat,lang);
-
-            // Getting URL to the Google Directions API
-            String url = getDirectionsUrl(origin, dest);
-
-            DownloadTask downloadTask = new DownloadTask();
-
-            // Start downloading json data from Google Directions API
-            downloadTask.execute(url);
-
-            MarkerOptions options = new MarkerOptions();
-            options.position(new LatLng(lat, lang));
-            options.snippet("" + address);
-            options.title("" + company);
-            options.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
-            map.addMarker(options);
-
-            MarkerOptions options1 = new MarkerOptions();
-            options1.position(new LatLng(location.getLatitude(), location.getLongitude()));
-            options1.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
-            map.addMarker(options1);
-
-            LatLng current=new LatLng(location.getLatitude(),location.getLongitude());
-            CameraPosition cameraPosition = new CameraPosition.Builder()
-                    .target(current)      // Sets the center of the map to Mountain View
-                    .zoom(13)                   // Sets the zoom
-                    .tilt(30)                   // Sets the tilt of the camera to 30 degrees
-                    .build();                   // Creates a CameraPosition from the builder
-            map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-
-        }
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.map);
+        mapFragment.getMapAsync(MapActivity.this);
     }
 
     private String getDirectionsUrl(LatLng origin, LatLng dest) {
@@ -164,6 +129,51 @@ public class MapActivity extends FragmentActivity {
             urlConnection.disconnect();
         }
         return data;
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+
+        map = googleMap;
+        if (map != null) {
+
+            // Enable MyLocation Button in the Map
+            //map.setMyLocationEnabled(true);
+
+
+            LatLng origin = new LatLng(location.getLatitude(), location.getLongitude());
+            LatLng dest = new LatLng(lat, lang);
+
+            // Getting URL to the Google Directions API
+            String url = getDirectionsUrl(origin, dest);
+
+            DownloadTask downloadTask = new DownloadTask();
+
+            // Start downloading json data from Google Directions API
+            downloadTask.execute(url);
+
+            MarkerOptions options = new MarkerOptions();
+            options.position(new LatLng(lat, lang));
+            options.snippet("" + address);
+            options.title("" + company);
+            options.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+            map.addMarker(options);
+
+            MarkerOptions options1 = new MarkerOptions();
+            options1.position(new LatLng(location.getLatitude(), location.getLongitude()));
+            options1.title("Your Location");
+            options1.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+            map.addMarker(options1);
+
+            LatLng current = new LatLng(location.getLatitude(), location.getLongitude());
+            CameraPosition cameraPosition = new CameraPosition.Builder()
+                    .target(current)      // Sets the center of the map to Mountain View
+                    .zoom(13)                   // Sets the zoom
+                    .tilt(30)                   // Sets the tilt of the camera to 30 degrees
+                    .build();                   // Creates a CameraPosition from the builder
+            map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+
+        }
     }
 
 

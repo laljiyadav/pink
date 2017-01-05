@@ -8,11 +8,16 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.PointF;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
+import android.net.Uri;
 import android.provider.Settings;
 import android.text.Html;
+import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -24,6 +29,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.pinkstar.main.Account;
+import com.pinkstar.main.MainActivity;
 import com.pinkstar.main.MyWallet;
 import com.pinkstar.main.NearBy;
 import com.pinkstar.main.Profile;
@@ -41,7 +47,7 @@ public class Dialogs {
     private Activity activity;
 
 
-    public static void showProDialog(Context context,String msg){
+    public static void showProDialog(Context context, String msg) {
         progressDialog = new ProgressDialog(context);
         progressDialog.setCancelable(false);
         progressDialog.setMessage(msg);
@@ -50,15 +56,101 @@ public class Dialogs {
         progressDialog.show();
     }
 
+    public static void Touch(Context context, final ImageView star_img) {
+
+        DisplayMetrics displaymetrics = new DisplayMetrics();
+        ((Activity) context).getWindowManager()
+                .getDefaultDisplay()
+                .getMetrics(displaymetrics);
+        final int height = displaymetrics.heightPixels - 100;
+        final int width = displaymetrics.widthPixels - 120;
+
+        Log.e("height", "" + height);
+        Log.e("width", "" + width);
+
+
+        star_img.setOnTouchListener(new View.OnTouchListener() {
+            PointF DownPT = new PointF(); // Record Mouse Position When Pressed Down
+            PointF StartPT = new PointF(); // Record Start Position of 'img'
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                int eid = event.getAction();
+                switch (eid) {
+                    case MotionEvent.ACTION_MOVE:
+                        PointF mv = new PointF(event.getX() - DownPT.x, event.getY() - DownPT.y);
+                        star_img.setX((int) (StartPT.x + mv.x));
+                        star_img.setY((int) (StartPT.y + mv.y));
+
+                        Log.e("x", "" + (int) (StartPT.x + mv.x));
+                        Log.e("y", "" + (int) (StartPT.y + mv.y));
+
+                        if ((int) (StartPT.x + mv.x) < 5 && (int) (StartPT.y + mv.y) > height) {
+                            star_img.setX(10);
+                            star_img.setY(height);
+                            StartPT = new PointF(10, height);
+                        } else if ((int) (StartPT.x + mv.x) > width && (int) (StartPT.y + mv.y) > height) {
+                            star_img.setX(width);
+                            star_img.setY(height);
+                            StartPT = new PointF(width, height);
+                        } else if ((int) (StartPT.y + mv.y) < 5 && (int) (StartPT.x + mv.x) > width) {
+                            star_img.setX(width);
+                            star_img.setY(10);
+                            StartPT = new PointF(width, 10);
+                        } else if ((int) (StartPT.y + mv.y) < 5 && (int) (StartPT.x + mv.x) < 5) {
+                            star_img.setX(10);
+                            star_img.setY(10);
+                            StartPT = new PointF(10, 10);
+                        } else if ((int) (StartPT.x + mv.x) > width) {
+                            star_img.setX(width);
+                            star_img.setY((int) (StartPT.y + mv.y));
+                            StartPT = new PointF(width, (int) (StartPT.y + mv.y));
+                        } else if ((int) (StartPT.y + mv.y) > height) {
+                            star_img.setX((int) (StartPT.x + mv.x));
+                            star_img.setY(height);
+                            StartPT = new PointF((int) (StartPT.x + mv.x), height);
+                        } else if ((int) (StartPT.x + mv.x) < 5) {
+                            star_img.setX(10);
+                            star_img.setY((int) (StartPT.y + mv.y));
+                            StartPT = new PointF(10, (int) (StartPT.y + mv.y));
+                        } else if ((int) (StartPT.y + mv.y) < 5) {
+                            star_img.setX((int) (StartPT.x + mv.x));
+                            star_img.setY(10);
+                            StartPT = new PointF((int) (StartPT.x + mv.x), 10);
+                        } else {
+                            StartPT = new PointF(star_img.getX(), star_img.getY());
+                        }
+                        break;
+                    case MotionEvent.ACTION_DOWN:
+                        DownPT.x = event.getX();
+                        DownPT.y = event.getY();
+                        StartPT = new PointF(star_img.getX(), star_img.getY());
+
+                        break;
+
+
+                    case MotionEvent.ACTION_UP:
+
+                        break;
+
+                    default:
+                        break;
+                }
+                return false;
+            }
+        });
+
+    }
+
     //dismiss the progress dialog
-    public static void dismissDialog(){
-        if (progressDialog!= null) {
+    public static void dismissDialog() {
+        if (progressDialog != null) {
             progressDialog.dismiss();
         }
     }
 
 
-    public static void showDialog(Context context,String msg){
+    public static void showDialog(Context context, String msg) {
         final AlertDialog alertDialog = new AlertDialog.Builder(context).create();
         alertDialog.setMessage(msg);
         alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
@@ -70,13 +162,14 @@ public class Dialogs {
         alertDialog.show();
     }
 
-    public static void alertDialog(final Context context,String txt_val, String txt_val1, String btn, String btn1) {
+    public static void alertDialog(final Context context, String txt_val, String txt_val1, String btn, String btn1) {
 
 
         final Dialog dialog2 = new Dialog(context);
         dialog2.requestWindowFeature(Window.FEATURE_NO_TITLE); //before
-        dialog2.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        dialog2.getWindow().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#20000000")));
         dialog2.setContentView(R.layout.dialog_location);
+        dialog2.setCancelable(false);
         WindowManager.LayoutParams lp = dialog2.getWindow().getAttributes();
         Window window = dialog2.getWindow();
         lp.copyFrom(window.getAttributes());
@@ -116,13 +209,13 @@ public class Dialogs {
             @Override
             public void onClick(View v) {
                 if (allow.getText().toString().equalsIgnoreCase("Allow")) {
-                    GPSTracker gpsTracker=new GPSTracker(context);
-                    Location location=gpsTracker.getLocation();
-                    if(location==null) {
+                    GPSTracker gpsTracker = new GPSTracker(context);
+                    Location location = gpsTracker.getLocation();
+                    if (location == null) {
                         Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
                         context.startActivity(intent);
-                    }
-                    else {
+                        dialog2.dismiss();
+                    } else {
                         dialog2.dismiss();
                     }
 
@@ -138,34 +231,65 @@ public class Dialogs {
 
     }
 
-    public static void star_dialog(final Context context)
-    {
+    public static void hideSystemUI(View mDecorView, Context context) {
+        // Set the IMMERSIVE flag.
+        // Set the content to appear under the system bars so that the content
+        // doesn't resize when the system bars hide and show.
+        mDecorView = new View(context);
+        mDecorView.setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                        //| View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                        //| View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION // hide nav bar
+                        | View.SYSTEM_UI_FLAG_FULLSCREEN);// hide status bar
+        //| View.SYSTEM_UI_FLAG_IMMERSIVE);
+    }
+
+    // This snippet shows the system bars. It does this by removing all the flags
+// except for the ones that make the content appear under the system bars.
+    public void showSystemUI(View mDecorView) {
+        mDecorView.setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+    }
+
+    public static void star_dialog(final Context context) {
         final Dialog dialog2 = new Dialog(context);
         dialog2.requestWindowFeature(Window.FEATURE_NO_TITLE); //before
-        dialog2.getWindow().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#00000000")));
+        dialog2.getWindow().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#50ffffff")));
         dialog2.setContentView(R.layout.star_dialog);
         WindowManager.LayoutParams lp = dialog2.getWindow().getAttributes();
-        lp.dimAmount=0.0f;
+        lp.dimAmount = 0.0f;
         Window window = dialog2.getWindow();
         lp.copyFrom(window.getAttributes());
         lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
         window.setAttributes(lp);
         lp.gravity = Gravity.CENTER;
 
-        TextView star_near=(TextView)dialog2.findViewById(R.id.star_near);
-        TextView star_home=(TextView)dialog2.findViewById(R.id.star_home);
-        TextView star_redeem=(TextView)dialog2.findViewById(R.id.star_redeem);
-        TextView star_account=(TextView)dialog2.findViewById(R.id.star_account);
-        TextView star_wallet=(TextView)dialog2.findViewById(R.id.star_wallet);
-        ImageView star_search=(ImageView)dialog2.findViewById(R.id.star_search);
+
+        TextView star_near = (TextView) dialog2.findViewById(R.id.star_near);
+        TextView star_home = (TextView) dialog2.findViewById(R.id.star_home);
+        TextView star_redeem = (TextView) dialog2.findViewById(R.id.star_redeem);
+        TextView star_account = (TextView) dialog2.findViewById(R.id.star_account);
+        TextView star_wallet = (TextView) dialog2.findViewById(R.id.star_wallet);
+        ImageView star_search = (ImageView) dialog2.findViewById(R.id.star_search);
+        GPSTracker gpsTracker = new GPSTracker(context);
+        final Location location = gpsTracker.getLocation();
+
 
         star_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent in = new Intent(context,Search.class);
-                context.startActivity(in);
-                dialog2.dismiss();
+                if (location == null) {
+                    Dialogs.alertDialog(context, "Allow &#34;Pink Star&#34; to access your location while you use this app?", "Location is required", "Don't Allow", "Allow");
+                    dialog2.dismiss();
+                } else {
+                    Intent in = new Intent(context, Search.class);
+                    context.startActivity(in);
+                    dialog2.dismiss();
+                }
             }
         });
 
@@ -173,25 +297,32 @@ public class Dialogs {
         star_near.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent in = new Intent(context,NearBy.class);
-                context.startActivity(in);
-                dialog2.dismiss();
+                if (location == null) {
+                    Dialogs.alertDialog(context, "Allow &#34;Pink Star&#34; to access your location while you use this app?", "Location is required", "Don't Allow", "Allow");
+                    dialog2.dismiss();
+                } else {
+                    Intent in = new Intent(context, NearBy.class);
+                    context.startActivity(in);
+                    dialog2.dismiss();
+                }
             }
         });
 
         star_home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent in = new Intent(context,Profile.class);
+                Intent in = new Intent(context, MainActivity.class);
                 context.startActivity(in);
+
                 dialog2.dismiss();
+
             }
         });
 
         star_redeem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent in = new Intent(context,Recharge.class);
+                Intent in = new Intent(context, Recharge.class);
                 context.startActivity(in);
                 dialog2.dismiss();
             }
@@ -200,7 +331,7 @@ public class Dialogs {
         star_account.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent in = new Intent(context,Account.class);
+                Intent in = new Intent(context, Account.class);
                 context.startActivity(in);
                 dialog2.dismiss();
             }
@@ -209,7 +340,7 @@ public class Dialogs {
         star_wallet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent in = new Intent(context,MyWallet.class);
+                Intent in = new Intent(context, MyWallet.class);
                 context.startActivity(in);
                 dialog2.dismiss();
             }
@@ -220,23 +351,23 @@ public class Dialogs {
     }
 
 
-
     //dismiss the progress dialog
-    public static void disDialog(){
-        if (progressDialog!= null) {
+    public static void disDialog() {
+        if (progressDialog != null) {
             progressDialog.dismiss();
         }
     }
 
+
     //to show a center toast.
-    public static void showCenterToast(Context context, String msg){
+    public static void showCenterToast(Context context, String msg) {
         Toast toast = Toast.makeText(context, msg, Toast.LENGTH_LONG);
         toast.setGravity(Gravity.CENTER, 0, 0);
         toast.show();
     }
 
     //hide soft key board
-    public static void hideSoftKeyboard(Context ctx, EditText view){
+    public static void hideSoftKeyboard(Context ctx, EditText view) {
         InputMethodManager imm = (InputMethodManager) ctx.getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
     }

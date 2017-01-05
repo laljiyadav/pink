@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "147690730517",
+    "firebase_url": "https://pink-star-9d9cc.firebaseio.com",
+    "project_id": "pink-star-9d9cc",
+    "storage_bucket": "pink-star-9d9cc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:147690730517:android:112ad8a815c7b156",
+        "android_client_info": {
+          "package_name": "com.pinkstar.main"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "147690730517-j3c6mm0ho4geed95v7uc1u038u7oovf1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBH7QcuadfoCMk-LnfY5isCHK_5GiDKJg0"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

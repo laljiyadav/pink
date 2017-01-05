@@ -1,15 +1,19 @@
 package com.pinkstar.main;
 
+import android.*;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.pinkstar.main.data.Apis;
 import com.pinkstar.main.data.Dialogs;
@@ -17,8 +21,12 @@ import com.pinkstar.main.data.GPSTracker;
 import com.pinkstar.main.data.Parser;
 import com.pinkstar.main.data.SaveSharedPreference;
 
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 public class Password extends Activity {
     Button pas_submit;
@@ -32,6 +40,13 @@ public class Password extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_password);
+
+        inIt();
+
+
+    }
+
+    public void inIt() {
         forgot = (TextView) findViewById(R.id.txt_forgot);
 
         forgot.setOnClickListener(new View.OnClickListener() {
@@ -41,13 +56,18 @@ public class Password extends Activity {
             }
         });
 
-        gpsTracker = new GPSTracker(Password.this);
-        Location location = gpsTracker.getLocation();
 
-        if (location == null) {
-            Dialogs.alertDialog(Password.this,"Allow &#34;Pink Star&#34; to access your location while you use this app?", "Location is required", "Don't Allow", "Allow");
-        }
-        else {
+        if (ContextCompat.checkSelfPermission(Password.this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(Password.this, android.Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+
+            gpsTracker = new GPSTracker(Password.this);
+            Location location = gpsTracker.getLocation();
+
+            if (location == null) {
+                Dialogs.alertDialog(Password.this, "Allow &#34;Pink Star&#34; to access your location while you use this app?", "Location is required", "Don't Allow", "Allow");
+            }
+        } else {
+
+            Toast.makeText(Password.this, "not", Toast.LENGTH_SHORT).show();
 
         }
 
@@ -67,8 +87,6 @@ public class Password extends Activity {
 
             }
         });
-
-
     }
 
 
@@ -85,31 +103,21 @@ public class Password extends Activity {
         protected String doInBackground(Void... params) {
 
             // http://pinkstarapp.com/api/restservices.php?email=%@&password=%@&rquest=email_signup
-            StringBuilder strBuilder = new StringBuilder(url);
-            strBuilder.append("password=" + pass);
-            strBuilder.append("&rquest=email_signup");
-            strBuilder.append("&mobile=" + SaveSharedPreference.getMobile(Password.this));
+            ArrayList<NameValuePair> strBuilder = new ArrayList<NameValuePair>();
+            strBuilder.add(new BasicNameValuePair("password", pass));
+            strBuilder.add(new BasicNameValuePair("rquest", "userLogin"));
+            strBuilder.add(new BasicNameValuePair("mobile", SaveSharedPreference.getMobile(Password.this)));
+            strBuilder.add(new BasicNameValuePair("api_token", Apis.Api_Token));
 
+            Log.e("Log_tag", "" + strBuilder.toString());
 
             // Create an array
             Parser perser = new Parser();
-            json = perser.getJSONFromUrl1(strBuilder.toString());
+            json = perser.getJSONFromUrl(url, strBuilder);
+
             try {
 
-                udata = json.getString("udata");
-                JSONArray jsaary = json.getJSONArray("result");
-                if (udata.equals("1")) {
-                    for (int i = 0; i < jsaary.length(); i++) {
-                        JSONObject js = jsaary.getJSONObject(i);
-                        SaveSharedPreference.setMobile(Password.this, "+"+js.getString("std_code") + "-" + js.getString("mobile"));
-                        SaveSharedPreference.setUserID(Password.this, js.getString("token_id"));
-                        SaveSharedPreference.setUSERSSN(Password.this, js.getString("otp"));
-
-                    }
-
-
-                }
-
+                udata = json.getString("uData");
 
             } catch (Exception e) {
                 Log.e("Log_Exception", e.toString());
@@ -125,8 +133,14 @@ public class Password extends Activity {
 
                 if (udata.equals("1")) {
                     startActivity(new Intent(Password.this, MainActivity.class));
-                } else if (udata.equals("0")) {
-                    Dialogs.showDialog(Password.this, "" + json.getString("result"));
+                    SaveSharedPreference.setUserID(Password.this, json.getJSONObject("result").getString("id"));
+                    SaveSharedPreference.setUSERAuth(Password.this, json.getString("token_id"));
+                } else if (udata.equals("13")) {
+                    Dialogs.showDialog(Password.this, "" + json.getJSONObject("result").getString("message"));
+                } else if (udata.equals("14")) {
+                    Dialogs.showDialog(Password.this, "" + json.getJSONObject("result").getString("message"));
+                } else if (udata.equals("4")) {
+                    Dialogs.showDialog(Password.this, "" + json.getJSONObject("result").getString("message"));
                 } else {
                     Dialogs.showDialog(Password.this, "Server Failed");
                 }

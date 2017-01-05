@@ -2,17 +2,13 @@ package com.pinkstar.main.adapter;
 
 import android.app.Activity;
 import android.content.Context;
-import android.location.Location;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.pinkstar.main.R;
-import com.pinkstar.main.data.GPSTracker;
-import com.pinkstar.main.other.ImageLoader;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -49,14 +45,14 @@ public class BrawseAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = ((Activity) context).getLayoutInflater();
         convertView = inflater.inflate(R.layout.browse_list, parent, false);
-        TextView talk = (TextView) convertView.findViewById(R.id.bro_talktime);
-        TextView validity = (TextView) convertView.findViewById(R.id.bro_validity);
-        TextView plan = (TextView) convertView.findViewById(R.id.br_plan);
-        TextView descri = (TextView) convertView.findViewById(R.id.bro_descr);
+        final TextView talk = (TextView) convertView.findViewById(R.id.bro_talktime);
+        final TextView validity = (TextView) convertView.findViewById(R.id.bro_validity);
+        final TextView plan = (TextView) convertView.findViewById(R.id.br_plan);
+        final TextView descri = (TextView) convertView.findViewById(R.id.bro_descr);
 
         talk.setText(citynearArrayList.get(position).get("amount"));
         validity.setText(citynearArrayList.get(position).get("validity"));
-        plan.setText(citynearArrayList.get(position).get("amount"));
+        plan.setText(context.getResources().getString(R.string.rs)+" "+citynearArrayList.get(position).get("amount"));
         descri.setText(citynearArrayList.get(position).get("detail"));
 
 

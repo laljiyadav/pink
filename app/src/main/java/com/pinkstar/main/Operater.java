@@ -1,32 +1,28 @@
 package com.pinkstar.main;
 
-import android.app.ProgressDialog;
-import android.content.Intent;
-import android.location.Address;
-import android.location.Geocoder;
+import android.app.Activity;
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ExpandableListView;
 import android.widget.Toast;
 
-import com.google.android.gms.common.api.Api;
 import com.pinkstar.main.adapter.ExpandableListAdapter;
 import com.pinkstar.main.data.Apis;
 import com.pinkstar.main.data.Dialogs;
 import com.pinkstar.main.data.Parser;
+import com.pinkstar.main.data.SaveSharedPreference;
 
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
 
-public class Operater extends AppCompatActivity {
+public class Operater extends Activity {
 
     ExpandableListView listView;
     String url = Apis.Opt_pre;
@@ -41,12 +37,15 @@ public class Operater extends AppCompatActivity {
     public static String operator_code = "";
     public static String circle_code = "";
     public static String operator_name = "";
+    public static String operator_name_code = "";
     public static String operator_code1 = "";
     public static String circle_code1 = "";
     public static String operator_name1 = "";
+    public static String operator_name_code1 = "";
     public static String operator_code2 = "";
     public static String circle_code2 = "";
     public static String operator_name2 = "";
+    public static String operator_name_code2 = "";
     public static String type = "";
 
     @Override
@@ -55,6 +54,7 @@ public class Operater extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_operater);
         listView = (ExpandableListView) findViewById(R.id.expend);
+
 
         type = getIntent().getExtras().getString("type");
 
@@ -78,7 +78,7 @@ public class Operater extends AppCompatActivity {
                                         int groupPosition, int childPosition, long id) {
                 Toast.makeText(
                         getApplicationContext(),
-                        oprators_list.get(groupPosition).get("operator_code")
+                        oprators_list.get(groupPosition).get("operator_name_code")
                                 + " -> "
                                 + details_code.get(
                                 oprators_list.get(groupPosition).get("operator_name")).get(
@@ -88,14 +88,17 @@ public class Operater extends AppCompatActivity {
                 if (type.equals("postpaid") || type.equals("prepaid")) {
                     operator_name = oprators_list.get(groupPosition).get("operator_name");
                     operator_code = oprators_list.get(groupPosition).get("operator_code");
+                    operator_name_code=oprators_list.get(groupPosition).get("operator_name_code");
                     circle_code = details_code.get(oprators_list.get(groupPosition).get("operator_name")).get(childPosition);
                 } else if (type.equals("datacard")) {
                     operator_name1 = oprators_list.get(groupPosition).get("operator_name");
                     operator_code1 = oprators_list.get(groupPosition).get("operator_code");
+                    operator_name_code1=oprators_list.get(groupPosition).get("operator_name_code");
                     circle_code1 = details_code.get(oprators_list.get(groupPosition).get("operator_name")).get(childPosition);
                 } else {
                     operator_name2 = oprators_list.get(groupPosition).get("operator_name");
                     operator_code2 = oprators_list.get(groupPosition).get("operator_code");
+                    operator_name_code2=oprators_list.get(groupPosition).get("operator_name_code");
                     circle_code2 = details_code.get(oprators_list.get(groupPosition).get("operator_name")).get(childPosition);
                 }
 
@@ -123,23 +126,28 @@ public class Operater extends AppCompatActivity {
             // Create an array
             try {
                 Parser perser = new Parser();
-                json = perser.getJSONFromUrl1(url);
-                Log.e("Json_list", "" + json);
-                JSONObject result = json.getJSONObject("result");
-                JSONArray j_operator = result.getJSONArray("operator");
-                JSONArray j_area = result.getJSONArray("area");
+
+                ArrayList<NameValuePair> strBuilder = new ArrayList<NameValuePair>();
+                strBuilder.add(new BasicNameValuePair("type", type));
+                strBuilder.add(new BasicNameValuePair("rquest", "operatorList"));
+                strBuilder.add(new BasicNameValuePair("mobile", SaveSharedPreference.getMobile(Operater.this)));
+                strBuilder.add(new BasicNameValuePair("token_id", SaveSharedPreference.getUSERAuth(Operater.this)));
+                strBuilder.add(new BasicNameValuePair("api_token", Apis.Api_Token));
+
+                Log.e("Log_tag", "" + strBuilder.toString());
+                json = perser.getJSONFromUrl(url,strBuilder);
+
+                JSONArray j_operator = json.getJSONArray("operator");
+                JSONArray j_area = json.getJSONArray("circle");
 
                 HashMap<String, String> map;
                 for (int i = 0; i < j_operator.length(); i++) {
                     map = new HashMap<String, String>();
                     JSONObject js = j_operator.getJSONObject(i);
-                    if (type.equals("dth")) {
-                        map.put("operator_name", js.getString("dth_operator_name"));
-                        map.put("operator_code", js.getString("operator_code"));
-                    } else {
                         map.put("operator_name", js.getString("operator_name"));
-                        map.put("operator_code", js.getString("operator_code"));
-                    }
+                        map.put("operator_code", js.getString("id"));
+                        map.put("operator_name_code", js.getString("operator_text_code"));
+
 
                     oprators_list.add(map);
 
@@ -149,8 +157,8 @@ public class Operater extends AppCompatActivity {
                 for (int i = 0; i < j_area.length(); i++) {
 
                     JSONObject js = j_area.getJSONObject(i);
-                    name.add(js.getString("operator_location"));
-                    code.add(js.getString("operator_code"));
+                    name.add(js.getString("circle_name"));
+                    code.add(js.getString("circle_code"));
 
 
                 }

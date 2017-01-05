@@ -2,8 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    tools:context="com.pinkstar.main.OneFragment">
+    android:background="@color/white">
 
     <LinearLayout
         android:id="@+id/tab_mobile"
@@ -54,11 +53,12 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_marginTop="5dp"
-                android:layout_weight="0.98"
+                android:layout_weight="1"
                 android:background="@color/white"
                 android:gravity="center_vertical"
                 android:hint="Mobile"
                 android:inputType="number"
+                android:maxLength="14"
                 android:paddingLeft="10dp"
                 android:singleLine="true"
                 android:textColor="@color/black"
@@ -67,9 +67,11 @@
 
             <ImageView
                 android:id="@+id/mob_contact"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:layout_gravity="right|bottom"
+                android:adjustViewBounds="true"
+                android:scaleType="fitXY"
                 android:src="@drawable/contact" />
 
 
@@ -145,7 +147,7 @@
                     android:gravity="right"
                     android:text="Browse Plans"
                     android:textColor="#1212FF"
-                    android:textSize="20dp" />
+                    android:textSize="18dp" />
 
                 <TextView
                     android:layout_width="match_parent"

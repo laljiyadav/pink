@@ -54,7 +54,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_marginTop="5dp"
-                android:layout_weight="0.98"
+                android:layout_weight="1"
                 android:background="@color/white"
                 android:gravity="center_vertical"
                 android:hint="Mobile"
@@ -67,8 +67,10 @@
 
             <ImageView
                 android:id="@+id/data_contact"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:adjustViewBounds="true"
+                android:scaleType="fitXY"
                 android:layout_gravity="right|bottom"
                 android:src="@drawable/contact" />
 
@@ -145,7 +147,7 @@
                     android:gravity="right"
                     android:text="Browse Plans"
                     android:textColor="#1212FF"
-                    android:textSize="20dp" />
+                    android:textSize="18dp" />
 
                 <TextView
                     android:layout_width="match_parent"

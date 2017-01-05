@@ -2,25 +2,31 @@ package com.pinkstar.main;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.PorterDuff;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
@@ -29,6 +35,7 @@ import com.pinkstar.main.data.Apis;
 import com.pinkstar.main.data.Dialogs;
 import com.pinkstar.main.data.Parser;
 import com.pinkstar.main.data.SaveSharedPreference;
+import com.squareup.picasso.Picasso;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -41,6 +48,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
@@ -50,7 +58,7 @@ import java.util.Calendar;
 public class Profile extends Activity implements View.OnClickListener {
 
     ToggleButton toggleButton;
-    TextView txt_gender, txt_birth, txt_annversary, txt_fullaname, txt_save;
+    TextView txt_gender, txt_birth, txt_annversary, txt_save;
     ImageView profileimage;
     private DatePickerDialog fromDatePickerDialog, fromDatePickerDialog1;
     private SimpleDateFormat dateFormatter;
@@ -58,10 +66,11 @@ public class Profile extends Activity implements View.OnClickListener {
     final String EMAIL_PATTERN = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
     Bitmap bitmap;
     Uri fileUri;
-    String encodedSting, udata, url = Apis.Base;
+    String encodedSting, udata, udata1, url = Apis.Base;
     JSONObject json;
     String email, mobile, dob, annversary, gender, fisrt_name, last_name;
     EditText et_number, et_email, et_first, et_last;
+    ProgressBar progress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,10 +78,16 @@ public class Profile extends Activity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
+        init();
+
+    }
+
+
+    public void init() {
+
         toggleButton = (ToggleButton) findViewById(R.id.toggleButton1);
         txt_gender = (TextView) findViewById(R.id.txt_gender);
         txt_annversary = (TextView) findViewById(R.id.txt_anneversary);
-        txt_fullaname = (TextView) findViewById(R.id.txt_fullname);
         txt_save = (TextView) findViewById(R.id.txt_save);
         profileimage = (ImageView) findViewById(R.id.img);
         txt_birth = (TextView) findViewById(R.id.txt_birth);
@@ -80,21 +95,13 @@ public class Profile extends Activity implements View.OnClickListener {
         et_email = (EditText) findViewById(R.id.ed_email);
         et_first = (EditText) findViewById(R.id.ed_first);
         et_last = (EditText) findViewById(R.id.ed_last);
+        progress = (ProgressBar) findViewById(R.id.progressBar);
 
-        txt_fullaname.setText(SaveSharedPreference.getUserName(Profile.this) + " " + SaveSharedPreference.getLastName(Profile.this));
         et_first.setText(SaveSharedPreference.getUserName(Profile.this));
         et_last.setText(SaveSharedPreference.getLastName(Profile.this));
-        txt_birth.setText(SaveSharedPreference.getBirth(Profile.this));
-        txt_annversary.setText(SaveSharedPreference.getAnnversary(Profile.this));
         et_number.setText(SaveSharedPreference.getMobile(Profile.this).replace("+91-", ""));
         et_email.setText(SaveSharedPreference.getUserEMAIL(Profile.this));
         txt_gender.setText(SaveSharedPreference.getGender(Profile.this));
-
-        if (SaveSharedPreference.getGender(Profile.this).equalsIgnoreCase("Female")) {
-            toggleButton.setChecked(false);
-        } else {
-            toggleButton.setChecked(true);
-        }
 
         txt_birth.setOnClickListener(this);
         txt_save.setOnClickListener(this);
@@ -103,6 +110,21 @@ public class Profile extends Activity implements View.OnClickListener {
         setDateTimeField();
         setDateTimeField1();
 
+        if (SaveSharedPreference.getGender(Profile.this).equalsIgnoreCase("Female")) {
+            toggleButton.setChecked(false);
+            txt_gender.setText("Female");
+
+        } else {
+            toggleButton.setChecked(true);
+            txt_gender.setText("Male");
+        }
+
+        if(!SaveSharedPreference.getBirth(Profile.this).equalsIgnoreCase("0000-00-00")) {
+            txt_birth.setText(SaveSharedPreference.getBirth(Profile.this));
+        }
+        if(!SaveSharedPreference.getAnnversary(Profile.this).equalsIgnoreCase("0000-00-00")) {
+            txt_annversary.setText(SaveSharedPreference.getAnnversary(Profile.this));
+        }
 
         toggleButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -117,12 +139,26 @@ public class Profile extends Activity implements View.OnClickListener {
 
         if (SaveSharedPreference.getUserIMAGE(Profile.this).equals("")) {
 
+            progress.setVisibility(View.GONE);
         } else {
-            new ImageDownloader().execute(SaveSharedPreference.getUserIMAGE(Profile.this));
-            Log.e("blank", "Blank");
+
+            Picasso.with(Profile.this)
+                    .load(SaveSharedPreference.getUserIMAGE(Profile.this))
+                    .into(profileimage, new com.squareup.picasso.Callback() {
+                        @Override
+                        public void onSuccess() {
+                            if (progress != null) {
+                                progress.setVisibility(View.GONE);
+                            }
+                        }
+
+                        @Override
+                        public void onError() {
+
+
+                        }
+                    });
         }
-
-
     }
 
     private void setDateTimeField() {
@@ -176,8 +212,7 @@ public class Profile extends Activity implements View.OnClickListener {
         }
 
         if (v == profileimage) {
-            Intent i = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-            startActivityForResult(i.createChooser(i, "Select Picture"), CAMERA_CAPTURE_IMAGE_REQUEST_CODE);
+            PickImage();
         }
 
         if (v == txt_save) {
@@ -185,9 +220,52 @@ public class Profile extends Activity implements View.OnClickListener {
                 new AttempProfile().execute();
             }
 
+
         }
 
 
+    }
+
+
+    public void PickImage() {
+        final Dialog dialog2 = new Dialog(Profile.this);
+        dialog2.requestWindowFeature(Window.FEATURE_NO_TITLE); //before
+        dialog2.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        dialog2.setContentView(R.layout.camera_popup);
+        WindowManager.LayoutParams lp = dialog2.getWindow().getAttributes();
+        Window window = dialog2.getWindow();
+        lp.copyFrom(window.getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        window.setAttributes(lp);
+        lp.gravity = Gravity.CENTER;
+
+        TextView txtCamera = (TextView) dialog2.findViewById(R.id.camera);
+        TextView txtGallery = (TextView) dialog2.findViewById(R.id.gallary);
+
+        txtCamera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                File f = new File(android.os.Environment.getExternalStorageDirectory(), "temp.jpg");
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(f));
+                startActivityForResult(intent, 0);
+                dialog2.dismiss();
+            }
+        });
+        txtGallery.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent pickPhoto = new Intent(Intent.ACTION_PICK,
+                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(pickPhoto, 1);
+                dialog2.dismiss();
+            }
+        });
+
+
+        dialog2.show();
     }
 
     public boolean valid() {
@@ -196,7 +274,7 @@ public class Profile extends Activity implements View.OnClickListener {
         dob = txt_birth.getText().toString();
         annversary = txt_annversary.getText().toString();
         gender = txt_gender.getText().toString();
-        fisrt_name = et_last.getText().toString();
+        fisrt_name = et_first.getText().toString();
         last_name = et_last.getText().toString();
 
         if (fisrt_name.equals("")) {
@@ -217,9 +295,6 @@ public class Profile extends Activity implements View.OnClickListener {
         } else if (dob.equals("")) {
             Dialogs.showCenterToast(Profile.this, "Select birth date");
             return false;
-        } else if (annversary.equals("")) {
-            Dialogs.showCenterToast(Profile.this, "Select annversary date");
-            return false;
         } else if (mobile.length() < 10) {
             Dialogs.showCenterToast(Profile.this, "Select valid number");
             return false;
@@ -231,6 +306,7 @@ public class Profile extends Activity implements View.OnClickListener {
 
         return true;
     }
+
 
     private class AttempProfile extends AsyncTask<Void, Integer, String> {
 
@@ -249,25 +325,24 @@ public class Profile extends Activity implements View.OnClickListener {
 
 
             nameValuePairs.add(new BasicNameValuePair("email", email));
-            nameValuePairs.add(new BasicNameValuePair("first_name", fisrt_name));
-            nameValuePairs.add(new BasicNameValuePair("last_name", last_name));
+            nameValuePairs.add(new BasicNameValuePair("fname", fisrt_name));
+            nameValuePairs.add(new BasicNameValuePair("lname", last_name));
             nameValuePairs.add(new BasicNameValuePair("dob", dob));
             nameValuePairs.add(new BasicNameValuePair("gender", gender));
             nameValuePairs.add(new BasicNameValuePair("anniversary", annversary));
-            nameValuePairs.add(new BasicNameValuePair("image_name", ""));
-            nameValuePairs.add(new BasicNameValuePair("image_text", encodedSting));
-            nameValuePairs.add(new BasicNameValuePair("rquest", "update_profile_details"));
+            nameValuePairs.add(new BasicNameValuePair("rquest", "profileUpdate"));
             nameValuePairs.add(new BasicNameValuePair("mobile", SaveSharedPreference.getMobile(Profile.this)));
-            nameValuePairs.add(new BasicNameValuePair("token_id", SaveSharedPreference.getUserID(Profile.this)));
+            nameValuePairs.add(new BasicNameValuePair("token_id", SaveSharedPreference.getUSERAuth(Profile.this)));
+            nameValuePairs.add(new BasicNameValuePair("api_token", Apis.Api_Token));
+
             Log.e("Log_tag", "" + nameValuePairs);
 
             // Create an array
             Parser perser = new Parser();
             json = perser.getJSONFromUrl(url, nameValuePairs);
-            Log.e("Log_tag", "" + json);
             try {
 
-                udata = json.getString("udata");
+                udata = json.getString("uData");
 
 
             } catch (Exception e) {
@@ -283,7 +358,7 @@ public class Profile extends Activity implements View.OnClickListener {
             try {
                 if (udata.equals("1")) {
                     Dialogs.showCenterToast(Profile.this, "Profile is successfully update");
-                    new AttempProf().execute();
+                    new AttempProfileDetail().execute();
 
                 } else if (udata.equals("0")) {
                     Dialogs.showCenterToast(Profile.this, "Profile is not updated");
@@ -299,33 +374,7 @@ public class Profile extends Activity implements View.OnClickListener {
         }
     }
 
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == RESULT_OK) {
-            if (requestCode == CAMERA_CAPTURE_IMAGE_REQUEST_CODE) {
-                fileUri = data.getData();
-
-                try {
-                    bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), fileUri);
-                    profileimage.setImageBitmap(bitmap);
-                    ByteArrayOutputStream bos = new ByteArrayOutputStream();
-                    bitmap.compress(Bitmap.CompressFormat.JPEG, 75, bos);
-                    byte[] data1 = bos.toByteArray();
-
-
-                    encodedSting = Base64.encodeToString(data1, Base64.DEFAULT);
-
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-            }
-        }
-    }
-
-    private class AttempProf extends AsyncTask<Void, Integer, String> {
+    private class AttempProfileImage extends AsyncTask<Void, Integer, String> {
 
         @Override
         protected void onPreExecute() {
@@ -337,38 +386,140 @@ public class Profile extends Activity implements View.OnClickListener {
         @Override
         protected String doInBackground(Void... params) {
 
-            StringBuilder strBuilder = new StringBuilder(url);
-            strBuilder.append("token_id=" + SaveSharedPreference.getUserID(Profile.this));
-            strBuilder.append("&rquest=get_profile_details");
-            strBuilder.append("&mobile=" + SaveSharedPreference.getMobile(Profile.this));
 
+            ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+
+
+            nameValuePairs.add(new BasicNameValuePair("image_url", encodedSting));
+            nameValuePairs.add(new BasicNameValuePair("rquest", "profilePictureUpdate"));
+            nameValuePairs.add(new BasicNameValuePair("mobile", SaveSharedPreference.getMobile(Profile.this)));
+            nameValuePairs.add(new BasicNameValuePair("token_id", SaveSharedPreference.getUSERAuth(Profile.this)));
+            nameValuePairs.add(new BasicNameValuePair("api_token", Apis.Api_Token));
+
+            Log.e("Log_tag", "" + nameValuePairs);
 
             // Create an array
             Parser perser = new Parser();
-            json = perser.getJSONFromUrl1(strBuilder.toString());
-
-            Log.e("JSon", "" + json);
+            json = perser.getJSONFromUrl(url, nameValuePairs);
             try {
 
-                udata = json.getString("udata");
-                JSONArray jarray = json.getJSONArray("result");
+                udata = json.getString("uData");
+
+
+            } catch (Exception e) {
+                Log.e("Log_Exception", e.toString());
+
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String args) {
+            Dialogs.dismissDialog();
+            try {
                 if (udata.equals("1")) {
-                    for (int i = 0; i < jarray.length(); i++) {
-                        JSONObject js = jarray.getJSONObject(i);
-                        SaveSharedPreference.setUserName(Profile.this, js.getString("first_name"));
-                        SaveSharedPreference.setLastName(Profile.this, js.getString("last_name"));
-                        SaveSharedPreference.setUserEMAIL(Profile.this, js.getString("email"));
-                        SaveSharedPreference.setBirth(Profile.this, js.getString("dob"));
-                        SaveSharedPreference.setAnnversary(Profile.this, js.getString("anniversary"));
-                        SaveSharedPreference.setUserIMAGE(Profile.this, js.getString("image_url"));
-                        SaveSharedPreference.setTotal(Profile.this, js.getString("balance_star"));
-                        SaveSharedPreference.setBalStar(Profile.this, js.getString("redeemable_star"));
-                        SaveSharedPreference.setGender(Profile.this, js.getString("gender"));
+                    Dialogs.showCenterToast(Profile.this, "Profile Image successfully update");
+                    new AttempProfileDetail().execute();
+
+                } else {
+                    Dialogs.showCenterToast(Profile.this, "Server Error");
+                }
+            } catch (Exception e) {
+
+            }
+
+
+        }
+    }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case 0:
+                if (resultCode == RESULT_OK) {
+                    File f = new File(Environment.getExternalStorageDirectory().toString());
+                    for (File temp : f.listFiles()) {
+                        if (temp.getName().equals("temp.jpg")) {
+                            f = temp;
+
+                        }
 
 
                     }
 
+                    try {
+                        BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
+
+                        bitmap = BitmapFactory.decodeFile(f.getAbsolutePath(),
+                                bitmapOptions);
+
+                        profileimage.setImageBitmap(bitmap);
+                        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+                        bitmap.compress(Bitmap.CompressFormat.PNG, 75, bos);
+                        byte[] data1 = bos.toByteArray();
+
+
+                        encodedSting = Base64.encodeToString(data1, Base64.DEFAULT);
+                        new AttempProfileImage().execute();
+                    } catch (Exception e) {
+
+                    }
+
                 }
+
+                break;
+            case 1:
+                fileUri = data.getData();
+
+                try {
+                    bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), fileUri);
+                    profileimage.setImageBitmap(bitmap);
+                    ByteArrayOutputStream bos = new ByteArrayOutputStream();
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 75, bos);
+                    byte[] data1 = bos.toByteArray();
+
+
+                    encodedSting = Base64.encodeToString(data1, Base64.DEFAULT);
+                    new AttempProfileImage().execute();
+
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                break;
+
+
+        }
+    }
+
+    private class AttempProfileDetail extends AsyncTask<Void, Integer, String> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+            Dialogs.showProDialog(Profile.this, "Wait...");
+        }
+
+        @Override
+        protected String doInBackground(Void... params) {
+
+            ArrayList<NameValuePair> strBuilder = new ArrayList<NameValuePair>();
+            strBuilder.add(new BasicNameValuePair("token_id", SaveSharedPreference.getUSERAuth(Profile.this)));
+            strBuilder.add(new BasicNameValuePair("rquest", "profileDetail"));
+            strBuilder.add(new BasicNameValuePair("mobile", SaveSharedPreference.getMobile(Profile.this)));
+            strBuilder.add(new BasicNameValuePair("api_token", Apis.Api_Token));
+
+
+            // Create an array
+            Parser perser = new Parser();
+            json = perser.getJSONFromUrl(url, strBuilder);
+
+            Log.e("url", "" + strBuilder.toString());
+            try {
+
+                udata1 = json.getString("uData");
 
 
             } catch (Exception e) {
@@ -382,76 +533,26 @@ public class Profile extends Activity implements View.OnClickListener {
         protected void onPostExecute(String args) {
             Dialogs.dismissDialog();
 
-            txt_fullaname.setText(SaveSharedPreference.getUserName(Profile.this) + " " + SaveSharedPreference.getLastName(Profile.this));
-            et_first.setText(SaveSharedPreference.getUserName(Profile.this));
-            et_last.setText(SaveSharedPreference.getLastName(Profile.this));
-            txt_birth.setText(SaveSharedPreference.getBirth(Profile.this));
-            txt_annversary.setText(SaveSharedPreference.getAnnversary(Profile.this));
-            et_number.setText(SaveSharedPreference.getMobile(Profile.this).replace("+91-", ""));
-            et_email.setText(SaveSharedPreference.getUserEMAIL(Profile.this));
-            txt_gender.setText(SaveSharedPreference.getGender(Profile.this));
-
-            if (SaveSharedPreference.getGender(Profile.this).equalsIgnoreCase("Female")) {
-                toggleButton.setChecked(false);
-            } else {
-                toggleButton.setChecked(true);
-            }
-        }
-    }
-
-    private class ImageDownloader extends AsyncTask<String, Void, Bitmap> {
-        @Override
-        protected Bitmap doInBackground(String... param) {
-            // TODO Auto-generated method stub
-            return downloadBitmap(param[0]);
-        }
-
-
-        @Override
-        protected void onPostExecute(Bitmap result) {
-            Log.i("Async-Example", "onPostExecute Called");
-            //drawer_image.setImageBitmap(result);
-            Log.e("bitmap", "" + result);
-            profileimage.setImageBitmap(result);
-        }
-
-        private Bitmap downloadBitmap(String url) {
-            // initilize the default HTTP client object
-            final DefaultHttpClient client = new DefaultHttpClient();
-            //forming a HttoGet request
-            final HttpGet getRequest = new HttpGet(url);
             try {
-                HttpResponse response = client.execute(getRequest);
-                //check 200 OK for success
-                final int statusCode = response.getStatusLine().getStatusCode();
-                if (statusCode != HttpStatus.SC_OK) {
-                    Log.w("ImageDownloader", "Error " + statusCode +
-                            " while retrieving bitmap from " + url);
-                    return null;
-                }
-                final HttpEntity entity = response.getEntity();
-                if (entity != null) {
-                    InputStream inputStream = null;
-                    try {
-                        // getting contents from the stream
-                        inputStream = entity.getContent();
-                        // decoding stream data back into image Bitmap that android understands
-                        final Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
-                        return bitmap;
-                    } finally {
-                        if (inputStream != null) {
-                            inputStream.close();
-                        }
-                        entity.consumeContent();
-                    }
+                if (udata1.equals("1")) {
+                    SaveSharedPreference.setUserName(Profile.this, json.getJSONObject("result").getString("first_name"));
+                    SaveSharedPreference.setLastName(Profile.this, json.getJSONObject("result").getString("last_name"));
+                    SaveSharedPreference.setUserEMAIL(Profile.this, json.getJSONObject("result").getString("email"));
+                    SaveSharedPreference.setBirth(Profile.this, json.getJSONObject("result").getString("dob"));
+                    SaveSharedPreference.setAnnversary(Profile.this, json.getJSONObject("result").getString("anniversary"));
+                    SaveSharedPreference.setUserIMAGE(Profile.this, json.getJSONObject("result").getString("image_url"));
+                    SaveSharedPreference.setBalStar(Profile.this, json.getJSONObject("star").getString("redeemable_star"));
+                    SaveSharedPreference.setTotal(Profile.this, json.getJSONObject("star").getString("balance_star"));
+                    SaveSharedPreference.setGender(Profile.this, json.getJSONObject("result").getString("gender"));
+                    init();
+
                 }
             } catch (Exception e) {
-                // You Could provide a more explicit error message for IOException
-                getRequest.abort();
-                Log.e("ImageDownloader", "Something went wrong while" +
-                        " retrieving bitmap from " + url + e.toString());
+
             }
-            return null;
+
         }
     }
+
+
 }

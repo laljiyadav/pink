@@ -1,6 +1,7 @@
 package com.pinkstar.main;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -8,13 +9,18 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import com.pinkstar.main.data.Apis;
 import com.pinkstar.main.data.Dialogs;
 import com.pinkstar.main.data.Parser;
 import com.pinkstar.main.data.SaveSharedPreference;
 
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 
 public class ChangePassword extends Activity implements View.OnClickListener {
@@ -22,20 +28,28 @@ public class ChangePassword extends Activity implements View.OnClickListener {
     String str_change_confirm, str_change_new, str_change_old, udata, url = Apis.Base;
     Button change_submit;
     JSONObject json;
+    ImageView star_img;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change_password);
+
+        inIt();
+    }
+
+    public void inIt() {
         change_new = (EditText) findViewById(R.id.change_new);
         change_confirm = (EditText) findViewById(R.id.change_confirm);
         change_old = (EditText) findViewById(R.id.change_old);
         change_submit = (Button) findViewById(R.id.change_submit);
+        star_img = (ImageView) findViewById(R.id.star_img);
 
         change_submit.setOnClickListener(this);
+        star_img.setOnClickListener(this);
 
-
+        Dialogs.Touch(ChangePassword.this, star_img);
     }
 
     @Override
@@ -46,6 +60,9 @@ public class ChangePassword extends Activity implements View.OnClickListener {
             if (valid()) {
                 new AttempChange().execute();
             }
+        }
+        if (v == star_img) {
+            Dialogs.star_dialog(ChangePassword.this);
         }
 
     }
@@ -89,22 +106,23 @@ public class ChangePassword extends Activity implements View.OnClickListener {
         protected String doInBackground(Void... params) {
 
 
-            StringBuilder strBuilder = new StringBuilder(url);
-            strBuilder.append("newpwd=" + str_change_new);
-            strBuilder.append("&oldpwd=" + str_change_old);
-            strBuilder.append("&rquest=change_password");
-            strBuilder.append("&mobile=" + SaveSharedPreference.getMobile(ChangePassword.this));
-            strBuilder.append("&token_id=" + SaveSharedPreference.getUserID(ChangePassword.this));
+            ArrayList<NameValuePair> strBuilder = new ArrayList<NameValuePair>();
+            strBuilder.add(new BasicNameValuePair("new_password", str_change_new));
+            strBuilder.add(new BasicNameValuePair("old_password", str_change_old));
+            strBuilder.add(new BasicNameValuePair("rquest", "changePassword"));
+            strBuilder.add(new BasicNameValuePair("mobile", SaveSharedPreference.getMobile(ChangePassword.this)));
+            strBuilder.add(new BasicNameValuePair("token_id", SaveSharedPreference.getUSERAuth(ChangePassword.this)));
+            strBuilder.add(new BasicNameValuePair("api_token", Apis.Api_Token));
 
             Log.e("Log_tag", "" + strBuilder.toString());
 
             // Create an array
             Parser perser = new Parser();
-            json = perser.getJSONFromUrl1(strBuilder.toString());
+            json = perser.getJSONFromUrl(url, strBuilder);
             Log.e("Log_tag", "" + json);
             try {
 
-                udata = json.getString("udata");
+                udata = json.getString("uData");
 
 
             } catch (Exception e) {
@@ -120,7 +138,9 @@ public class ChangePassword extends Activity implements View.OnClickListener {
             try {
                 if (udata.equals("1")) {
                     Dialogs.showCenterToast(ChangePassword.this, "Password Update Successfully");
-                } else if (udata.equals("0")) {
+                    startActivity(new Intent(ChangePassword.this, Mobile.class));
+                    SaveSharedPreference.setUserID(ChangePassword.this, "");
+                } else if (udata.equals("10")) {
                     Dialogs.showCenterToast(ChangePassword.this, "Old Password is incorrect");
 
                 } else {

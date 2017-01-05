@@ -77,7 +77,7 @@
                     android:background="@color/white"
                     android:gravity="center"
                     android:hint="Mobile number"
-                    android:inputType="phone"
+                    android:inputType="number"
                     android:singleLine="true"
                     android:textColor="@color/black"
                     android:textSize="20sp" />

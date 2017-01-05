@@ -4,7 +4,10 @@ package com.pinkstar.main.data;
  * Created by Win 7 on 11/5/2015.
  */
 public class Apis {
-    public static final String Base = "http://pinkstarapp.com/api/restservices.php?";
+    //public static final String Base = "http://ec2-54-169-93-225.ap-southeast-1.compute.amazonaws.com/api_old/restservices.php?";
+    public static final String Base = "http://pinkstarapp.com/api_old/restservices.php?";
+    public  static final String Api_Token="1f3870be274f6c49b3e31a0c6728957f";
+    public static final String Token_id="33452b6faa70d52accb77f77f371b525";
     public static final String Opt_pre = Base+"rquest=circle_list&operator=prepaid";
     public static final String Opt_post = Base+"rquest=circle_list&operator=postpaid";
     public static final String Opt_data = Base+"rquest=circle_list&operator=datacard";

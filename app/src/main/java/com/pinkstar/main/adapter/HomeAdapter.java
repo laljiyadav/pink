@@ -8,11 +8,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.pinkstar.main.R;
 import com.pinkstar.main.data.GPSTracker;
-import com.pinkstar.main.other.ImageLoader;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,19 +22,17 @@ import java.util.HashMap;
 public class HomeAdapter extends BaseAdapter {
 
     Context c;
-    ArrayList<HashMap<String,String>> map;
-    ImageLoader imageLoader;
+    ArrayList<HashMap<String, String>> map;
     GPSTracker gpsTracker;
-    double lat,lang,lat1,lang1;
+    double lat, lang, lat1, lang1;
 
 
-    public HomeAdapter(Context context, ArrayList<HashMap<String,String>> map ){
+    public HomeAdapter(Context context, ArrayList<HashMap<String, String>> map) {
 
         super();
         this.c = context;
-        this.map =map;
-        imageLoader=new ImageLoader(context);
-        gpsTracker=new GPSTracker(context);
+        this.map = map;
+        gpsTracker = new GPSTracker(context);
 
 
     }
@@ -62,17 +61,34 @@ public class HomeAdapter extends BaseAdapter {
         TextView kms = (TextView) row.findViewById(R.id.kilo);
         TextView name = (TextView) row.findViewById(R.id.listname);
         ImageView img = (ImageView) row.findViewById(R.id.imagelist);
+        final ProgressBar progress=(ProgressBar)row.findViewById(R.id.progressBar);
 
-        name.setText(map.get(position).get("company_name"));
-        per.setText(map.get(position).get("ps_discount") + "%");
-        imageLoader.DisplayImage(map.get(position).get("image_url"), img);
-        Location location=gpsTracker.getLocation();
-        lat=location.getLatitude();
-        lang=location.getLongitude();
-        lat1=Double.parseDouble(map.get(position).get("lat"));
-        lang1=Double.parseDouble(map.get(position).get("long"));
+        name.setText(map.get(position).get("company_display_name"));
+        per.setText(map.get(position).get("discount_amount") + "%");
 
-        kms.setText(""+(int)distance(lat,lang,lat1,lang1)+"Km");
+        Picasso.with(c)
+                .load(map.get(position).get("image_url"))
+                .into(img,  new com.squareup.picasso.Callback() {
+                    @Override
+                    public void onSuccess() {
+                        if (progress != null) {
+                            progress .setVisibility(View.GONE);
+                        }
+                    }
+
+                    @Override
+                    public void onError() {
+
+
+                    }
+                });
+        Location location = gpsTracker.getLocation();
+        lat = location.getLatitude();
+        lang = location.getLongitude();
+        lat1 = Double.parseDouble(map.get(position).get("lat"));
+        lang1 = Double.parseDouble(map.get(position).get("long"));
+
+        kms.setText("" + (int) distance(lat, lang, lat1, lang1) + "Km");
 
 
         return row;
