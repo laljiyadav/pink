@@ -5,9 +5,15 @@
     android:background="@color/white"
     android:orientation="vertical">
 
+    <include
+        android:id="@+id/incl"
+        layout="@layout/toolbar"></include>
+
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_below="@+id/incl"
+        android:scrollbars="none">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -24,7 +30,6 @@
                     android:layout_height="wrap_content"
                     android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
-                    <include layout="@layout/toolbar"></include>
 
                     <TextView
                         android:id="@+id/tab11"
@@ -35,7 +40,7 @@
                         android:gravity="center"
                         android:text="Recharge or Pay bill for"
                         android:textColor="@color/black"
-                        android:textSize="20sp" />
+                        android:textSize="18sp" />
 
                     <android.support.design.widget.TabLayout
                         android:id="@+id/tabs"
@@ -61,8 +66,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"
                 android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
                 android:scrollbars="none">
 
                 <LinearLayout
@@ -80,8 +85,8 @@
                 android:id="@+id/grid"
                 android:layout_width="match_parent"
                 android:layout_height="160dp"
-                android:layout_marginTop="0dp"
                 android:layout_marginBottom="30dp"
+                android:layout_marginTop="0dp"
                 android:verticalSpacing="10dp">
 
             </android.support.v4.view.ViewPager>
@@ -97,11 +102,11 @@
         android:layout_alignParentLeft="true"
         android:layout_marginBottom="10dp"
         android:layout_marginLeft="10dp"
-        android:padding="5dp"
         android:adjustViewBounds="true"
-        android:scaleType="fitCenter"
         android:background="@drawable/radio"
         android:clickable="true"
+        android:padding="5dp"
+        android:scaleType="fitCenter"
         android:src="@drawable/star" />
 
 

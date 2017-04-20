@@ -115,7 +115,6 @@ public class HomeDetail extends Activity implements View.OnClickListener {
         bill_img.setOnClickListener(this);
 
 
-
         mHandler = new Handler();
         runnable = new Runnable() {
             @Override
@@ -140,7 +139,7 @@ public class HomeDetail extends Activity implements View.OnClickListener {
                 Intent in = new Intent(HomeDetail.this, MapActivity.class);
                 in.putExtra("lat", lat);
                 in.putExtra("lang", lang);
-                in.putExtra("company", company);
+                in.putExtra("company", tx_company.getText().toString());
                 in.putExtra("add", tx_address.getText().toString());
 
                 startActivity(in);
@@ -226,9 +225,11 @@ public class HomeDetail extends Activity implements View.OnClickListener {
                     tx_cost.setText(obj.getString("meal2") + " : Meal for two(approx)");
                     tc_contact.setText(obj.getString("phone"));
                     phn_number = obj.getString("phone");
-                    star_type = obj.getString("type");
+                    if (obj.has("type"))
+                        star_type = obj.getString("type");
                     rating.setRating(Float.valueOf(obj.getString("rating")));
-                    dis_amount = obj.getString("vdiscount_amount");
+                    if (obj.has("vdiscount_amount"))
+                        dis_amount = obj.getString("vdiscount_amount");
                     lat = Double.parseDouble(obj.getString("lat"));
                     lang = Double.parseDouble(obj.getString("long"));
                     tx_company.setText(obj.getString("company_display_name"));
@@ -239,6 +240,8 @@ public class HomeDetail extends Activity implements View.OnClickListener {
                 }
 
             } catch (Exception e) {
+
+                Log.e("exp", e.toString());
 
             }
         }

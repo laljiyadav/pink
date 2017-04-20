@@ -82,8 +82,8 @@ public class Dialogs {
                         star_img.setX((int) (StartPT.x + mv.x));
                         star_img.setY((int) (StartPT.y + mv.y));
 
-                        Log.e("x", "" + (int) (StartPT.x + mv.x));
-                        Log.e("y", "" + (int) (StartPT.y + mv.y));
+                       // Log.e("x", "" + (int) (StartPT.x + mv.x));
+                       // Log.e("y", "" + (int) (StartPT.y + mv.y));
 
                         if ((int) (StartPT.x + mv.x) < 5 && (int) (StartPT.y + mv.y) > height) {
                             star_img.setX(10);

@@ -1,9 +1,11 @@
 package com.pinkstar.main;
 
+import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -24,7 +26,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Browser_plas extends ActionBarActivity {
+public class Browser_plas extends FragmentActivity {
 
     private Toolbar toolbar;
     private TabLayout tabLayout;

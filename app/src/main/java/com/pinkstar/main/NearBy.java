@@ -98,6 +98,7 @@ public class NearBy extends AppCompatActivity {
 
                 int threshold = 1;
                 int count = citynearby_listView.getCount();
+                //Log.e("lenth",""+js.length());
 
                 if (scrollState == SCROLL_STATE_IDLE) {
                     if (citynearby_listView.getLastVisiblePosition() >= count
@@ -152,7 +153,7 @@ public class NearBy extends AppCompatActivity {
             json = perser.getJSONFromUrl(url, strBuilder);
 
             Log.e("url", "" + strBuilder.toString());
-            Log.e("url", "" + json);
+            // Log.e("url", "" + json);
 
             try {
 
@@ -165,26 +166,30 @@ public class NearBy extends AppCompatActivity {
                     for (int i = 0; i < js.length(); i++) {
                         map1 = new HashMap<String, String>();
                         JSONObject object = js.getJSONObject(i);
-                        JSONArray image = object.getJSONArray("image");
+                        if (object.has("unique_id")) {
+                            JSONArray image = object.getJSONArray("image");
+                            map1.put("unique_id", object.getString("unique_id"));
+                            map1.put("company_display_name", object.getString("company_display_name"));
+                            map1.put("discount_amount", object.getString("discount_amount"));
+                            map1.put("vdiscount_amount", object.getString("vdiscount_amount"));
+                            map1.put("lat", object.getString("lat"));
+                            map1.put("long", object.getString("long"));
+                            map1.put("img_array", "" + image);
 
-                        map1.put("unique_id", object.getString("unique_id"));
-                        map1.put("company_display_name", object.getString("company_display_name"));
-                        map1.put("discount_amount", object.getString("discount_amount"));
-                        map1.put("vdiscount_amount", object.getString("vdiscount_amount"));
-                        map1.put("lat", object.getString("lat"));
-                        map1.put("long", object.getString("long"));
-                        map1.put("img_array", "" + image);
-
-                        for (int h = 0; h < image.length(); h++) {
-                            if (image.getJSONObject(h).getString("type").equals("home")) {
-                                map1.put("image_url", image.getJSONObject(h).getString("image_url"));
+                            for (int h = 0; h < image.length(); h++) {
+                                if (image.getJSONObject(h).getString("type").equals("home")) {
+                                    map1.put("image_url", image.getJSONObject(h).getString("image_url"));
+                                    break;
+                                }
                             }
+
+                            venderList.add(map1);
                         }
 
-                        venderList.add(map1);
-
-
                     }
+                } else {
+                    js = new JSONArray();
+
                 }
 
 
@@ -252,17 +257,16 @@ public class NearBy extends AppCompatActivity {
 
                 if (query.length() <= 3) {
 
+
+
                 } else {
 
                     new AttempSearchVender().execute();
                 }
 
-                try {
                     InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
-                } catch (Exception e) {
 
-                }
                 return false;
             }
 
@@ -318,6 +322,7 @@ public class NearBy extends AppCompatActivity {
             Parser perser = new Parser();
             json = perser.getJSONFromUrl(url, strBuilder);
             Log.e("Log_tag", "" + strBuilder.toString());
+            Log.e("Log_tag", "" + json);
 
             try {
 
@@ -336,27 +341,30 @@ public class NearBy extends AppCompatActivity {
                     for (int i = 0; i < js.length(); i++) {
                         map1 = new HashMap<String, String>();
                         JSONObject object = js.getJSONObject(i);
-                        JSONArray image = object.getJSONArray("image");
+                        if (object.has("unique_id")) {
+                            JSONArray image = object.getJSONArray("image");
+                            map1.put("unique_id", object.getString("unique_id"));
+                            map1.put("company_display_name", object.getString("company_display_name"));
+                            map1.put("discount_amount", object.getString("discount_amount"));
+                            map1.put("vdiscount_amount", object.getString("vdiscount_amount"));
+                            map1.put("lat", object.getString("lat"));
+                            map1.put("long", object.getString("long"));
+                            map1.put("img_array", "" + image);
 
-                        map1.put("unique_id", object.getString("unique_id"));
-                        map1.put("company_display_name", object.getString("company_display_name"));
-                        map1.put("discount_amount", object.getString("discount_amount"));
-                        map1.put("vdiscount_amount", object.getString("vdiscount_amount"));
-                        map1.put("lat", object.getString("lat"));
-                        map1.put("long", object.getString("long"));
-                        map1.put("img_array", "" + image);
-
-                        for (int h = 0; h < image.length(); h++) {
-                            if (image.getJSONObject(h).getString("type").equals("home")) {
-                                map1.put("image_url", image.getJSONObject(h).getString("image_url"));
+                            for (int h = 0; h < image.length(); h++) {
+                                if (image.getJSONObject(h).getString("type").equals("home")) {
+                                    map1.put("image_url", image.getJSONObject(h).getString("image_url"));
+                                }
                             }
+
+
+                            venderList.add(map1);
                         }
 
-
-                        venderList.add(map1);
-
-
                     }
+                } else {
+                    js = new JSONArray();
+
                 }
 
 

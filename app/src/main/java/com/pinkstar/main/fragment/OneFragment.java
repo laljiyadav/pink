@@ -20,6 +20,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.pinkstar.main.Browser_plas;
 import com.pinkstar.main.Operater;
 import com.pinkstar.main.R;
 import com.pinkstar.main.data.Apis;
@@ -116,7 +117,7 @@ public class OneFragment extends Fragment {
             }
         });
 
-        /*mob_plan.setOnClickListener(new View.OnClickListener() {
+        mob_plan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent in = new Intent(getActivity(), Browser_plas.class);
@@ -128,7 +129,7 @@ public class OneFragment extends Fragment {
                     startActivity(in);
                 }
             }
-        });*/
+        });
 
         btn_proceed.setOnClickListener(new View.OnClickListener() {
             @Override

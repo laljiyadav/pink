@@ -26,7 +26,7 @@ public class MarkerActivity extends FragmentActivity implements OnMapReadyCallba
     GoogleMap map;
     ArrayList<HashMap<String, String>> venderlist;
     Marker allMarkers;
-    private HashMap<Marker, Integer> mHashMap = new HashMap<Marker, Integer>();
+    private HashMap<Marker, Long> mHashMap = new HashMap<Marker, Long>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,7 +82,7 @@ public class MarkerActivity extends FragmentActivity implements OnMapReadyCallba
                     .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
 
 
-            mHashMap.put(allMarkers,Integer.parseInt(venderlist.get(i).get("unique_id")));
+            mHashMap.put(allMarkers,Long.parseLong(venderlist.get(i).get("unique_id")));
 
 
             if (i == (venderlist.size() - 1)) {

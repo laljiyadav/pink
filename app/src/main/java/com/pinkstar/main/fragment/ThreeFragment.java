@@ -80,7 +80,7 @@ public class ThreeFragment extends Fragment {
                 // checkedId is the RadioButton selected
                 radioButton = (RadioButton) view.findViewById(checkedId);
                 //Toast.makeText(getActivity(), radioButton.getText(), Toast.LENGTH_SHORT).show();
-                if (type.equals("postpaid")) {
+                if (radioButton.getText().toString().equals("postpaid")) {
                     data_plan.setVisibility(View.INVISIBLE);
                     type = "postpaid";
                 } else {

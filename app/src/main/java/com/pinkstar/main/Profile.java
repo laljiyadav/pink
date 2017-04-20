@@ -338,11 +338,13 @@ public class Profile extends Activity implements View.OnClickListener {
             Log.e("Log_tag", "" + nameValuePairs);
 
             // Create an array
-            Parser perser = new Parser();
-            json = perser.getJSONFromUrl(url, nameValuePairs);
-            try {
 
+            try {
+                Parser perser = new Parser();
+                json = perser.getJSONFromUrl(url, nameValuePairs);
                 udata = json.getString("uData");
+
+                Log.e("json",""+json);
 
 
             } catch (Exception e) {
@@ -396,13 +398,13 @@ public class Profile extends Activity implements View.OnClickListener {
             nameValuePairs.add(new BasicNameValuePair("token_id", SaveSharedPreference.getUSERAuth(Profile.this)));
             nameValuePairs.add(new BasicNameValuePair("api_token", Apis.Api_Token));
 
-            Log.e("Log_tag", "" + nameValuePairs);
+            //Log.e("Log_tag", "" + nameValuePairs);
 
             // Create an array
-            Parser perser = new Parser();
-            json = perser.getJSONFromUrl(url, nameValuePairs);
-            try {
 
+            try {
+                Parser perser = new Parser();
+                json = perser.getJSONFromUrl(url, nameValuePairs);
                 udata = json.getString("uData");
 
 
@@ -513,12 +515,12 @@ public class Profile extends Activity implements View.OnClickListener {
 
 
             // Create an array
-            Parser perser = new Parser();
-            json = perser.getJSONFromUrl(url, strBuilder);
 
-            Log.e("url", "" + strBuilder.toString());
             try {
+                Parser perser = new Parser();
+                json = perser.getJSONFromUrl(url, strBuilder);
 
+                Log.e("url", "" + strBuilder.toString());
                 udata1 = json.getString("uData");
 
 

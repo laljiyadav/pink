@@ -102,6 +102,8 @@ public class MainActivity extends Activity {
         FirebaseMessaging.getInstance().subscribeToTopic("PinkStar");
         token = FirebaseInstanceId.getInstance().getToken();
 
+        Log.e("log", token);
+
         if (!SaveSharedPreference.gethomefirst(MainActivity.this).equals("1")) {
             dialog();
         }
@@ -246,6 +248,8 @@ public class MainActivity extends Activity {
         @Override
         protected void onPostExecute(String args) {
 
+            Log.e("tokenlog", "" + json);
+
             new AttempProfile().execute();
         }
     }
@@ -271,11 +275,14 @@ public class MainActivity extends Activity {
 
 
             // Create an array
-            Parser perser = new Parser();
-            json = perser.getJSONFromUrl(url, strBuilder);
+
 
 
             try {
+                Parser perser = new Parser();
+                json = perser.getJSONFromUrl(url, strBuilder);
+
+                Log.e("json",""+json);
 
                 udata = json.getString("uData");
                 if (udata.equals("1")) {
@@ -324,10 +331,13 @@ public class MainActivity extends Activity {
 
 
             // Create an array
-            Parser perser = new Parser();
-            json = perser.getJSONFromUrl(url, strBuilder);
+
 
             try {
+                Parser perser = new Parser();
+                json = perser.getJSONFromUrl(url, strBuilder);
+
+                //Log.e("json",""+json);
 
                 udata = json.getString("uData");
                 if (udata.equals("1")) {
@@ -406,18 +416,21 @@ public class MainActivity extends Activity {
             strBuilder.add(new BasicNameValuePair("page", "" + page));
 
 
-            // Create an array
-            Parser perser = new Parser();
-            json = perser.getJSONFromUrl(url, strBuilder);
+
 
 
             try {
+
+                // Create an array
+                Parser perser = new Parser();
+                json = perser.getJSONFromUrl(url, strBuilder);
+
+                //Log.e("jsonven",""+json);
 
                 udata = json.getString("uData");
 
 
                 if (udata.equals("1")) {
-                    //JSONArray js = json.getJSONObject("result").getJSONArray("vendor");
                     JSONArray category = json.getJSONObject("result").getJSONArray("category");
 
 
@@ -449,8 +462,6 @@ public class MainActivity extends Activity {
                         }
                         subArray.put(category.getJSONObject(i).getString("name"), namesub);
                         subArrayid.put(category.getJSONObject(i).getString("id"), idsub);
-                       /* Log.e("logtagArray", "" + subArray);
-                        Log.e("logtagArray", "" + subArrayid);*/
 
 
                     }
@@ -478,6 +489,7 @@ public class MainActivity extends Activity {
 
 
             createText();
+            Featured();
 
 
         }
@@ -512,17 +524,16 @@ public class MainActivity extends Activity {
                 Parser perser = new Parser();
                 json1 = perser.getJSONFromUrl(url, strBuilder);
 
-                Log.e("json", "" + json1);
-                Log.e("json", "" + strBuilder.toString());
+
                 udata = json1.getString("uData");
 
 
                 if (udata.equals("1")) {
 
-                    JSONArray js1 = json1.getJSONObject("result").getJSONArray("featured");
+                    //JSONArray js1 = json1.getJSONObject("result").getJSONArray("featured");
 
                     HashMap<String, String> map1;
-                    for (int i = 0; i < js1.length(); i++) {
+                    /*for (int i = 0; i < js1.length(); i++) {
                         map1 = new HashMap<String, String>();
                         JSONObject object = js1.getJSONObject(i);
                         JSONArray image = object.getJSONArray("image");
@@ -550,7 +561,8 @@ public class MainActivity extends Activity {
                             venderList1.add(map1);
                         }
 
-                    }
+                    }*/
+
 
                     JSONArray js = json1.getJSONObject("result").getJSONArray("vendor");
                     for (int i = 0; i < js.length(); i++) {
@@ -714,6 +726,8 @@ public class MainActivity extends Activity {
     @Override
     public void onBackPressed() {
 
+        finish();
+
     }
 
     public void Featured() {
@@ -822,7 +836,7 @@ public class MainActivity extends Activity {
     public String testtoimage(int pos, String image) {
 
         String str = image.replace("\"", "");
-        String first = str.replace("[", "");
+        String first = str.replace("[", "").replace("]", "");
 
         String array[] = first.split(",");
 
