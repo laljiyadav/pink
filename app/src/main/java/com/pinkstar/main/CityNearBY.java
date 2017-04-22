@@ -324,12 +324,13 @@ public class CityNearBY extends AppCompatActivity {
             strBuilder.add(new BasicNameValuePair("name", search_name));
 
             // Create an array
-            Parser perser = new Parser();
-            jsonObject = perser.getJSONFromUrl(url, strBuilder);
-            Log.e("Log_tag", "" + strBuilder.toString());
+
 
             try {
 
+                Parser perser = new Parser();
+                jsonObject = perser.getJSONFromUrl(url, strBuilder);
+                Log.e("Log_tag", "" + strBuilder.toString());
                 udata = jsonObject.getString("uData");
 
 

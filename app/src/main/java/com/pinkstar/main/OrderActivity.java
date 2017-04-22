@@ -78,16 +78,20 @@ public class OrderActivity extends Activity {
 
             Log.e("Log_tag", "" + nameValuePairs);
 
-            // Create an array
-            Parser perser = new Parser();
-            json = perser.getJSONFromUrl(url, nameValuePairs);
+
             try {
 
+                // Create an array
+                Parser perser = new Parser();
+                json = perser.getJSONFromUrl(url, nameValuePairs);
+
                 udata = json.getString("uData");
-                JSONArray jarray = json.getJSONArray("order");
+
+                Log.e("json", "" + json);
+
 
                 if (udata.equals("1")) {
-
+                    JSONArray jarray = json.getJSONArray("order");
                     HashMap<String, String> map;
                     for (int i = 0; i < jarray.length(); i++) {
                         JSONObject object = jarray.getJSONObject(i);

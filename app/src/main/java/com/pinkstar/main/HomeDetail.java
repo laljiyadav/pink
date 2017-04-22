@@ -61,7 +61,7 @@ public class HomeDetail extends Activity implements View.OnClickListener {
     Runnable runnable;
     int position;
     JSONObject json, obj;
-    double lat, lang;
+    double lat, lang, lat_user, long_user;
     Button phn, route;
     Handler mHandler2;
     int position1 = 0;
@@ -71,6 +71,7 @@ public class HomeDetail extends Activity implements View.OnClickListener {
     Location location;
     ImageView tap_imageView;
     String star_type, dis_amount;
+    TextView txt_upload;
 
 
     @Override
@@ -80,6 +81,11 @@ public class HomeDetail extends Activity implements View.OnClickListener {
 
         inIt();
 
+        gpsTracker = new GPSTracker(HomeDetail.this);
+        location = gpsTracker.getLocation();
+
+        lat_user = location.getLatitude();
+        long_user = location.getLongitude();
 
     }
 
@@ -89,6 +95,7 @@ public class HomeDetail extends Activity implements View.OnClickListener {
         tx_company = (TextView) findViewById(R.id.de_company);
         tx_address = (TextView) findViewById(R.id.de_add);
         tx_address1 = (TextView) findViewById(R.id.de_add1);
+        txt_upload = (TextView) findViewById(R.id.txt_upload);
         tx_cash = (TextView) findViewById(R.id.tx_cash);
         tx_cost = (TextView) findViewById(R.id.tx_cost);
         tx_type = (TextView) findViewById(R.id.tx_type);
@@ -236,6 +243,19 @@ public class HomeDetail extends Activity implements View.OnClickListener {
                     img_array = "" + obj.getJSONArray("image");
 
                     offer(img_array);
+
+
+                    Log.e("log", "" + Dialogs.distance(lat_user, long_user, lat, lang));
+                    float aFloat = Dialogs.distance(lat_user, long_user, lat, lang);
+
+                    if (aFloat < 0.2) {
+
+
+                    } else {
+
+                        bill_img.setEnabled(false);
+                        txt_upload.setText("You are so far at outlet");
+                    }
 
                 }
 

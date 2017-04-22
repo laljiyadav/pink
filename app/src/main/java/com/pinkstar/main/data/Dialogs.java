@@ -82,8 +82,8 @@ public class Dialogs {
                         star_img.setX((int) (StartPT.x + mv.x));
                         star_img.setY((int) (StartPT.y + mv.y));
 
-                       // Log.e("x", "" + (int) (StartPT.x + mv.x));
-                       // Log.e("y", "" + (int) (StartPT.y + mv.y));
+                        // Log.e("x", "" + (int) (StartPT.x + mv.x));
+                        // Log.e("y", "" + (int) (StartPT.y + mv.y));
 
                         if ((int) (StartPT.x + mv.x) < 5 && (int) (StartPT.y + mv.y) > height) {
                             star_img.setX(10);
@@ -147,6 +147,23 @@ public class Dialogs {
         if (progressDialog != null) {
             progressDialog.dismiss();
         }
+    }
+
+    public static float distance(double lat1, double lon1, double lat2, double lon2) {
+        double theta = lon1 - lon2;
+        double dist = Math.sin(deg2rad(lat1)) * Math.sin(deg2rad(lat2)) + Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.cos(deg2rad(theta));
+        dist = Math.acos(dist);
+        dist = rad2deg(dist);
+        dist = dist * 60 * 1.1515;
+        return Float.parseFloat(""+dist);
+    }
+
+    public static double deg2rad(double deg) {
+        return (deg * Math.PI / 180.0);
+    }
+
+    private static double rad2deg(double rad) {
+        return (rad * 180.0 / Math.PI);
     }
 
 

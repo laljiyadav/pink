@@ -25,9 +25,9 @@ public class EstoreAdapter extends PagerAdapter {
     // Declare Variables
     Context context;
     LayoutInflater inflater;
-    ArrayList<HashMap<String ,String>> map;
+    ArrayList<HashMap<String, String>> map;
 
-    public EstoreAdapter(Context context,    ArrayList<HashMap<String ,String>> map1) {
+    public EstoreAdapter(Context context, ArrayList<HashMap<String, String>> map1) {
         this.context = context;
         this.map = map1;
 
@@ -66,23 +66,25 @@ public class EstoreAdapter extends PagerAdapter {
         txtfirst = (TextView) itemView.findViewById(R.id.grid_first);
         txtsecont = (TextView) itemView.findViewById(R.id.grid_second);
         txtname = (TextView) itemView.findViewById(R.id.listname);
-        imgflag=(ImageView)itemView.findViewById(R.id.imagelist);
+        imgflag = (ImageView) itemView.findViewById(R.id.imagelist);
+
+        String re = context.getResources().getString(R.string.rs);
 
         // Capture position and set to the TextViews
-        txtfirst.setText(map.get(position).get("price"));
+        txtfirst.setText(re + map.get(position).get("price"));
         txtfirst.setPaintFlags(txtfirst.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-        txtsecont.setText(map.get(position).get("discount_price"));
+        txtsecont.setText(re + map.get(position).get("discount_price"));
         txtname.setText(map.get(position).get("name"));
-        final ProgressBar progress=(ProgressBar)itemView.findViewById(R.id.progressBar);
+        final ProgressBar progress = (ProgressBar) itemView.findViewById(R.id.progressBar);
 
-        if(!map.get(position).get("product_image").equals("")) {
+        if (!map.get(position).get("product_image").equals("")) {
             Picasso.with(context)
                     .load(map.get(position).get("product_image"))
-                    .into(imgflag,  new com.squareup.picasso.Callback() {
+                    .into(imgflag, new com.squareup.picasso.Callback() {
                         @Override
                         public void onSuccess() {
                             if (progress != null) {
-                                progress .setVisibility(View.GONE);
+                                progress.setVisibility(View.GONE);
                             }
                         }
 
@@ -97,12 +99,12 @@ public class EstoreAdapter extends PagerAdapter {
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent in=new Intent(context, EstoreDetail.class);
-                in.putExtra("name",map.get(position).get("name"));
-                in.putExtra("discount_price",map.get(position).get("discount_price"));
-                in.putExtra("description",map.get(position).get("description"));
-                in.putExtra("product_image",map.get(position).get("product_image"));
-                in.putExtra("id",map.get(position).get("id"));
+                Intent in = new Intent(context, EstoreDetail.class);
+                in.putExtra("name", map.get(position).get("name"));
+                in.putExtra("discount_price", map.get(position).get("discount_price"));
+                in.putExtra("description", map.get(position).get("description"));
+                in.putExtra("product_image", map.get(position).get("product_image"));
+                in.putExtra("id", map.get(position).get("id"));
                 context.startActivity(in);
             }
         });

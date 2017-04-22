@@ -47,6 +47,7 @@ import com.pinkstar.main.data.SaveSharedPreference;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -102,11 +103,12 @@ public class MainActivity extends Activity {
         FirebaseMessaging.getInstance().subscribeToTopic("PinkStar");
         token = FirebaseInstanceId.getInstance().getToken();
 
-        Log.e("log", token);
+        Log.e("token", token);
 
         if (!SaveSharedPreference.gethomefirst(MainActivity.this).equals("1")) {
             dialog();
         }
+
 
         subcat.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -231,12 +233,11 @@ public class MainActivity extends Activity {
 
 
             // Create an array
-            Parser perser = new Parser();
-            json = perser.getJSONFromUrl(url, strBuilder);
 
 
             try {
-
+                Parser perser = new Parser();
+                json = perser.getJSONFromUrl(url, strBuilder);
 
             } catch (Exception e) {
                 Log.e("Log_Exception", e.toString());
@@ -250,7 +251,18 @@ public class MainActivity extends Activity {
 
             Log.e("tokenlog", "" + json);
 
-            new AttempProfile().execute();
+            try {
+                if (json.getString("uData").equals("6")) {
+                    Intent intent = new Intent(MainActivity.this, Mobile.class);
+                    startActivity(intent);
+                } else {
+                    new AttempProfile().execute();
+                }
+
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -277,12 +289,11 @@ public class MainActivity extends Activity {
             // Create an array
 
 
-
             try {
                 Parser perser = new Parser();
                 json = perser.getJSONFromUrl(url, strBuilder);
 
-                Log.e("json",""+json);
+                Log.e("json", "" + json);
 
                 udata = json.getString("uData");
                 if (udata.equals("1")) {
@@ -416,16 +427,14 @@ public class MainActivity extends Activity {
             strBuilder.add(new BasicNameValuePair("page", "" + page));
 
 
-
-
-
             try {
 
                 // Create an array
                 Parser perser = new Parser();
                 json = perser.getJSONFromUrl(url, strBuilder);
 
-                //Log.e("jsonven",""+json);
+                // Log.e("jsonven",""+json);
+                Log.e("jsonven", "" + strBuilder.toString());
 
                 udata = json.getString("uData");
 

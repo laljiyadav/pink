@@ -50,7 +50,7 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback {
     Location location;
     String id, amount, type, print;
     LinearLayout lin_print, lin_unprint;
-    ImageView stamp,image;
+    ImageView stamp, image;
     Animation a, a1;
     TextView gotit;
     ImageView imageView;
@@ -65,11 +65,11 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback {
 
         setContentView(R.layout.activity_camera);
 
-        surfaceView = (SurfaceView) findViewById(R. id.surfaceView);
+        surfaceView = (SurfaceView) findViewById(R.id.surfaceView);
         lin_print = (LinearLayout) findViewById(R.id.print);
         lin_unprint = (LinearLayout) findViewById(R.id.unprint);
-        imageView=(ImageView)findViewById(R.id.ok);
-        gotit=(TextView)findViewById(R.id.gotit);
+        imageView = (ImageView) findViewById(R.id.ok);
+        gotit = (TextView) findViewById(R.id.gotit);
         surfaceHolder = surfaceView.getHolder();
         gpsTracker = new GPSTracker(CameraActivity.this);
         location = gpsTracker.getLocation();
@@ -106,9 +106,6 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback {
 
             }
         });
-
-
-
 
 
         a.setAnimationListener(new Animation.AnimationListener() {
@@ -178,7 +175,7 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback {
                 location = gpsTracker.getLocation();
                 new AttempBillUpload().execute();
 
-                Toast.makeText(getApplicationContext(), "Picture Saved", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(), "Picture Saved", Toast.LENGTH_SHORT).show();
                 refreshCamera();
             }
         };
@@ -274,7 +271,7 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback {
             nameValuePairs.add(new BasicNameValuePair("lat", "" + location.getLatitude()));
             nameValuePairs.add(new BasicNameValuePair("long", "" + location.getLongitude()));
             nameValuePairs.add(new BasicNameValuePair("vendor_id", id));
-            nameValuePairs.add(new BasicNameValuePair("token_id",SaveSharedPreference.getUSERAuth(CameraActivity.this)));
+            nameValuePairs.add(new BasicNameValuePair("token_id", SaveSharedPreference.getUSERAuth(CameraActivity.this)));
             nameValuePairs.add(new BasicNameValuePair("star_type", type));
             nameValuePairs.add(new BasicNameValuePair("discount_amount", amount));
             nameValuePairs.add(new BasicNameValuePair("image_url", HomeDetail.encodeString));
@@ -303,8 +300,15 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback {
                 if (udata.equals("1")) {
                     Dialogs.showCenterToast(CameraActivity.this, "Bill Upload successfully");
                     finish();
+                } else if (udata.equals("25")) {
+                    Dialogs.showCenterToast(CameraActivity.this, "You can not upload ");
+                    finish();
+                } else if (udata.equals("26")) {
+                    Dialogs.showCenterToast(CameraActivity.this, "You can not upload ");
+                    finish();
                 } else {
                     Dialogs.showCenterToast(CameraActivity.this, json.getJSONObject("result").getString("message"));
+                    finish();
                 }
             } catch (Exception e) {
                 e.printStackTrace();
