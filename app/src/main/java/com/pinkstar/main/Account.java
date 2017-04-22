@@ -9,7 +9,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;
+import android.widget.LinearLayout;
+import android.widget.LinearLayout;
 
 import com.pinkstar.main.data.Apis;
 import com.pinkstar.main.data.Dialogs;
@@ -24,8 +25,8 @@ import java.util.ArrayList;
 
 public class Account extends Activity implements View.OnClickListener {
 
-    TextView ac_profile, ac_order, ac_stars, ac_change, ac_invite, ac_share;
-    Button logout;
+    LinearLayout ac_profile, ac_order, ac_stars, ac_change, ac_invite, ac_share;
+    LinearLayout logout;
     JSONObject json;
     String url = Apis.Base, udata;
     ImageView star_img;
@@ -39,13 +40,13 @@ public class Account extends Activity implements View.OnClickListener {
     }
 
     public void inIt() {
-        ac_profile = (TextView) findViewById(R.id.ac_profile);
-        ac_order = (TextView) findViewById(R.id.ac_order);
-        ac_stars = (TextView) findViewById(R.id.ac_stars);
-        ac_change = (TextView) findViewById(R.id.ac_change);
-        ac_invite = (TextView) findViewById(R.id.ac_invite);
-        ac_share = (TextView) findViewById(R.id.ac_share);
-        logout = (Button) findViewById(R.id.logout);
+        ac_profile = (LinearLayout) findViewById(R.id.lin_profile);
+        ac_order = (LinearLayout) findViewById(R.id.lin_order);
+        ac_stars = (LinearLayout) findViewById(R.id.lin_send);
+        ac_change = (LinearLayout) findViewById(R.id.lin_change);
+        ac_invite = (LinearLayout) findViewById(R.id.lin_invite);
+        ac_share = (LinearLayout) findViewById(R.id.lin_what);
+        logout = (LinearLayout) findViewById(R.id.lin_logout);
         star_img = (ImageView) findViewById(R.id.star_img);
 
 
@@ -81,17 +82,24 @@ public class Account extends Activity implements View.OnClickListener {
 
         }
         if (v == ac_invite) {
-            Intent sharingIntent = new Intent(Intent.ACTION_SEND);
-            sharingIntent.setType("image/png");
-            sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, Html.fromHtml("<p>This is the text that will be shared.</p>"));
-            startActivity(Intent.createChooser(sharingIntent, "Share using"));
+            Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+            sharingIntent.setType("text/plain");
+            String shareBody = "https://play.google.com/store/apps/details?id=com.pinkstar.main";
+            sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Subject Here");
+            sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
+            startActivity(Intent.createChooser(sharingIntent, "Share via"));
 
         }
         if (v == ac_share) {
-            Intent sharingIntent = new Intent(Intent.ACTION_SEND);
-            sharingIntent.setType("image/png");
-            sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, Html.fromHtml("<p>This is the text that will be shared.</p>"));
-            startActivity(Intent.createChooser(sharingIntent, "Share using"));
+            try {
+                Intent whatsappIntent = new Intent(Intent.ACTION_SEND);
+                whatsappIntent.setType("text/plain");
+                whatsappIntent.setPackage("com.whatsapp");
+                whatsappIntent.putExtra(Intent.EXTRA_TEXT, "https://play.google.com/store/apps/details?id=com.pinkstar.main");
+                startActivity(whatsappIntent);
+            } catch (Exception ex) {
+                Dialogs.showCenterToast(Account.this, "WhatsApp have not been installed.");
+            }
 
         }
         if (v == logout) {
