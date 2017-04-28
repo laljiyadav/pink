@@ -158,7 +158,7 @@ public class Recharge extends FragmentActivity {
                 udata = json.getString("uData");
                 JSONArray jarray = json.getJSONArray("result");
 
-                Log.e("json",""+json);
+                //Log.e("json",""+json);
 
 
                 if (udata.equals("1")) {

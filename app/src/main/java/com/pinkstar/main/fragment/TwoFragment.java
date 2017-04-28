@@ -57,14 +57,14 @@ public class TwoFragment extends Fragment {
         operator = (TextView) view.findViewById(R.id.dth_oprater);
         btn_pro = (Button) view.findViewById(R.id.dth_proceed);
 
-        operator.setOnClickListener(new View.OnClickListener() {
+        /*operator.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent in = new Intent(getActivity(), Operater.class);
                 in.putExtra("type", "dth");
                 startActivity(in);
             }
-        });
+        });*/
 
         btn_pro.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -168,13 +168,7 @@ public class TwoFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        Log.e("pause", "resume2");
-        if (Operater.type.equals("dth")) {
-            operator.setText(Operater.operator_name2);
-            operator_code = Operater.operator_code2;
-            circle_code = Operater.circle_code2;
-            operator_name_code = Operater.operator_name_code2;
-        }
+
     }
 
 }

@@ -1,6 +1,5 @@
 package com.pinkstar.main;
 
-import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -9,17 +8,24 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.ListView;
+import android.widget.Toast;
 
+import com.pinkstar.main.adapter.BrawseAdapter;
 import com.pinkstar.main.data.Apis;
 import com.pinkstar.main.data.Dialogs;
 import com.pinkstar.main.data.Parser;
+import com.pinkstar.main.data.SaveSharedPreference;
+import com.pinkstar.main.fragment.OneFragment;
 import com.pinkstar.main.fragment.TopUp;
 
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -28,18 +34,12 @@ import java.util.HashMap;
 
 public class Browser_plas extends FragmentActivity {
 
-    private Toolbar toolbar;
     private TabLayout tabLayout;
-    private ViewPager viewPager;
+    private ListView list;
     JSONObject json;
     String url = Apis.Base, operator_code, circle_code;
     ArrayList<HashMap<String, String>> array_topup = new ArrayList<HashMap<String, String>>();
-    ArrayList<HashMap<String, String>> array_fulltalk = new ArrayList<HashMap<String, String>>();
-    ArrayList<HashMap<String, String>> array_sms = new ArrayList<HashMap<String, String>>();
-    ArrayList<HashMap<String, String>> array_std = new ArrayList<HashMap<String, String>>();
-    ArrayList<HashMap<String, String>> array_roaming = new ArrayList<HashMap<String, String>>();
-    ArrayList<HashMap<String, String>> array_two = new ArrayList<HashMap<String, String>>();
-    ArrayList<HashMap<String, String>> array_three = new ArrayList<HashMap<String, String>>();
+    String type = "TUP";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,80 +47,85 @@ public class Browser_plas extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_browser_plas);
 
-        viewPager = (ViewPager) findViewById(R.id.viewpager);
-        circle_code = getIntent().getExtras().getString("circle");
-        operator_code = getIntent().getExtras().getString("operator");
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            circle_code = getIntent().getExtras().getString("circle");
+            operator_code = getIntent().getExtras().getString("operator");
+        }
+
+        inIt();
 
         new AttempTopUP().execute();
 
     }
 
+    public void inIt() {
+        tabLayout = (TabLayout) findViewById(R.id.tabs);
+        list = (ListView) findViewById(R.id.list);
 
-    private void setupViewPager(ViewPager viewPager) {
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        viewPager.setAdapter(adapter);
-        viewPager.setOffscreenPageLimit(0);
-        Log.e("item", "" + viewPager.getCurrentItem());
-    }
+        tabLayout.addTab(tabLayout.newTab().setText("Top-up Recharge"));
+        tabLayout.addTab(tabLayout.newTab().setText("Full Talk-time Recharge"));
+        tabLayout.addTab(tabLayout.newTab().setText("2G Data Recharge"));
+        tabLayout.addTab(tabLayout.newTab().setText("3G/4G Data Recharge"));
+        tabLayout.addTab(tabLayout.newTab().setText("SMS Pack Recharge"));
+        tabLayout.addTab(tabLayout.newTab().setText("Local/STD/ISD Call Recharge"));
+        tabLayout.addTab(tabLayout.newTab().setText("Other Recharge"));
+        tabLayout.addTab(tabLayout.newTab().setText("National/International Roaming Recharge"));
 
-    private class AttempTwoG extends AsyncTask<Void, Integer, String> {
+        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
 
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
+                tabselect();
 
-        }
-
-        @Override
-        protected String doInBackground(Void... params) {
-
-            // http://pinkstarapp.com/api/restservices.php?rquest=plan_list&operator=28&circle=17&plancode=2G
-            StringBuilder builder = new StringBuilder(url);
-            builder.append("rquest=plan_list");
-            builder.append("&operator=" + operator_code);
-            builder.append("&circle=" + circle_code);
-            builder.append("&plancode=2G");
-
-            try {
-                Parser perser = new Parser();
-                json = perser.getJSONFromUrl1(builder.toString());
-                Log.e("Json_list", "" + json);
-                JSONArray result = json.getJSONArray("result");
-
-
-                HashMap<String, String> map;
-                for (int i = 0; i < result.length(); i++) {
-                    map = new HashMap<String, String>();
-                    JSONObject js = result.getJSONObject(i);
-
-                    map.put("amount", js.getString("Amount"));
-                    map.put("validity", js.getString("Validity"));
-                    map.put("detail", js.getString("Detail"));
-
-
-                    array_two.add(map);
-
-                }
-
-
-            } catch (Exception e) {
 
             }
 
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
 
-            return null;
+            }
 
-        }
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
 
-        @Override
-        protected void onPostExecute(String args) {
-            // Locate the listview in listview_main.xml
-            //Dialogs.dismissDialog();
+            }
+        });
 
-            new AttempThreeG().execute();
 
-        }
     }
+
+    public void tabselect() {
+        if (tabLayout.getSelectedTabPosition() == 0) {
+
+            type = "TUP";
+        } else if (tabLayout.getSelectedTabPosition() == 1) {
+
+            type = "FTT";
+        } else if (tabLayout.getSelectedTabPosition() == 2) {
+
+            type = "2G";
+        } else if (tabLayout.getSelectedTabPosition() == 3) {
+
+            type = "3G";
+        } else if (tabLayout.getSelectedTabPosition() == 4) {
+
+            type = "SMS";
+        } else if (tabLayout.getSelectedTabPosition() == 5) {
+
+            type = "LSC";
+        } else if (tabLayout.getSelectedTabPosition() == 6) {
+
+            type = "OTR";
+        } else if (tabLayout.getSelectedTabPosition() == 7) {
+
+            type = "RMG";
+        }
+
+        //Dialogs.showCenterToast(Browser_plas.this, type);
+        new AttempTopUP().execute();
+    }
+
 
     private class AttempTopUP extends AsyncTask<Void, Integer, String> {
 
@@ -134,143 +139,25 @@ public class Browser_plas extends FragmentActivity {
         @Override
         protected String doInBackground(Void... params) {
 
-            // http://pinkstarapp.com/api/restservices.php?rquest=plan_list&operator=28&circle=17&plancode=2G
-            StringBuilder builder = new StringBuilder(url);
-            builder.append("rquest=plan_list");
-            builder.append("&operator=" + operator_code);
-            builder.append("&circle=" + circle_code);
+            ArrayList<NameValuePair> strBuilder = new ArrayList<NameValuePair>();
+            strBuilder.add(new BasicNameValuePair("api_token", Apis.Api_Token));
+            strBuilder.add(new BasicNameValuePair("token_id", SaveSharedPreference.getUSERAuth(Browser_plas.this)));
+            strBuilder.add(new BasicNameValuePair("rquest", "planOffer"));
+            strBuilder.add(new BasicNameValuePair("mobile", SaveSharedPreference.getMobile(Browser_plas.this)));
+            strBuilder.add(new BasicNameValuePair("offer_type", type));
+            strBuilder.add(new BasicNameValuePair("circle_code", circle_code));
+            strBuilder.add(new BasicNameValuePair("operator_code", operator_code));
+
+            Log.e("Json_list", "" + strBuilder.toString());
 
             try {
                 Parser perser = new Parser();
-                json = perser.getJSONFromUrl1(builder.toString());
+                json = perser.getJSONFromUrl(Apis.Base, strBuilder);
                 Log.e("Json_list", "" + json);
-                Log.e("url", "" + builder.toString());
-                JSONArray result = json.getJSONArray("result");
-
-
-                HashMap<String, String> map;
-                for (int i = 0; i < result.length(); i++) {
-                    map = new HashMap<String, String>();
-                    JSONObject js = result.getJSONObject(i);
-
-                    if (js.getString("Detail").contains("Talktime")) {
-
-                        map.put("amount", js.getString("Amount"));
-                        map.put("validity", js.getString("Validity"));
-                        map.put("detail", js.getString("Detail"));
-
-                        array_topup.add(map);
-                    }
-
-                    if (js.getString("Detail").contains("Full Talktime")) {
-
-                        map.put("amount", js.getString("Amount"));
-                        map.put("validity", js.getString("Validity"));
-                        map.put("detail", js.getString("Detail"));
-
-                        array_fulltalk.add(map);
-                    }
-
-                    if (js.getString("Detail").contains("SMS")) {
-
-                        map.put("amount", js.getString("Amount"));
-                        map.put("validity", js.getString("Validity"));
-                        map.put("detail", js.getString("Detail"));
-
-                        array_sms.add(map);
-                    }
-
-                    if (js.getString("Detail").contains("Local")) {
-
-                        map.put("amount", js.getString("Amount"));
-                        map.put("validity", js.getString("Validity"));
-                        map.put("detail", js.getString("Detail"));
-
-                        array_std.add(map);
-                    }
-                    if (js.getString("Detail").contains("std")) {
-
-                        map.put("amount", js.getString("Amount"));
-                        map.put("validity", js.getString("Validity"));
-                        map.put("detail", js.getString("Detail"));
-
-                        array_std.add(map);
-                    }
-
-                    if (js.getString("Detail").contains("Roaming")) {
-
-                        map.put("amount", js.getString("Amount"));
-                        map.put("validity", js.getString("Validity"));
-                        map.put("detail", js.getString("Detail"));
-
-                        array_roaming.add(map);
-                    }
-
-
-                }
 
 
             } catch (Exception e) {
-
-            }
-
-
-            return null;
-
-        }
-
-        @Override
-        protected void onPostExecute(String args) {
-            // Locate the listview in listview_main.xml
-            // Dialogs.dismissDialog();
-
-            new AttempTwoG().execute();
-
-
-        }
-    }
-
-    private class AttempThreeG extends AsyncTask<Void, Integer, String> {
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-
-        }
-
-        @Override
-        protected String doInBackground(Void... params) {
-
-            // http://pinkstarapp.com/api/restservices.php?rquest=plan_list&operator=28&circle=17&plancode=2G
-            StringBuilder builder = new StringBuilder(url);
-            builder.append("rquest=plan_list");
-            builder.append("&operator="+operator_code);
-            builder.append("&circle="+circle_code);
-            builder.append("&plancode=3G");
-
-            try {
-                Parser perser = new Parser();
-                json = perser.getJSONFromUrl1(builder.toString());
-                Log.e("Json_list", "" + json);
-                JSONArray result = json.getJSONArray("result");
-
-
-                HashMap<String, String> map;
-                for (int i = 0; i < result.length(); i++) {
-                    map = new HashMap<String, String>();
-                    JSONObject js = result.getJSONObject(i);
-
-                    map.put("amount", js.getString("Amount"));
-                    map.put("validity", js.getString("Validity"));
-                    map.put("detail", js.getString("Detail"));
-
-
-                    array_three.add(map);
-
-                }
-
-
-            } catch (Exception e) {
+                Log.e("exp", e.toString());
 
             }
 
@@ -284,81 +171,55 @@ public class Browser_plas extends FragmentActivity {
             // Locate the listview in listview_main.xml
             Dialogs.dismissDialog();
 
-            setupViewPager(viewPager);
-            tabLayout = (TabLayout) findViewById(R.id.tabs);
-            tabLayout.setupWithViewPager(viewPager);
+            try {
+                array_topup.clear();
+                if (json.getString("uData").equals("1")) {
 
+                    String jString = json.getString("result");
+                    JSONArray result = new JSONArray(jString);
+
+
+                    HashMap<String, String> map;
+                    for (int i = 0; i < result.length(); i++) {
+                        map = new HashMap<String, String>();
+                        JSONObject js = result.getJSONObject(i);
+
+
+                        map.put("amount", js.getString("Amount"));
+                        map.put("validity", js.getString("Validity"));
+                        map.put("detail", js.getString("Detail"));
+
+                        array_topup.add(map);
+
+
+                    }
+                }
+
+                list.setAdapter(new BrawseAdapter(Browser_plas.this, array_topup));
+
+                list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                        OneFragment.setAmount(array_topup.get(position).get("amount"));
+                        finish();
+
+
+                    }
+                });
+
+
+            } catch (Exception e) {
+
+                Log.e("exp", e.toString());
+
+            }
 
         }
     }
 
-    class ViewPagerAdapter extends FragmentPagerAdapter {
-
-
-        public ViewPagerAdapter(FragmentManager manager) {
-            super(manager);
-        }
-
-        @Override
-        public Fragment getItem(final int position) {
-            switch (position) {
-                case 0:
-                    return new TopUp().newInstance(0, array_topup, new TopUp());
-                case 1:
-                    return new TopUp().newInstance(1, array_two, new TopUp());
-                case 2:
-                    return new TopUp().newInstance(0, array_three, new TopUp());
-                case 3:
-                    return new TopUp().newInstance(0, array_fulltalk, new TopUp());
-                case 4:
-                    return new TopUp().newInstance(0, array_sms, new TopUp());
-                case 5:
-                    return new TopUp().newInstance(0, array_std, new TopUp());
-                case 6:
-                    return new TopUp().newInstance(0, array_roaming, new TopUp());
-
-                default:
-                    break;
-            }
-            return null;
-        }
-
-        @Override
-        public int getCount() {
-            return 7;
-        }
-
-
-        @Override
-        public boolean isViewFromObject(View view, Object object) {
-            if (object != null) {
-                return ((Fragment) object).getView() == view;
-            } else {
-                return false;
-            }
-        }
-
-        @Override
-        public CharSequence getPageTitle(final int position) {
-            switch (position) {
-                case 0:
-                    return "Top Up";
-                case 1:
-                    return "2G Data";
-                case 2:
-                    return "3G/4G Data";
-                case 3:
-                    return "Full Talktime";
-                case 4:
-                    return "SMS Packs";
-                case 5:
-                    return "Local/ISD Calls";
-                case 6:
-                    return "Roaming";
-                default:
-                    break;
-            }
-            return null;
-        }
+    @Override
+    public void onBackPressed() {
+        finish();
     }
 }

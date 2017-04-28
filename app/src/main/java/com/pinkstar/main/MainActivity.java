@@ -103,7 +103,7 @@ public class MainActivity extends Activity {
         FirebaseMessaging.getInstance().subscribeToTopic("PinkStar");
         token = FirebaseInstanceId.getInstance().getToken();
 
-        Log.e("token", token);
+        Log.e("token","abc"+ token);
 
         if (!SaveSharedPreference.gethomefirst(MainActivity.this).equals("1")) {
             dialog();

@@ -72,20 +72,7 @@ public class TopUp extends Fragment {
         adapter = new BrawseAdapter(getActivity(), title);
         list.setAdapter(adapter);
 
-        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (Operater.type.equals("prepaid") || Operater.type.equals("postpaid")) {
-                    amount = title.get(position).get("amount");
 
-                } else if (Operater.type.equals("datacard")) {
-                    amount1 = title.get(position).get("amount");
-                }
-
-                getActivity().finish();
-
-            }
-        });
 
 
         return view;

@@ -15,8 +15,8 @@
         android:gravity="center_vertical"
         android:text="Total Stars:"
         android:textColor="@color/black"
-        android:textSize="20sp"
-        android:textStyle="bold" />
+        android:textSize="16sp"
+        android:textStyle="normal" />
 
 
     <TextView
@@ -27,7 +27,7 @@
         android:layout_weight="0.3"
         android:gravity="right|center"
         android:paddingRight="10dp"
-        android:text="200"
+        android:text=""
         android:textColor="@color/input_hint"
         android:textSize="18sp"
         android:textStyle="normal" />

@@ -2,8 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@color/white"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context="com.pinkstar.main.Operater">
 
     <TextView
@@ -11,22 +11,40 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@color/colorpink"
-        android:text="Operators"
-        android:textStyle="bold"
+        android:gravity="center"
+        android:text="Select Operator"
         android:textColor="@color/white"
-        android:textSize="22dp"
-        android:gravity="center"/>
+        android:textSize="18dp"
+        android:textStyle="bold" />
 
 
-    <ExpandableListView
+    <GridView
         android:id="@+id/expend"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/head"
-        android:layout_marginBottom="0dp">
+        android:layout_margin="10dp"
+        android:layout_marginBottom="0dp"
+        android:horizontalSpacing="5dp"
+        android:numColumns="3"
+        android:scrollbars="none"
+        android:verticalSpacing="5dp">
 
-    </ExpandableListView>
+    </GridView>
 
+    <ListView
+        android:id="@+id/list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/head"
+        android:layout_margin="10dp"
+        android:divider="@color/gray"
+        android:dividerHeight="1dp"
+        android:scrollbars="none"
+        android:verticalSpacing="5dp"
+        android:visibility="gone">
+
+    </ListView>
     <!--<ImageView
         android:id="@+id/star_img"
         android:layout_width="60dp"

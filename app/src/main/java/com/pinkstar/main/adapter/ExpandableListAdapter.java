@@ -1,102 +1,67 @@
 package com.pinkstar.main.adapter;
 
+/**
+ * Created by sudhir on 5/5/2016.
+ */
+
+import android.app.Activity;
 import android.content.Context;
-import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseExpandableListAdapter;
+import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.pinkstar.main.R;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
-public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
-    private Context context;
-    private List<String> expandableListTitle;
-    private HashMap<String, ArrayList<String>> expandableListDetail;
+public class ExpandableListAdapter extends BaseAdapter {
 
-    public ExpandableListAdapter(Context context, List<String> expandableListTitle,
-                                 HashMap<String, ArrayList<String>> expandableListDetail) {
-        this.context = context;
-        this.expandableListTitle = expandableListTitle;
-        this.expandableListDetail = expandableListDetail;
+    Context c;
+    ArrayList<HashMap<String, String>> map;
+
+    public ExpandableListAdapter(Context context, ArrayList<HashMap<String, String>> map) {
+
+        super();
+        this.c = context;
+        this.map = map;
+
+
     }
 
     @Override
-    public Object getChild(int listPosition, int expandedListPosition) {
-        return this.expandableListDetail.get(this.expandableListTitle.get(listPosition))
-                .get(expandedListPosition);
+    public int getCount() {
+        return map.size();
     }
 
     @Override
-    public long getChildId(int listPosition, int expandedListPosition) {
-        return expandedListPosition;
+    public Object getItem(int position) {
+        return map.get(position);
     }
 
     @Override
-    public View getChildView(int listPosition, final int expandedListPosition,
-                             boolean isLastChild, View convertView, ViewGroup parent) {
-        final String expandedListText = (String) getChild(listPosition, expandedListPosition);
-        if (convertView == null) {
-            LayoutInflater layoutInflater = (LayoutInflater) this.context
-                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = layoutInflater.inflate(R.layout.child_raw, null);
-        }
-        TextView expandedListTextView = (TextView) convertView
-                .findViewById(R.id.grp_child);
-        expandedListTextView.setText(expandedListText);
-        return convertView;
+    public long getItemId(int position) {
+        return 0;
     }
 
     @Override
-    public int getChildrenCount(int listPosition) {
-        return this.expandableListDetail.get(this.expandableListTitle.get(listPosition))
-                .size();
-    }
+    public View getView(int position, View convertView, ViewGroup parent) {
 
-    @Override
-    public Object getGroup(int listPosition) {
-        return this.expandableListTitle.get(listPosition);
-    }
+        LayoutInflater inflater = ((Activity) c).getLayoutInflater();
+        View row = inflater.inflate(R.layout.child_raw, parent, false);
+        TextView city = (TextView) row.findViewById(R.id.txt_optname);
+        ImageView icon = (ImageView) row.findViewById(R.id.opt_image);
 
-    @Override
-    public int getGroupCount() {
-        return this.expandableListTitle.size();
-    }
+        city.setText(map.get(position).get("name"));
+        //count.setText(map.get(position).get("citycount"));
+        icon.setImageResource(Integer.parseInt(map.get(position).get("image")));
 
-    @Override
-    public long getGroupId(int listPosition) {
-        return listPosition;
-    }
 
-    @Override
-    public View getGroupView(int listPosition, boolean isExpanded,
-                             View convertView, ViewGroup parent) {
-        String listTitle = (String) getGroup(listPosition);
-        if (convertView == null) {
-            LayoutInflater layoutInflater = (LayoutInflater) this.context.
-                    getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = layoutInflater.inflate(R.layout.group, null);
-        }
-        TextView listTitleTextView = (TextView) convertView
-                .findViewById(R.id.row_name);
-        listTitleTextView.setTypeface(null, Typeface.BOLD);
-        listTitleTextView.setText(listTitle);
-        return convertView;
-    }
+        return row;
 
-    @Override
-    public boolean hasStableIds() {
-        return false;
-    }
-
-    @Override
-    public boolean isChildSelectable(int listPosition, int expandedListPosition) {
-        return true;
     }
 }

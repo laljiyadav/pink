@@ -50,7 +50,7 @@ public class BrawseAdapter extends BaseAdapter {
         final TextView plan = (TextView) convertView.findViewById(R.id.br_plan);
         final TextView descri = (TextView) convertView.findViewById(R.id.bro_descr);
 
-        talk.setText(citynearArrayList.get(position).get("amount"));
+        talk.setText(context.getResources().getString(R.string.rs)+" "+citynearArrayList.get(position).get("amount"));
         validity.setText(citynearArrayList.get(position).get("validity"));
         plan.setText(context.getResources().getString(R.string.rs)+" "+citynearArrayList.get(position).get("amount"));
         descri.setText(citynearArrayList.get(position).get("detail"));

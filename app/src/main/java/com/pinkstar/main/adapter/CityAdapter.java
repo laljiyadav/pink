@@ -55,7 +55,7 @@ public class CityAdapter extends BaseAdapter {
         TextView count = (TextView) row.findViewById(R.id.txt_count);
 
         city.setText(map.get(position).get("city"));
-        count.setText(map.get(position).get("citycount"));
+        //count.setText(map.get(position).get("citycount"));
 
 
 

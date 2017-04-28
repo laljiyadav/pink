@@ -30,6 +30,7 @@ import com.pinkstar.main.data.SaveSharedPreference;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -43,11 +44,12 @@ public class ThreeFragment extends Fragment {
     LinearLayout data_plan;
     ImageView data_contact;
     EditText data_mobile;
-    TextView operator, data_amount;
+    public static TextView operator, data_amount;
     private static final int REQUEST_CODE = 1;
-    String type = "prepaid", operator_code = "", circle_code = "", operator_name_code = "";
+    String type = "prepaid", operator_name_code = "";
+    public static String operator_code = "", circle_code = "";
     Button date_pro;
-    String amount, mobile, opeator_name,url=Apis.Base;
+    String amount, mobile, opeator_name, url = Apis.Base;
     JSONObject json;
 
 
@@ -111,20 +113,6 @@ public class ThreeFragment extends Fragment {
             }
         });
 
-        /*data_plan.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent in = new Intent(getActivity(), Browser_plas.class);
-                if(circle_code.equals("")) {
-                    Dialogs.showCenterToast(getActivity(),"Select Operator");
-                }
-                else {
-                    in.putExtra("circle", circle_code);
-                    in.putExtra("operator", operator_code);
-                    startActivity(in);
-                }
-            }
-        });*/
 
         date_pro.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -143,7 +131,7 @@ public class ThreeFragment extends Fragment {
                 }
 
                 if (mobile.equals("")) {
-                    data_mobile.setError("Enter Datacard Number");
+                    Dialogs.showCenterToast(getActivity(), "Enter Datacard Number");
 
                 } else if (amount.equals("")) {
                     Dialogs.showCenterToast(getActivity(), "Enter Amount");
@@ -162,6 +150,50 @@ public class ThreeFragment extends Fragment {
         });
 
         return view;
+    }
+
+    public static void setText(String opera, String circle) {
+
+        String operator_name = "";
+        String circle_name = "";
+        circle_code = circle;
+        operator_code = opera;
+
+        try {
+            JSONObject object = new JSONObject(Apis.Oprator);
+            JSONArray json = object.getJSONArray("Operator");
+
+            JSONArray jsonArray = object.getJSONArray("Circle");
+
+
+            for (int i = 0; i < jsonArray.length(); i++) {
+
+                if (jsonArray.getJSONObject(i).getString("Code").equals(circle)) {
+                    circle_name = jsonArray.getJSONObject(i).getString("Operator");
+                    break;
+                }
+
+
+            }
+
+            for (int i = 0; i < json.length(); i++) {
+
+                if (json.getJSONObject(i).getString("Code").equals(opera)) {
+                    operator_name = json.getJSONObject(i).getString("Operator");
+                    break;
+                }
+
+
+            }
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e("exp", e.toString());
+        }
+
+
+        operator.setText(operator_name + "-" + circle_name);
     }
 
 
@@ -255,13 +287,6 @@ public class ThreeFragment extends Fragment {
         super.onResume();
         Log.e("pause", "resume3");
 
-        if (Operater.type.equals("datacard")) {
-            operator.setText(Operater.operator_name1);
-            operator_code = Operater.operator_code1;
-            circle_code = Operater.circle_code1;
-            operator_name_code = Operater.operator_name_code1;
-            data_amount.setText(TopUp.amount1);
-        }
     }
 
 }
