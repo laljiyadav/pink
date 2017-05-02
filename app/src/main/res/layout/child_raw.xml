@@ -23,7 +23,6 @@
             android:layout_gravity="center"
             android:layout_marginTop="20dp"
             android:adjustViewBounds="true"
-            android:background="@drawable/anniversary"
             android:scaleType="fitXY" />
 
         <TextView
@@ -35,7 +34,7 @@
             android:layout_marginTop="20dp"
             android:gravity="center"
             android:lines="1"
-            android:text="My Profile"
+            android:text=""
             android:textColor="@color/black"
             android:textSize="14sp" />
 

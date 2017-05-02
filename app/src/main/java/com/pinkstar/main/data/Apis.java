@@ -13,6 +13,246 @@ public class Apis {
     public static final String Opt_data = Base + "rquest=circle_list&operator=datacard";
     public static final String Opt_dth = Base + "rquest=circle_list&operator=dth";
 
+
+    public static final String json_error = "[\n" +
+            "  {\n" +
+            "    \"Code\": \"Error0\",\n" +
+            "    \"Message\": \"Recharge successfully completed.\"\n" +
+            "  },\n" +
+            "  {\n" +
+            "    \"Code\": \" Error1\",\n" +
+            "    \"Message\": \"Session with this number already exists.\"\n" +
+            "  },\n" +
+            "  {\n" +
+            "    \"Code\": \" Error2\",\n" +
+            "    \"Message\": \"Invalid Dealer code.\"\n" +
+            "  },\n" +
+            "  {\n" +
+            "    \"Code\": \" Error 3\",\n" +
+            "    \"Message\": \"Invalid acceptance outlet code.\"\n" +
+            "  },\n" +
+            "  {\n" +
+            "    \"Code\": \" Error 4\",\n" +
+            "    \"Message\": \"Invalid Operator code.\"\n" +
+            "  },\n" +
+            "  {\n" +
+            "    \"Code\": \" Error 5\",\n" +
+            "    \"Message\": \"Invalid session code format.\"\n" +
+            "  },\n" +
+            "  {\n" +
+            "    \"Code\": \" Error 6\",\n" +
+            "    \"Message\": \"Invalid EDS.\"\n" +
+            "  },\n" +
+            "  {\n" +
+            "    \"Code\": \" Error 7\",\n" +
+            "    \"Message\": \"Invalid amount format or amount value is out of admissible range.\"\n" +
+            "  },\n" +
+            "  {\n" +
+            "    \"Code\": \" Error 8\",\n" +
+            "    \"Message\": \"Invalid phone number format.\"\n" +
+            "  },\n" +
+            "  {\n" +
+            "    \"Code\": \" Error 9\",\n" +
+            "    \"Message\": \"Invalid format of personal account number.\"\n" +
+            "  },\n" +
+            "  {\n" +
+            "    \"Code\": \" Error 10\",\n" +
+            "    \"Message\": \"Invalid request message format.\"\n" +
+            "  },\n" +
+            "  {\n" +
+            "    \"Code\": \" Error 11\",\n" +
+            "    \"Message\": \"Session with such a number does not exist.\"\n" +
+            "  },\n" +
+            "  {\n" +
+            "    \"Code\": \" Error 12\",\n" +
+            "    \"Message\": \"The request is made from an unregistered IP.\"\n" +
+            "  },\n" +
+            "  {\n" +
+            "    \"Code\": \" Error 13\",\n" +
+            "    \"Message\": \"The outlet is not registered with the Service Provider.\"\n" +
+            "  },\n" +
+            "  {\n" +
+            "    \"Code\": \" Error 15\",\n" +
+            "    \"Message\": \"Payments to the benefit of this operator are not supported by the system.\"\n" +
+            "  },\n" +
+            "  {\n" +
+            "    \"Code\": \" Error 17\",\n" +
+            "    \"Message\": \"The phone number does not match the previously entered number.\"\n" +
+            "  },\n" +
+            "  {\n" +
+            "    \"Code\": \" Error 18\",\n" +
+            "    \"Message\": \"The payment amount does not match the previously entered amount.\"\n" +
+            "  },\n" +
+            "  {\n" +
+            "    \"Code\": \" Error 19\",\n" +
+            "    \"Message\": \"The account (contract) number does not match the previously entered number.\"\n" +
+            "  },\n" +
+            "  {\n" +
+            "    \"Code\": \" Error 20\",\n" +
+            "    \"Message\": \"The payment is being completed.\"\n" +
+            "  },\n" +
+            "  {\n" +
+            "    \"Code\": \" Error 21\",\n" +
+            "    \"Message\": \"Not enough funds for effecting the payment.\"\n" +
+            "  },\n" +
+            "  {\n" +
+            "    \"Code\": \" Error 22\",\n" +
+            "    \"Message\": \"The payment has not been accepted. Funds transfer error.\"\n" +
+            "  },\n" +
+            "  {\n" +
+            "    \"Code\": \" Error 23\",\n" +
+            "    \"Message\": \"Invalid phone (account) number.\"\n" +
+            "  },\n" +
+            "  {\n" +
+            "    \"Code\": \" Error 24\",\n" +
+            "    \"Message\": \"Error of connection with the provider’s server or a routine break in CyberPlat®.\"\n" +
+            "  },\n" +
+            "  {\n" +
+            "    \"Code\": \" Error 25\",\n" +
+            "    \"Message\": \"Effecting of this type of payments is suspended.\"\n" +
+            "  },\n" +
+            "  {\n" +
+            "    \"Code\": \" Error 26\",\n" +
+            "    \"Message\": \"Payments of this Dealer are temporarily blocked\"\n" +
+            "  },\n" +
+            "  {\n" +
+            "    \"Code\": \" Error 27\",\n" +
+            "    \"Message\": \"Operations with this account are suspended\"\n" +
+            "  },\n" +
+            "  {\n" +
+            "    \"Code\": \" Error 30\",\n" +
+            "    \"Message\": \"General system failure.\"\n" +
+            "  },\n" +
+            "  {\n" +
+            "    \"Code\": \" Error 31\",\n" +
+            "    \"Message\": \"Exceeded number of simultaneously processed requests (CyberPlat®).\"\n" +
+            "  },\n" +
+            "  {\n" +
+            "    \"Code\": \" Error 32\",\n" +
+            "    \"Message\": \"Repeated payment within 60 minutes from the end of payment effecting process\"\n" +
+            "  },\n" +
+            "  {\n" +
+            "    \"Code\": \" Error 33\",\n" +
+            "    \"Message\": \"This denomination is applicable in <Flexi OR Special> category\"\n" +
+            "  },\n" +
+            "  {\n" +
+            "    \"Code\": \" Error 34\",\n" +
+            "    \"Message\": \"Transaction with such number could not be found.\"\n" +
+            "  },\n" +
+            "  {\n" +
+            "    \"Code\": \" Error 35\",\n" +
+            "    \"Message\": \"Payment status alteration error.\"\n" +
+            "  },\n" +
+            "  {\n" +
+            "    \"Code\": \" Error 36\",\n" +
+            "    \"Message\": \"Invalid payment status.\"\n" +
+            "  },\n" +
+            "  {\n" +
+            "    \"Code\": \" Error 37\",\n" +
+            "    \"Message\": \"An attempt of referring to the gateway that is different from the gateway at the previous\"\n" +
+            "  },\n" +
+            "  {\n" +
+            "    \"Code\": \" Error 38\",\n" +
+            "    \"Message\": \"Invalid date. The effective period of the payment may have expired.\"\n" +
+            "  },\n" +
+            "  {\n" +
+            "    \"Code\": \" Error 39\",\n" +
+            "    \"Message\": \"Invalid account number.\"\n" +
+            "  },\n" +
+            "  {\n" +
+            "    \"Code\": \" Error 40\",\n" +
+            "    \"Message\": \"The card of the specified value is not registered in the system\"\n" +
+            "  },\n" +
+            "  {\n" +
+            "    \"Code\": \" Error 41\",\n" +
+            "    \"Message\": \"Error in saving the payment in the system.\"\n" +
+            "  },\n" +
+            "  {\n" +
+            "    \"Code\": \" Error 42\",\n" +
+            "    \"Message\": \"Error in saving the receipt to the database.\"\n" +
+            "  },\n" +
+            "  {\n" +
+            "    \"Code\": \" Error 43\",\n" +
+            "    \"Message\": \"Your working session in the system is invalid (the duration of the session may have expired), try to re-enter.\"\n" +
+            "  },\n" +
+            "  {\n" +
+            "    \"Code\": \" Error 44\",\n" +
+            "    \"Message\": \"The Client cannot operate on this trading server.\"\n" +
+            "  },\n" +
+            "  {\n" +
+            "    \"Code\": \" Error 45\",\n" +
+            "    \"Message\": \"No license is available for accepting payments to the benefit of this operator.\"\n" +
+            "  },\n" +
+            "  {\n" +
+            "    \"Code\": \" Error 46\",\n" +
+            "    \"Message\": \"Could not complete the erroneous payment.\"\n" +
+            "  },\n" +
+            "  {\n" +
+            "    \"Code\": \" Error 47\",\n" +
+            "    \"Message\": \"Time limitation of access rights has been activated.\"\n" +
+            "  },\n" +
+            "  {\n" +
+            "    \"Code\": \" Error 48\",\n" +
+            "    \"Message\": \"Error in saving the session data to the database.\"\n" +
+            "  },\n" +
+            "  {\n" +
+            "    \"Code\": \" Error 50\",\n" +
+            "    \"Message\": \"Effecting payments in the system is temporarily impossible.\"\n" +
+            "  },\n" +
+            "  {\n" +
+            "    \"Code\": \" Error 51\",\n" +
+            "    \"Message\": \"Data are not found in the system.\"\n" +
+            "  },\n" +
+            "  {\n" +
+            "    \"Code\": \" Error 52\",\n" +
+            "    \"Message\": \"The Dealer may be blocked. The Dealer’s current status does not allow effecting payments\"\n" +
+            "  },\n" +
+            "  {\n" +
+            "    \"Code\": \" Error 53\",\n" +
+            "    \"Message\": \"The Acceptance Outlet may be blocked. The Acceptance Outlet’s current status does not allow effecting payments.\"\n" +
+            "  },\n" +
+            "  {\n" +
+            "    \"Code\": \" Error 54\",\n" +
+            "    \"Message\": \"The Operator may be blocked. The Operator’s current status does not allow effecting payments. (OP code not activated)\"\n" +
+            "  },\n" +
+            "  {\n" +
+            "    \"Code\": \" Error 55\",\n" +
+            "    \"Message\": \"The Dealer Type does not allow effecting payments.\"\n" +
+            "  },\n" +
+            "  {\n" +
+            "    \"Code\": \" Error 56\",\n" +
+            "    \"Message\": \"An Acceptance Outlet of another type was expected. This Acceptance Outlet type does not allow effecting payments.\"\n" +
+            "  },\n" +
+            "  {\n" +
+            "    \"Code\": \" Error 57\",\n" +
+            "    \"Message\": \"An Operator of another type was expected. This Operator type does not allow effecting payments\"\n" +
+            "  },\n" +
+            "  {\n" +
+            "    \"Code\": \" Error 81\",\n" +
+            "    \"Message\": \"Exceeded the maximum payment amount.\"\n" +
+            "  },\n" +
+            "  {\n" +
+            "    \"Code\": \" Error 82\",\n" +
+            "    \"Message\": \"Daily debit amount has been exceeded.\"\n" +
+            "  },\n" +
+            "  {\n" +
+            "    \"Code\": \" Error 88\",\n" +
+            "    \"Message\": \"Duplicate Recharge\"\n" +
+            "  },\n" +
+            "  {\n" +
+            "    \"Code\": \" Error 134\",\n" +
+            "    \"Message\": \"Wrong keys or Be sure using Production Keys\"\n" +
+            "  },\n" +
+            "  {\n" +
+            "    \"Code\": \" Error 137\",\n" +
+            "    \"Message\": \"wrong key or passphrase\"\n" +
+            "  },\n" +
+            "  {\n" +
+            "    \"Code\": \" Error 224\",\n" +
+            "    \"Message\": \"Operator Server Down\"\n" +
+            "  }\n" +
+            "]\n";
+
     public static final String Oprator = "{\n" +
             "\"Operator\":[\n" +
             "{\"Code\":\"28\",\"Operator\":\"AIRTEL\"},\n" +
@@ -25,11 +265,11 @@ public class Apis {
             "{\"Code\":\"12\",\"Operator\":\"RELAINCE CDMA\"},\n" +
             "{\"Code\":\"10\",\"Operator\":\"MTS\"},\n" +
             "{\"Code\":\"19\",\"Operator\":\"UNINOR\"},\n" +
-            "{\"Code\":\"9\",\"Operator\":\"LOOP\"},\n" +
+           // "{\"Code\":\"9\",\"Operator\":\"LOOP\"},\n" +
             "{\"Code\":\"5\",\"Operator\":\"VIDEOCON\"},\n" +
             "{\"Code\":\"6\",\"Operator\":\"MTNL MUMBAI\"},\n" +
             "{\"Code\":\"20\",\"Operator\":\"MTNL DELHI\"},\n" +
-            "{\"Code\":\"0\",\"Operator\":\"NONE\"},\n" +
+            //"{\"Code\":\"0\",\"Operator\":\"NONE\"},\n" +
             "{\"Code\":\"8\",\"Operator\":\"IDEA\"},\n" +
             "{\"Code\":\"29\",\"Operator\":\"JIO\"}\n" +
             "],\n" +

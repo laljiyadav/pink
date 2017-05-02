@@ -104,6 +104,7 @@ public class OneFragment extends Fragment implements View.OnClickListener {
         btn_proceed.setOnClickListener(this);
 
 
+
         mob_mobile.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -365,14 +366,27 @@ public class OneFragment extends Fragment implements View.OnClickListener {
             Dialogs.dismissDialog();
 
             try {
-                if (json.getString("uData").equals("1")) {
 
-                    Dialogs.showCenterToast(getActivity(), "Recharge Successfully");
+                String result = json.getString("result");
+                JSONObject object = new JSONObject(result);
+                String error = object.getString("message").replace(":", "").replace(" ", "");
+                Log.e("error", error);
+                String msg = "";
 
-                } else {
-                    Dialogs.showCenterToast(getActivity(), "Server Error");
+                JSONArray jso_error = new JSONArray(Apis.json_error);
+
+                for (int i = 0; i < jso_error.length(); i++) {
+
+                    if (jso_error.getJSONObject(i).getString("Code").replace(" ", "").equals(error)) {
+                        msg = jso_error.getJSONObject(i).getString("Message");
+                        break;
+                    }
+
 
                 }
+
+                Dialogs.showCenterToast(getActivity(), msg);
+
 
             } catch (Exception e) {
                 e.printStackTrace();

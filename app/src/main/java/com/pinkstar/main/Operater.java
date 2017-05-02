@@ -9,6 +9,7 @@ import android.widget.AdapterView;
 import android.widget.ExpandableListView;
 import android.widget.GridView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.pinkstar.main.adapter.CityAdapter;
@@ -36,10 +37,11 @@ public class Operater extends Activity {
     ArrayList<HashMap<String, String>> oprators_list = new ArrayList<HashMap<String, String>>();
     ArrayList<HashMap<String, String>> circle_list = new ArrayList<HashMap<String, String>>();
     String opt_code, circle_code;
+    TextView txt_head;
     String type;
     int images[] = {R.drawable.vodafone, R.drawable.aircel, R.drawable.bsnl, R.drawable.airtel, R.drawable.docomo,
-            R.drawable.tata, R.drawable.rel_cdma, R.drawable.rele_cdma, R.drawable.mts, R.drawable.uninor, R.drawable.loop,
-            R.drawable.videocon, R.drawable.mtnl, R.drawable.mtnl, R.drawable.airtel, R.drawable.idea, R.drawable.jio};
+            R.drawable.tata, R.drawable.rel_cdma, R.drawable.rele_cdma, R.drawable.mts, R.drawable.uninor,
+            R.drawable.videocon, R.drawable.mtnl, R.drawable.mtnl, R.drawable.idea, R.drawable.jio};
 
 
     @Override
@@ -49,6 +51,7 @@ public class Operater extends Activity {
         setContentView(R.layout.activity_operater);
         listView = (GridView) findViewById(R.id.expend);
         list = (ListView) findViewById(R.id.list);
+        txt_head = (TextView) findViewById(R.id.head);
 
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
@@ -86,7 +89,7 @@ public class Operater extends Activity {
 
                     list.setVisibility(View.VISIBLE);
                     listView.setVisibility(View.GONE);
-
+                    txt_head.setText("Select Area");
                     opt_code = oprators_list.get(position).get("code");
                     Log.e("value", "" + list.getVisibility());
 
@@ -150,6 +153,7 @@ public class Operater extends Activity {
         if (list.getVisibility() == View.VISIBLE) {
             listView.setVisibility(View.VISIBLE);
             list.setVisibility(View.GONE);
+            txt_head.setText("Select Operator");
         } else {
             finish();
         }
