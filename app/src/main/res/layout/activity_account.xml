@@ -11,11 +11,12 @@
 
     <ImageView
         android:id="@+id/image"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_marginTop="10dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_centerHorizontal="true"
-        android:background="@drawable/star" />
+        android:layout_marginTop="10dp"
+        android:background="@drawable/star"
+        android:visibility="gone" />
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
@@ -57,8 +58,11 @@
                     android:layout_gravity="center|bottom"
                     android:layout_marginBottom="5dp"
                     android:layout_marginTop="5dp"
-                    android:gravity="center"
+                    android:gravity="center|top"
                     android:lines="2"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:paddingTop="5dp"
                     android:text="My Profile"
                     android:textColor="@color/black"
                     android:textSize="16sp" />
@@ -89,8 +93,11 @@
                     android:layout_gravity="center"
                     android:layout_marginBottom="5dp"
                     android:layout_marginTop="5dp"
-                    android:gravity="center"
+                    android:gravity="center|top"
                     android:lines="2"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:paddingTop="5dp"
                     android:text="My Order"
                     android:textColor="@color/black"
                     android:textSize="16sp"
@@ -122,8 +129,11 @@
                     android:layout_gravity="center|bottom"
                     android:layout_marginBottom="5dp"
                     android:layout_marginTop="5dp"
-                    android:gravity="center"
+                    android:gravity="center|top"
                     android:lines="2"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:paddingTop="5dp"
                     android:text="Send Stars"
                     android:textColor="@color/black"
                     android:textSize="16sp"
@@ -165,8 +175,11 @@
                     android:layout_gravity="center|bottom"
                     android:layout_marginBottom="5dp"
                     android:layout_marginTop="5dp"
-                    android:gravity="center"
+                    android:gravity="center|top"
                     android:lines="2"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:paddingTop="5dp"
                     android:text="Change Password"
                     android:textColor="@color/black"
                     android:textSize="16sp"
@@ -198,8 +211,11 @@
                     android:layout_gravity="center"
                     android:layout_marginBottom="5dp"
                     android:layout_marginTop="5dp"
-                    android:gravity="center"
+                    android:gravity="center|top"
                     android:lines="2"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:paddingTop="5dp"
                     android:text="Invite Friend"
                     android:textColor="@color/black"
                     android:textSize="16sp"
@@ -232,8 +248,11 @@
                     android:layout_gravity="center|bottom"
                     android:layout_marginBottom="5dp"
                     android:layout_marginTop="5dp"
-                    android:gravity="center"
+                    android:gravity="center|top"
                     android:lines="2"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:paddingTop="5dp"
                     android:text="Share With WhatsApp"
                     android:textColor="@color/black"
                     android:textSize="16sp"
@@ -263,8 +282,8 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     android:layout_gravity="center"
                     android:adjustViewBounds="true"
                     android:background="@drawable/logout"
@@ -276,9 +295,12 @@
                     android:layout_gravity="center"
                     android:layout_marginBottom="5dp"
                     android:layout_marginTop="5dp"
-                    android:gravity="center"
+                    android:gravity="center|top"
                     android:lines="2"
-                    android:text="Logout"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:paddingTop="5dp"
+                    android:text="Contact Us"
                     android:textColor="@color/black"
                     android:textSize="16sp"
                     android:textStyle="normal" />
@@ -287,18 +309,18 @@
 
 
             <LinearLayout
-                android:id="@+id/lin_rate"
+                android:id="@+id/lin_noti"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="center|left"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:orientation="vertical"
-                android:visibility="invisible">
+                android:visibility="visible">
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     android:layout_gravity="center"
                     android:adjustViewBounds="true"
                     android:background="@drawable/sendstar"
@@ -310,9 +332,12 @@
                     android:layout_gravity="center|bottom"
                     android:layout_marginBottom="5dp"
                     android:layout_marginTop="5dp"
-                    android:gravity="center"
+                    android:gravity="center|top"
                     android:lines="2"
-                    android:text="Rate Us"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:paddingTop="5dp"
+                    android:text="Notification"
                     android:textColor="@color/black"
                     android:textSize="16sp"
                     android:textStyle="normal" />
@@ -330,8 +355,8 @@
                 android:visibility="invisible">
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     android:layout_gravity="center"
                     android:adjustViewBounds="true"
                     android:background="@drawable/anniversary"
@@ -343,9 +368,12 @@
                     android:layout_gravity="center|bottom"
                     android:layout_marginBottom="5dp"
                     android:layout_marginTop="5dp"
-                    android:gravity="center"
+                    android:gravity="center|top"
                     android:lines="2"
-                    android:text="About Us"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:paddingTop="5dp"
+                    android:text="Notification"
                     android:textColor="@color/black"
                     android:textSize="16sp"
                     android:textStyle="normal" />
@@ -370,7 +398,8 @@
         android:clickable="true"
         android:padding="5dp"
         android:scaleType="fitCenter"
-        android:src="@drawable/star" />
+        android:src="@drawable/star"
+        android:visibility="gone" />
 
 
 </RelativeLayout>

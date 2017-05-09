@@ -58,7 +58,7 @@ import java.util.Calendar;
 public class Profile extends Activity implements View.OnClickListener {
 
     ToggleButton toggleButton;
-    TextView txt_gender, txt_birth, txt_annversary, txt_save;
+    TextView txt_gender, txt_birth, txt_annversary, txt_save, txt_logout;
     ImageView profileimage;
     private DatePickerDialog fromDatePickerDialog, fromDatePickerDialog1;
     private SimpleDateFormat dateFormatter;
@@ -89,6 +89,7 @@ public class Profile extends Activity implements View.OnClickListener {
         txt_gender = (TextView) findViewById(R.id.txt_gender);
         txt_annversary = (TextView) findViewById(R.id.txt_anneversary);
         txt_save = (TextView) findViewById(R.id.txt_save);
+        txt_logout = (TextView) findViewById(R.id.txt_logout);
         profileimage = (ImageView) findViewById(R.id.img);
         txt_birth = (TextView) findViewById(R.id.txt_birth);
         et_number = (EditText) findViewById(R.id.ed_number);
@@ -107,6 +108,7 @@ public class Profile extends Activity implements View.OnClickListener {
         txt_save.setOnClickListener(this);
         txt_annversary.setOnClickListener(this);
         profileimage.setOnClickListener(this);
+        txt_logout.setOnClickListener(this);
         setDateTimeField();
         setDateTimeField1();
 
@@ -119,10 +121,10 @@ public class Profile extends Activity implements View.OnClickListener {
             txt_gender.setText("Male");
         }
 
-        if(!SaveSharedPreference.getBirth(Profile.this).equalsIgnoreCase("0000-00-00")) {
+        if (!SaveSharedPreference.getBirth(Profile.this).equalsIgnoreCase("0000-00-00")) {
             txt_birth.setText(SaveSharedPreference.getBirth(Profile.this));
         }
-        if(!SaveSharedPreference.getAnnversary(Profile.this).equalsIgnoreCase("0000-00-00")) {
+        if (!SaveSharedPreference.getAnnversary(Profile.this).equalsIgnoreCase("0000-00-00")) {
             txt_annversary.setText(SaveSharedPreference.getAnnversary(Profile.this));
         }
 
@@ -221,6 +223,10 @@ public class Profile extends Activity implements View.OnClickListener {
             }
 
 
+        }
+        if (v == txt_logout) {
+
+            new AttempLogout().execute();
         }
 
 
@@ -344,7 +350,7 @@ public class Profile extends Activity implements View.OnClickListener {
                 json = perser.getJSONFromUrl(url, nameValuePairs);
                 udata = json.getString("uData");
 
-                Log.e("json",""+json);
+                Log.e("json", "" + json);
 
 
             } catch (Exception e) {
@@ -556,5 +562,63 @@ public class Profile extends Activity implements View.OnClickListener {
         }
     }
 
+    private class AttempLogout extends AsyncTask<Void, Integer, String> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+            Dialogs.showProDialog(Profile.this, "Wait...");
+        }
+
+        @Override
+        protected String doInBackground(Void... params) {
+
+            ArrayList<NameValuePair> strBuilder = new ArrayList<NameValuePair>();
+            strBuilder.add(new BasicNameValuePair("token_id", SaveSharedPreference.getUSERAuth(Profile.this)));
+            strBuilder.add(new BasicNameValuePair("rquest", "logout"));
+            strBuilder.add(new BasicNameValuePair("mobile", SaveSharedPreference.getMobile(Profile.this)));
+            strBuilder.add(new BasicNameValuePair("api_token", Apis.Api_Token));
+
+
+            // Create an array
+            Parser perser = new Parser();
+            json = perser.getJSONFromUrl(url, strBuilder);
+
+            Log.e("url", "" + strBuilder.toString());
+            try {
+
+                udata = json.getString("uData");
+
+
+            } catch (Exception e) {
+                Log.e("Log_Exception", e.toString());
+
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String args) {
+            Dialogs.dismissDialog();
+
+            if (udata.equals("6")) {
+                startActivity(new Intent(Profile.this, Mobile.class));
+                SaveSharedPreference.setUserID(Profile.this, "");
+                SaveSharedPreference.setfirst(Profile.this, "");
+                SaveSharedPreference.setLastName(Profile.this, "");
+                SaveSharedPreference.setUserIMAGE(Profile.this, "");
+                SaveSharedPreference.setUserEMAIL(Profile.this, "");
+                SaveSharedPreference.setBirth(Profile.this, "");
+                SaveSharedPreference.setAnnversary(Profile.this, "");
+                SaveSharedPreference.setUSERAuth(Profile.this, "");
+                SaveSharedPreference.setGender(Profile.this, "");
+
+            } else {
+                Dialogs.showCenterToast(Profile.this, "Try Again");
+            }
+
+        }
+    }
 
 }

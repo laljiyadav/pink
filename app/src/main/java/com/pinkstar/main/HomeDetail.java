@@ -198,12 +198,12 @@ public class HomeDetail extends Activity implements View.OnClickListener {
             strBuilder.add(new BasicNameValuePair("vendor_id", unique_id));
             strBuilder.add(new BasicNameValuePair("mobile", SaveSharedPreference.getMobile(HomeDetail.this)));
 
-
+            try {
             // Create an array
             Parser perser = new Parser();
             json = perser.getJSONFromUrl(url, strBuilder);
             Log.e("json", "" + json);
-            try {
+
 
                 udata = json.getString("uData");
                 obj = json.getJSONObject("result");

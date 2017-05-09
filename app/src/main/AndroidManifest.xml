@@ -51,7 +51,7 @@
             android:name=".MainActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Redeem"
+            android:name=".Notifition"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ChangePassword"
@@ -154,7 +154,8 @@
 
         <activity android:name=".OfferDetail" />
         <activity android:name=".MarkerActivity" />
-        <activity android:name=".WebView_Activity"></activity>
+        <activity android:name=".WebView_Activity" />
+        <activity android:name=".Contact_Us"></activity>
     </application>
 
 </manifest>

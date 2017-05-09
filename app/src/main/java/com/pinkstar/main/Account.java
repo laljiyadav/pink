@@ -26,7 +26,7 @@ import java.util.ArrayList;
 public class Account extends Activity implements View.OnClickListener {
 
     LinearLayout ac_profile, ac_order, ac_stars, ac_change, ac_invite, ac_share;
-    LinearLayout logout;
+    LinearLayout contact_us,lin_notification;
     JSONObject json;
     String url = Apis.Base, udata;
     ImageView star_img;
@@ -46,7 +46,8 @@ public class Account extends Activity implements View.OnClickListener {
         ac_change = (LinearLayout) findViewById(R.id.lin_change);
         ac_invite = (LinearLayout) findViewById(R.id.lin_invite);
         ac_share = (LinearLayout) findViewById(R.id.lin_what);
-        logout = (LinearLayout) findViewById(R.id.lin_logout);
+        contact_us = (LinearLayout) findViewById(R.id.lin_logout);
+        lin_notification = (LinearLayout) findViewById(R.id.lin_noti);
         star_img = (ImageView) findViewById(R.id.star_img);
 
 
@@ -56,7 +57,8 @@ public class Account extends Activity implements View.OnClickListener {
         ac_change.setOnClickListener(this);
         ac_invite.setOnClickListener(this);
         ac_share.setOnClickListener(this);
-        logout.setOnClickListener(this);
+        contact_us.setOnClickListener(this);
+        lin_notification.setOnClickListener(this);
         star_img.setOnClickListener(this);
 
         Dialogs.Touch(Account.this, star_img);
@@ -102,10 +104,15 @@ public class Account extends Activity implements View.OnClickListener {
             }
 
         }
-        if (v == logout) {
-            new AttempLogout().execute();
+        if (v == contact_us) {
+            startActivity(new Intent(Account.this, Contact_Us.class));
 
         }
+        if (v == lin_notification) {
+            startActivity(new Intent(Account.this, Notifition.class));
+
+        }
+
 
         if (v == star_img) {
             Dialogs.star_dialog(Account.this);
@@ -114,54 +121,5 @@ public class Account extends Activity implements View.OnClickListener {
 
     }
 
-    private class AttempLogout extends AsyncTask<Void, Integer, String> {
 
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-
-            Dialogs.showProDialog(Account.this, "Wait...");
-        }
-
-        @Override
-        protected String doInBackground(Void... params) {
-
-            ArrayList<NameValuePair> strBuilder = new ArrayList<NameValuePair>();
-            strBuilder.add(new BasicNameValuePair("token_id", SaveSharedPreference.getUSERAuth(Account.this)));
-            strBuilder.add(new BasicNameValuePair("rquest", "logout"));
-            strBuilder.add(new BasicNameValuePair("mobile", SaveSharedPreference.getMobile(Account.this)));
-            strBuilder.add(new BasicNameValuePair("api_token", Apis.Api_Token));
-
-
-            // Create an array
-            Parser perser = new Parser();
-            json = perser.getJSONFromUrl(url, strBuilder);
-
-            Log.e("url", "" + strBuilder.toString());
-            try {
-
-                udata = json.getString("uData");
-
-
-            } catch (Exception e) {
-                Log.e("Log_Exception", e.toString());
-
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(String args) {
-            Dialogs.dismissDialog();
-
-            if (udata.equals("6")) {
-                startActivity(new Intent(Account.this, Mobile.class));
-                SaveSharedPreference.setUserID(Account.this, "");
-
-            } else {
-                Dialogs.showCenterToast(Account.this, "Try Again");
-            }
-
-        }
-    }
 }

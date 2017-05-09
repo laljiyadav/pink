@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/black"
+        android:orientation="horizontal">
+
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/multiply" />
+
+        <TextView
+            android:id="@+id/tool"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:gravity="center_vertical"
+            android:paddingLeft="20dp"
+            android:text="Rating"
+            android:textColor="@color/white"
+            android:textSize="18dp"
+            android:textStyle="normal" />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/ratingBar"
+        android:layout_marginTop="40dp"
+        android:gravity="center"
+        android:text="Excellent"
+        android:textColor="@color/black"
+        android:textSize="18dp"
+        android:textStyle="normal" />
+
+    <RatingBar
+        android:id="@+id/ratingBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center"
+        android:layout_marginTop="30dp"
+        android:backgroundTint="@color/black"
+        android:progressBackgroundTint="@color/black"
+        android:scaleX="1"
+        android:scaleY="1"
+        android:stepSize="0.5" />
+
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:background="@color/black"
+        android:text="submit"
+        android:textColor="@color/white"
+        android:textSize="18sp" />
+
+
+</RelativeLayout>
