@@ -55,7 +55,7 @@ public class OneFragment extends Fragment implements View.OnClickListener {
     String type = "prepaid", operator_name_code = "", request = "recharge_prepaid", num;
     String url = Apis.Base, amount, mobile, opera;
     public static String operator_code = "", circle_code = "";
-    JSONObject json;
+    JSONObject json,jsonObject;
 
 
     public OneFragment() {
@@ -346,9 +346,9 @@ public class OneFragment extends Fragment implements View.OnClickListener {
 
             try {
                 Parser perser = new Parser();
-                json = perser.getJSONFromUrl(url, builder);
+                jsonObject = perser.getJSONFromUrl(url, builder);
                 Log.e("Json_list", "" + url + builder.toString());
-                Log.e("json", "" + json);
+                Log.e("jsonobj", "" + jsonObject);
 
 
             } catch (Exception e) {
@@ -367,29 +367,89 @@ public class OneFragment extends Fragment implements View.OnClickListener {
 
             try {
 
-                String result = json.getString("result");
-                JSONObject object = new JSONObject(result);
-                String error = object.getString("message").replace(":", "").replace(" ", "");
-                Log.e("error", error);
-                String msg = "";
+                if(jsonObject.getJSONObject("uData").equals("1")) {
 
-                JSONArray jso_error = new JSONArray(Apis.json_error);
+                    String result = jsonObject.getString("result");
+                    JSONObject object = new JSONObject(result);
+                    String error = object.getString("message").replace("\r", "").replace(" ", "");
+                    Log.e("error", error);
+                    String msg = "Recharge successfully";
 
-                for (int i = 0; i < jso_error.length(); i++) {
+                   /* JSONArray jso_error = new JSONArray(Apis.json_error);
 
-                    if (jso_error.getJSONObject(i).getString("Code").replace(" ", "").equals(error)) {
-                        msg = jso_error.getJSONObject(i).getString("Message");
-                        break;
+                    for (int i = 0; i < jso_error.length(); i++) {
+
+                        if (jso_error.getJSONObject(i).getString("Code").replace(" ", "").equals(error)) {
+                            msg = jso_error.getJSONObject(i).getString("Message");
+                            Log.e("errormsg", msg);
+                            break;
+                        }
+
+
+                    }*/
+                    Dialogs.showCenterToast(getActivity(), msg);
+                }
+                else if(jsonObject.getJSONObject("uData").equals("2")) {
+                    String result = jsonObject.getString("result");
+                    JSONObject object = new JSONObject(result);
+                    String error = object.getString("message").replace("\r", "").replace(" ", "");
+                    Log.e("error", error);
+                    String msg = "Recharge successfully";
+
+                   /* JSONArray jso_error = new JSONArray(Apis.json_error);
+
+                    for (int i = 0; i < jso_error.length(); i++) {
+
+                        if (jso_error.getJSONObject(i).getString("Code").replace(" ", "").equals(error)) {
+                            msg = jso_error.getJSONObject(i).getString("Message");
+                            Log.e("errormsg", msg);
+                            break;
+                        }
+
+
+                    }*/
+                    Dialogs.showCenterToast(getActivity(), msg);
+                }
+                else if(jsonObject.getJSONObject("uData").equals("-1")) {
+                    String result = jsonObject.getString("result");
+                    JSONObject object = new JSONObject(result);
+                    String error = object.getString("message").replace("\r", "").replace(" ", "");
+                    Log.e("error", error);
+                    String msg = "Recharge successfully";
+
+
+                    Dialogs.showCenterToast(getActivity(), error);
+                }
+                else {
+
+                    String result = jsonObject.getString("result");
+                    JSONObject object = new JSONObject(result);
+                    String error = object.getString("message").replace("\r", "").replace(" ", "");
+                    Log.e("error", error);
+                    String msg = "Recharge successfully";
+
+                    JSONArray jso_error = new JSONArray(Apis.json_error);
+
+                    for (int i = 0; i < jso_error.length(); i++) {
+
+                        if (jso_error.getJSONObject(i).getString("Code").replace(" ", "").equals(error)) {
+                            msg = jso_error.getJSONObject(i).getString("Message");
+                            Log.e("errormsg", msg);
+                            break;
+                        }
+
+
                     }
-
+                    Dialogs.showCenterToast(getActivity(), msg);
 
                 }
 
-                Dialogs.showCenterToast(getActivity(), msg);
+
 
 
             } catch (Exception e) {
                 e.printStackTrace();
+                Log.e("exp", ""+e.toString());
             }
 
         }

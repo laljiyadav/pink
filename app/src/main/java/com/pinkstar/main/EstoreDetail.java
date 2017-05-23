@@ -62,6 +62,16 @@ public class EstoreDetail extends Activity {
         layout = (LinearLayout) findViewById(R.id.hide);
         img_pager = (ViewPager) findViewById(R.id.image_pager);
 
+        if (SaveSharedPreference.getAddress(EstoreDetail.this).contains(",")) {
+            String addre[] = SaveSharedPreference.getAddress(EstoreDetail.this).split(",");
+
+            ed_add.setText(addre[0]);
+            ed_add1.setText(addre[1]);
+            ed_city.setText(addre[2]);
+            ed_pin.setText(addre[3]);
+            ed_state.setText(addre[4]);
+        }
+
 
         id = getIntent().getExtras().getString("id");
 
@@ -172,12 +182,12 @@ public class EstoreDetail extends Activity {
     }
 
     public boolean valid() {
-        add1 = ed_add.getText().toString();
-        add2 = ed_add1.getText().toString();
-        city = ed_city.getText().toString();
-        pin = ed_pin.getText().toString();
-        state = ed_state.getText().toString();
-        country = ed_country.getText().toString();
+        add1 = ed_add.getText().toString().replace(",", "");
+        add2 = ed_add1.getText().toString().replace(",", "");
+        city = ed_city.getText().toString().replace(",", "");
+        pin = ed_pin.getText().toString().replace(",", "");
+        state = ed_state.getText().toString().replace(",", "");
+        country = ed_country.getText().toString().replace(",", "");
 
         if (add1.equals("")) {
             ed_add.setError("Enter Address");
@@ -227,7 +237,7 @@ public class EstoreDetail extends Activity {
             nameValuePairs.add(new BasicNameValuePair("api_token", Apis.Api_Token));
             nameValuePairs.add(new BasicNameValuePair("product_cost", price));
             nameValuePairs.add(new BasicNameValuePair("product_quantity", "1"));
-            nameValuePairs.add(new BasicNameValuePair("address", add1 + " " + add2 + " " + city + " " + pin + " " + state));
+            nameValuePairs.add(new BasicNameValuePair("address", add1 + "," + add2 + "," + city + "," + pin + "," + state));
             nameValuePairs.add(new BasicNameValuePair("contact_number", country));
 
             Log.e("Log_tag", "" + nameValuePairs);
@@ -236,7 +246,7 @@ public class EstoreDetail extends Activity {
             Parser perser = new Parser();
             json = perser.getJSONFromUrl(url, nameValuePairs);
 
-            Log.e("log",""+json);
+            Log.e("log", "" + json);
             try {
 
                 udata = json.getString("uData");
@@ -254,6 +264,8 @@ public class EstoreDetail extends Activity {
             Dialogs.dismissDialog();
             try {
                 if (udata.equals("1")) {
+
+                    SaveSharedPreference.setAddress(EstoreDetail.this, add1 + "," + add2 + "," + city + "," + pin + "," + state);
                     Dialogs.showCenterToast(EstoreDetail.this, json.getJSONObject("result").getString("message"));
                     SaveSharedPreference.setBalStar(EstoreDetail.this, json.getJSONObject("star").getString("redeemable_star"));
                     SaveSharedPreference.setTotal(EstoreDetail.this, json.getJSONObject("star").getString("balance_star"));

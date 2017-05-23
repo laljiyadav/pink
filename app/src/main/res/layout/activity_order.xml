@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -11,23 +12,34 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@color/colorpink"
+        android:gravity="center"
         android:text="My Order"
-        android:textStyle="bold"
         android:textColor="@color/white"
         android:textSize="20dp"
-        android:gravity="center"/>
+        android:textStyle="bold" />
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tabs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tool"
+        style="@style/AppTabLayout"
+        app:tabTextAppearance="@style/AppTabTextAppearance"
+        app:tabGravity="fill"
+        app:tabMode="fixed" />
 
 
     <ListView
         android:id="@+id/order_list"
         android:layout_width="match_parent"
-        android:layout_below="@+id/tool"
-        android:divider="@color/gray"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/tabs"
         android:layout_marginLeft="10dp"
-        android:scrollbars="none"
         android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:divider="@color/gray"
         android:dividerHeight="1dp"
-        android:layout_height="match_parent"></ListView>
+        android:scrollbars="none"></ListView>
 
 
     <ImageView
@@ -38,11 +50,11 @@
         android:layout_alignParentLeft="true"
         android:layout_marginBottom="10dp"
         android:layout_marginLeft="10dp"
-        android:padding="5dp"
         android:adjustViewBounds="true"
-        android:scaleType="fitCenter"
         android:background="@drawable/radio"
         android:clickable="true"
+        android:padding="5dp"
+        android:scaleType="fitCenter"
         android:src="@drawable/star" />
 
 </RelativeLayout>

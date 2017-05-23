@@ -5,7 +5,8 @@ package com.pinkstar.main.data;
  */
 public class Apis {
     //public static final String Base = "http://ec2-54-169-93-225.ap-southeast-1.compute.amazonaws.com/api_old/restservices.php?";
-    public static final String Base = "http://pinkstarapp.com/api_old/restservices.php?";
+    public static final String Base = "http://pinkstarapp.com/vasu/restservices.php?";
+    //public static final String Base = "http://pinkstarapp.com/api_old/restservices.php?";
     public static final String Api_Token = "1f3870be274f6c49b3e31a0c6728957f";
     public static final String Token_id = "33452b6faa70d52accb77f77f371b525";
     public static final String Opt_pre = Base + "rquest=circle_list&operator=prepaid";
@@ -16,15 +17,15 @@ public class Apis {
 
     public static final String json_error = "[\n" +
             "  {\n" +
-            "    \"Code\": \"Error0\",\n" +
+            "    \"Code\": \"Error 0\",\n" +
             "    \"Message\": \"Recharge successfully completed.\"\n" +
             "  },\n" +
             "  {\n" +
-            "    \"Code\": \" Error1\",\n" +
+            "    \"Code\": \" Error 1\",\n" +
             "    \"Message\": \"Session with this number already exists.\"\n" +
             "  },\n" +
             "  {\n" +
-            "    \"Code\": \" Error2\",\n" +
+            "    \"Code\": \" Error 2\",\n" +
             "    \"Message\": \"Invalid Dealer code.\"\n" +
             "  },\n" +
             "  {\n" +
@@ -128,7 +129,7 @@ public class Apis {
             "    \"Message\": \"Exceeded number of simultaneously processed requests (CyberPlat®).\"\n" +
             "  },\n" +
             "  {\n" +
-            "    \"Code\": \" Error 32\",\n" +
+            "    \"Code\": \"Error 32\",\n" +
             "    \"Message\": \"Repeated payment within 60 minutes from the end of payment effecting process\"\n" +
             "  },\n" +
             "  {\n" +
@@ -255,23 +256,22 @@ public class Apis {
 
     public static final String Oprator = "{\n" +
             "\"Operator\":[\n" +
-            "{\"Code\":\"28\",\"Operator\":\"AIRTEL\"},\n" +
-            "{\"Code\":\"1\",\"Operator\":\"AIRCEL\"},\n" +
-            "{\"Code\":\"3\",\"Operator\":\"BSNL\"},\n" +
-            "{\"Code\":\"22\",\"Operator\":\"VODAFONE\"},\n" +
-            "{\"Code\":\"17\",\"Operator\":\"TATA DOCOMO GSM\"},\n" +
-            "{\"Code\":\"18\",\"Operator\":\"TATA DOCOMO CDMA\"},\n" +
-            "{\"Code\":\"13\",\"Operator\":\"RELIANCE GSM\"},\n" +
-            "{\"Code\":\"12\",\"Operator\":\"RELAINCE CDMA\"},\n" +
-            "{\"Code\":\"10\",\"Operator\":\"MTS\"},\n" +
-            "{\"Code\":\"19\",\"Operator\":\"UNINOR\"},\n" +
-           // "{\"Code\":\"9\",\"Operator\":\"LOOP\"},\n" +
-            "{\"Code\":\"5\",\"Operator\":\"VIDEOCON\"},\n" +
-            "{\"Code\":\"6\",\"Operator\":\"MTNL MUMBAI\"},\n" +
-            "{\"Code\":\"20\",\"Operator\":\"MTNL DELHI\"},\n" +
-            //"{\"Code\":\"0\",\"Operator\":\"NONE\"},\n" +
-            "{\"Code\":\"8\",\"Operator\":\"IDEA\"},\n" +
-            "{\"Code\":\"29\",\"Operator\":\"JIO\"}\n" +
+            "{\"Code\":\"28\",\"Operator\":\"AIRTEL\",\"image\":\"http://pinkstarapp.com/uploads/images/oprator-icon/airtel.jpg\"},\n" +
+            "{\"Code\":\"1\",\"Operator\":\"AIRCEL\",\"image\":\"http://pinkstarapp.com/uploads/images/oprator-icon/aircel.png\"},\n" +
+            "{\"Code\":\"3\",\"Operator\":\"BSNL\",\"image\":\"http://pinkstarapp.com/uploads/images/oprator-icon/bsnl.jpg\"},\n" +
+            "{\"Code\":\"22\",\"Operator\":\"VODAFONE\",\"image\":\"http://pinkstarapp.com/uploads/images/oprator-icon/vodafone.png\"},\n" +
+            "{\"Code\":\"17\",\"Operator\":\"TATA DOCOMO GSM\",\"image\":\"http://pinkstarapp.com/uploads/images/oprator-icon/docomo.png\"},\n" +
+            "{\"Code\":\"18\",\"Operator\":\"TATA DOCOMO CDMA\",\"image\":\"http://pinkstarapp.com/uploads/images/oprator-icon/tata.png\"},\n" +
+            "{\"Code\":\"13\",\"Operator\":\"RELIANCE GSM\",\"image\":\"http://pinkstarapp.com/uploads/images/oprator-icon/rel_gsm.png\"},\n" +
+            "{\"Code\":\"12\",\"Operator\":\"RELAINCE CDMA\",\"image\":\"http://pinkstarapp.com/uploads/images/oprator-icon/rele_cdma.png\"},\n" +
+            "{\"Code\":\"10\",\"Operator\":\"MTS\",\"image\":\"http://pinkstarapp.com/uploads/images/oprator-icon/mts.jpg\"},\n" +
+            "{\"Code\":\"19\",\"Operator\":\"UNINOR\",\"image\":\"http://pinkstarapp.com/uploads/images/oprator-icon/uninor.png\"},\n" +
+            "{\"Code\":\"9\",\"Operator\":\"LOOP\",\"image\":\"http://pinkstarapp.com/uploads/images/oprator-icon/loop.jpg\"},\n" +
+            "{\"Code\":\"5\",\"Operator\":\"VIDEOCON\",\"image\":\"http://pinkstarapp.com/uploads/images/oprator-icon/videocon.png\"},\n" +
+            "{\"Code\":\"6\",\"Operator\":\"MTNL MUMBAI\",\"image\":\"http://pinkstarapp.com/uploads/images/oprator-icon/mtnl.jpg\"},\n" +
+            "{\"Code\":\"20\",\"Operator\":\"MTNL DELHI\",\"image\":\"http://pinkstarapp.com/uploads/images/oprator-icon/mtnl.jpg\"},\n" +
+            "{\"Code\":\"8\",\"Operator\":\"IDEA\",\"image\":\"http://pinkstarapp.com/uploads/images/oprator-icon/idea.jpg\"},\n" +
+            "{\"Code\":\"29\",\"Operator\":\"JIO\",\"image\":\"http://pinkstarapp.com/uploads/images/oprator-icon/jio.jpg\"}\n" +
             "],\n" +
             "\"Circle\":[\n" +
             "{\"Code\":\"5\",\"Operator\":\"Andhra Pradesh\"},\n" +

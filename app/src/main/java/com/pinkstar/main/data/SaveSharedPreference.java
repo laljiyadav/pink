@@ -27,6 +27,7 @@ public class SaveSharedPreference {
     static final String Gender = "gender";
     static final String first = "first";
     static final String second = "second";
+    static final String address = "address";
 
 
     static SharedPreferences getSharedPreferences(Context ctx) {
@@ -182,6 +183,17 @@ public class SaveSharedPreference {
 
     public static String gethomefirst(Context ctx) {
         return getSharedPreferences(ctx).getString(second, "");
+    }
+
+
+    public static void setAddress(Context ctx, String place) {
+        Editor editor = getSharedPreferences(ctx).edit();
+        editor.putString(address, place);
+        editor.commit();
+    }
+
+    public static String getAddress(Context ctx) {
+        return getSharedPreferences(ctx).getString(address, "");
     }
 
 

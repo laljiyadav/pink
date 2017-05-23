@@ -28,12 +28,12 @@ import java.util.HashMap;
 /**
  * Created by Rskaushik on 07-06-2016.
  */
-public class OrderAdapter extends BaseAdapter {
+public class OrderListAdapter extends BaseAdapter {
     ArrayList<HashMap<String, String>> citynearArrayList;
     Context context;
     GPSTracker gpsTracker;
 
-    public OrderAdapter(Context context, ArrayList<HashMap<String, String>> citynearArrayList) {
+    public OrderListAdapter(Context context, ArrayList<HashMap<String, String>> citynearArrayList) {
         this.context = context;
         this.citynearArrayList = citynearArrayList;
         gpsTracker = new GPSTracker(context);
@@ -72,23 +72,16 @@ public class OrderAdapter extends BaseAdapter {
 
         order_number.setText("Order No-" + citynearArrayList.get(position).get("orderid"));
         descri.setText(citynearArrayList.get(position).get("name"));
+        payment.setText(citynearArrayList.get(position).get("order_status"));
 
-        if(citynearArrayList.get(position).get("order_status").equals("0"))
-        {
-            payment.setText("Your Order is successful");
-
-        }
-        else {
-            payment.setText("Payment Failed");
-        }
 
         Picasso.with(context)
                 .load(citynearArrayList.get(position).get("image"))
-                .into(img,  new com.squareup.picasso.Callback() {
+                .into(img, new com.squareup.picasso.Callback() {
                     @Override
                     public void onSuccess() {
                         if (progress != null) {
-                            progress .setVisibility(View.GONE);
+                            progress.setVisibility(View.GONE);
                         }
                     }
 
@@ -104,8 +97,8 @@ public class OrderAdapter extends BaseAdapter {
     }
 
 
-    public static String parseDateToddMMyyyy(String time) {
-        String inputPattern = "dd.MM.yyyy HH:mm:ss";
+    public String parseDateToddMMyyyy(String time) {
+        String inputPattern = "yyyy-MM-dd HH:mm:ss";
         String outputPattern = "EEE dd MMM yyyy h:mm a";
         SimpleDateFormat inputFormat = new SimpleDateFormat(inputPattern);
         SimpleDateFormat outputFormat = new SimpleDateFormat(outputPattern);
@@ -121,7 +114,6 @@ public class OrderAdapter extends BaseAdapter {
         }
         return str;
     }
-
 
 
 }
