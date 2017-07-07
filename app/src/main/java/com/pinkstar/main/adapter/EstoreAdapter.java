@@ -68,7 +68,7 @@ public class EstoreAdapter extends PagerAdapter {
         txtname = (TextView) itemView.findViewById(R.id.listname);
         imgflag = (ImageView) itemView.findViewById(R.id.imagelist);
 
-        String re = context.getResources().getString(R.string.rs);
+        String re = context.getResources().getString(R.string.rs) + " ";
 
         // Capture position and set to the TextViews
         txtfirst.setText(re + map.get(position).get("price"));

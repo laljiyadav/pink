@@ -262,8 +262,8 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
 
                 // Adding all the points in the route to LineOptions
                 lineOptions.addAll(points);
-                lineOptions.width(30);
-                lineOptions.color(Color.RED);
+                lineOptions.width(4);
+                lineOptions.color(Color.BLUE);
 
             }
 

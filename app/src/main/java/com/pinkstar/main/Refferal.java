@@ -88,6 +88,7 @@ public class Refferal extends Activity {
             public void onClick(View v) {
                 Intent in=new Intent(Refferal.this,MainActivity.class);
                 startActivity(in);
+                finish();
             }
         });
     }
@@ -144,6 +145,7 @@ public class Refferal extends Activity {
 
                 }
                 startActivity(new Intent(Refferal.this, MainActivity.class));
+                finish();
             } else if (udata.equals("8")) {
                 try {
                     Dialogs.showCenterToast(Refferal.this, json.getJSONObject("result").getString("message"));

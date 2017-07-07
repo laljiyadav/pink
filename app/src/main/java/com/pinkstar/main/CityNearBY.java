@@ -85,6 +85,7 @@ public class CityNearBY extends AppCompatActivity {
                 in.putExtra("company", venderList.get(position).get("company_display_name"));
                 in.putExtra("img_array", venderList.get(position).get("img_array"));
                 in.putExtra("unique_id", venderList.get(position).get("unique_id"));
+                in.putExtra("amount", venderList.get(position).get("discount_amount"));
 
                 startActivity(in);
             }
@@ -128,7 +129,7 @@ public class CityNearBY extends AppCompatActivity {
         star_img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Dialogs.star_dialog(CityNearBY.this);
+                Dialogs.star_dialog(CityNearBY.this,true);
             }
         });
         Dialogs.Touch(CityNearBY.this, star_img);

@@ -73,7 +73,7 @@ public class Recharge extends FragmentActivity {
         star_img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Dialogs.star_dialog(Recharge.this);
+                Dialogs.star_dialog(Recharge.this,true);
             }
         });
 

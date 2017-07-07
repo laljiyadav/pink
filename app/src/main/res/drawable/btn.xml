@@ -1,20 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?>
-<shape xmlns:android="http://schemas.android.com/apk/res/android"
-    android:shape="rectangle">
+<layer-list
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <corners
+    <item android:drawable="@drawable/shadow"/>
+    <item
+        android:drawable="@drawable/blue_rectangle_btn"
+        android:bottom="6px" />
 
-        android:radius="30dp"/>
-
-
-    <solid android:color="@color/colorpink" />
-
-    <padding
-        android:bottom="0dp"
-        android:left="0dp"
-        android:right="0dp"
-        android:top="0dp" />
-
-
-
-</shape>    
+</layer-list>

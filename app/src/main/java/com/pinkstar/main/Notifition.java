@@ -51,7 +51,7 @@ public class Notifition extends Activity {
         star_img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Dialogs.star_dialog(Notifition.this);
+                Dialogs.star_dialog(Notifition.this,true);
             }
         });
         Dialogs.Touch(Notifition.this, star_img);

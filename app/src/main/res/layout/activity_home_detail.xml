@@ -29,6 +29,7 @@
 
                     ></android.support.v4.view.ViewPager>
 
+
                 <me.relex.circleindicator.CircleIndicator
                     android:id="@+id/indicator"
                     android:layout_width="match_parent"
@@ -62,7 +63,7 @@
                 android:singleLine="true"
                 android:text=""
                 android:textColor="@color/colorpink"
-                android:textSize="20sp" />
+                android:textSize="@dimen/largetext" />
 
             <TextView
                 android:id="@+id/de_add"
@@ -75,7 +76,7 @@
                 android:singleLine="true"
                 android:text=""
                 android:textColor="@color/input_hint"
-                android:textSize="16sp" />
+                android:textSize="@dimen/smalltext" />
 
 
             <LinearLayout
@@ -88,14 +89,15 @@
                 <Button
                     android:id="@+id/route"
                     android:layout_width="0dp"
-                    android:layout_height="match_parent"
+                    android:layout_height="40dp"
                     android:layout_weight="1"
                     android:background="@drawable/blue"
                     android:drawableLeft="@drawable/route"
-                    android:gravity="center"
+                    android:drawablePadding="10dp"
+                    android:gravity="center_vertical"
                     android:paddingLeft="10dp"
                     android:text="Directions"
-                    android:textAllCaps="false"
+                    android:textAllCaps="true"
                     android:textColor="@color/white"
                     android:textSize="16sp"
                     android:textStyle="normal" />
@@ -104,15 +106,16 @@
                 <Button
                     android:id="@+id/phn"
                     android:layout_width="0dp"
-                    android:layout_height="match_parent"
+                    android:layout_height="40dp"
                     android:layout_marginLeft="10dp"
                     android:layout_weight="1"
                     android:background="@drawable/green"
                     android:drawableLeft="@drawable/w_phn"
-                    android:gravity="center"
+                    android:drawablePadding="10dp"
+                    android:gravity="center_vertical"
                     android:paddingLeft="10dp"
                     android:text="Call"
-                    android:textAllCaps="false"
+                    android:textAllCaps="true"
                     android:textColor="@color/white"
                     android:textSize="16sp" />
 
@@ -138,11 +141,11 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:layout_marginRight="30dp"
                     android:gravity="center_vertical"
                     android:text="RATING"
-                    android:layout_marginRight="30dp"
                     android:textColor="@color/input_hint"
-                    android:textSize="16sp"
+                    android:textSize="@dimen/smalltext"
                     android:textStyle="normal" />
 
 
@@ -189,7 +192,7 @@
                     android:gravity="center_vertical"
                     android:text="OPEN TIMING"
                     android:textColor="#76E067"
-                    android:textSize="16sp"
+                    android:textSize="@dimen/smalltext"
                     android:textStyle="normal" />
 
 
@@ -203,7 +206,7 @@
                     android:paddingRight="5dp"
                     android:text=""
                     android:textColor="@color/black"
-                    android:textSize="16sp"
+                    android:textSize="@dimen/smalltext"
                     android:textStyle="normal" />
 
             </LinearLayout>
@@ -242,7 +245,7 @@
                     android:gravity="center_vertical"
                     android:text=""
                     android:textColor="@color/black"
-                    android:textSize="16sp"
+                    android:textSize="@dimen/smalltext"
                     android:textStyle="normal" />
 
                 <TextView
@@ -262,7 +265,7 @@
                     android:gravity="center_vertical"
                     android:text=""
                     android:textColor="@color/black"
-                    android:textSize="16sp"
+                    android:textSize="@dimen/smalltext"
                     android:textStyle="normal" />
 
                 <TextView
@@ -282,7 +285,7 @@
                     android:gravity="center_vertical"
                     android:text=""
                     android:textColor="@color/black"
-                    android:textSize="16sp"
+                    android:textSize="@dimen/smalltext"
                     android:textStyle="normal" />
 
 
@@ -303,7 +306,7 @@
                     android:gravity="center_vertical"
                     android:text=""
                     android:textColor="@color/black"
-                    android:textSize="16sp"
+                    android:textSize="@dimen/smalltext"
                     android:textStyle="normal" />
 
 
@@ -325,7 +328,7 @@
                     android:gravity="center_vertical"
                     android:text=""
                     android:textColor="@color/black"
-                    android:textSize="16sp"
+                    android:textSize="@dimen/smalltext"
                     android:textStyle="normal" />
 
 

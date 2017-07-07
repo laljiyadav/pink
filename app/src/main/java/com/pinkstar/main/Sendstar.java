@@ -60,7 +60,7 @@ public class Sendstar extends Activity implements View.OnClickListener {
         star_img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Dialogs.star_dialog(Sendstar.this);
+                Dialogs.star_dialog(Sendstar.this,true);
             }
         });
 

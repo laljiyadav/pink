@@ -75,7 +75,7 @@ public class NearBy extends AppCompatActivity {
         star_img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Dialogs.star_dialog(NearBy.this);
+                Dialogs.star_dialog(NearBy.this,true);
             }
         });
         Dialogs.Touch(NearBy.this, star_img);
@@ -87,6 +87,7 @@ public class NearBy extends AppCompatActivity {
                 in.putExtra("company", venderList.get(position).get("company_display_name"));
                 in.putExtra("img_array", venderList.get(position).get("img_array"));
                 in.putExtra("unique_id", venderList.get(position).get("unique_id"));
+                in.putExtra("amount", venderList.get(position).get("discount_amount"));
 
                 startActivity(in);
             }

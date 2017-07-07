@@ -14,7 +14,7 @@
             android:layout_height="match_parent"
             android:layout_marginTop="30dp"
             android:adjustViewBounds="true"
-            android:scaleType="fitXY" />
+            android:scaleType="centerInside" />
 
         <ProgressBar
             android:id="@+id/progressBar"
@@ -42,7 +42,7 @@
                 android:text="Small Text"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textColor="@color/white"
-                android:textSize="18sp" />
+                android:textSize="@dimen/smalltext" />
 
             <TextView
                 android:id="@+id/kilo"
@@ -57,14 +57,14 @@
                 android:text="60Km"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="@color/white"
-                android:textSize="18sp" />
+                android:textSize="@dimen/smalltext" />
 
         </LinearLayout>
 
         <TextView
             android:id="@+id/listname"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="30dp"
             android:layout_gravity="center_horizontal|bottom"
             android:layout_marginBottom="0dp"
             android:background="#50000000"
@@ -76,7 +76,7 @@
             android:text="Medium Text"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="@color/white"
-            android:textSize="22sp" />
+            android:textSize="@dimen/largetext" />
 
     </FrameLayout>
 

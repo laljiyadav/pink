@@ -55,13 +55,13 @@ public class HomeDetail extends Activity implements View.OnClickListener {
     TextView tx_company, tx_address, tx_address1, tx_cash, tx_type, tx_cost, tc_contact, tx_time;
     RatingBar rating;
     ArrayList<HashMap<String, String>> offerList = new ArrayList<HashMap<String, String>>();
-    String company, img_array, unique_id, udata, url = Apis.Base, phn_number;
+    String company, img_array, udata, url = Apis.Base, phn_number;
     OfferAdapter offerAdapter;
     private Handler mHandler;
     Runnable runnable;
     int position;
     JSONObject json, obj;
-    double lat, lang, lat_user, long_user;
+    public static double lat, lang, lat_user, long_user;
     Button phn, route;
     Handler mHandler2;
     int position1 = 0;
@@ -70,8 +70,9 @@ public class HomeDetail extends Activity implements View.OnClickListener {
     GPSTracker gpsTracker;
     Location location;
     ImageView tap_imageView;
-    String star_type, dis_amount;
+    public static String star_type, dis_amount, unique_id,print,max_star;
     TextView txt_upload;
+    public static ImageView imageView;
 
 
     @Override
@@ -106,6 +107,7 @@ public class HomeDetail extends Activity implements View.OnClickListener {
         phn = (Button) findViewById(R.id.phn);
         bill_img = (ImageView) findViewById(R.id.bill_img);
 
+
         if (!SaveSharedPreference.getfirst(HomeDetail.this).equals("1")) {
             dialog();
         }
@@ -113,6 +115,7 @@ public class HomeDetail extends Activity implements View.OnClickListener {
         bill_img.setColorFilter(getResources().getColor(R.color.white), PorterDuff.Mode.SRC_ATOP);
 
         unique_id = getIntent().getExtras().getString("unique_id");
+        dis_amount=getIntent().getExtras().getString("amount");
 
 
         new AttempDetails().execute();
@@ -170,11 +173,12 @@ public class HomeDetail extends Activity implements View.OnClickListener {
         }
 
         if (v == bill_img) {
-            Intent in = new Intent(HomeDetail.this, CameraActivity.class);
-            in.putExtra("type", star_type);
+            Intent in = new Intent(HomeDetail.this, CameraNew.class);
+            in.putExtra("type", "1");
             in.putExtra("amount", dis_amount);
             in.putExtra("id", unique_id);
             in.putExtra("print", tx_type.getText().toString());
+            print=tx_type.getText().toString();
             startActivity(in);
         }
     }
@@ -199,10 +203,10 @@ public class HomeDetail extends Activity implements View.OnClickListener {
             strBuilder.add(new BasicNameValuePair("mobile", SaveSharedPreference.getMobile(HomeDetail.this)));
 
             try {
-            // Create an array
-            Parser perser = new Parser();
-            json = perser.getJSONFromUrl(url, strBuilder);
-            Log.e("json", "" + json);
+                // Create an array
+                Parser perser = new Parser();
+                json = perser.getJSONFromUrl(url, strBuilder);
+                Log.e("json", "" + json);
 
 
                 udata = json.getString("uData");
@@ -232,11 +236,11 @@ public class HomeDetail extends Activity implements View.OnClickListener {
                     tx_cost.setText(obj.getString("meal2") + " : Meal for two(approx)");
                     tc_contact.setText(obj.getString("phone"));
                     phn_number = obj.getString("phone");
-                    if (obj.has("type"))
-                        star_type = obj.getString("type");
+                    if (obj.has("bill_discount_type"))
+                        star_type = obj.getString("bill_discount_type");
                     rating.setRating(Float.valueOf(obj.getString("rating")));
-                    if (obj.has("vdiscount_amount"))
-                        dis_amount = obj.getString("vdiscount_amount");
+                    if (obj.has("maxstar"))
+                        max_star = obj.getString("maxstar");
                     lat = Double.parseDouble(obj.getString("lat"));
                     lang = Double.parseDouble(obj.getString("long"));
                     tx_company.setText(obj.getString("company_display_name"));
@@ -254,7 +258,8 @@ public class HomeDetail extends Activity implements View.OnClickListener {
                     } else {
 
                         bill_img.setEnabled(false);
-                        txt_upload.setText("You are so far at outlet");
+                        bill_img.setBackgroundResource(R.drawable.round1);
+                        txt_upload.setText("You are not at outlet");
                     }
 
                 }
@@ -280,7 +285,7 @@ public class HomeDetail extends Activity implements View.OnClickListener {
         super.onResume();  // Always call the superclass method first
 
         mHandler.postDelayed(runnable, 7000);
-        Log.e("encode", encodeString);
+        //Log.e("encode", encodeString);
         check();
 
     }

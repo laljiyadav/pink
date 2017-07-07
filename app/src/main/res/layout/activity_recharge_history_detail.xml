@@ -22,8 +22,8 @@
                 android:gravity="center"
                 android:text="Recharge History"
                 android:textColor="@color/white"
-                android:textSize="20dp"
-                android:textStyle="bold" />
+                android:textSize="@dimen/headertext"
+                android:textStyle="normal" />
 
 
             <TextView
@@ -37,8 +37,9 @@
                 android:paddingRight="5dp"
                 android:text="Order Number"
                 android:textColor="@color/black"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+                android:textSize="@dimen/largetext"
+
+                 />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -65,8 +66,8 @@
                         android:paddingLeft="5dp"
                         android:text="Order Number"
                         android:textColor="@color/black"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
+                        android:textSize="@dimen/largetext"
+                        android:textStyle="normal" />
 
                     <TextView
                         android:id="@+id/txt_order_number"
@@ -77,8 +78,8 @@
                         android:paddingLeft="5dp"
                         android:text="Order Number"
                         android:textColor="@color/black"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
+                        android:textSize="@dimen/largetext"
+                        android:textStyle="normal" />
 
                     <TextView
                         android:id="@+id/time_date"
@@ -89,7 +90,7 @@
                         android:paddingLeft="5dp"
                         android:text=""
                         android:textColor="@color/input_hint"
-                        android:textSize="14sp" />
+                        android:textSize="@dimen/smalltext" />
                 </LinearLayout>
 
 
@@ -111,8 +112,8 @@
                         android:paddingRight="5dp"
                         android:text="Amount"
                         android:textColor="@color/black"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
+                        android:textSize="@dimen/largetext"
+                        android:textStyle="normal" />
 
                     <TextView
                         android:id="@+id/txt_repee"
@@ -124,8 +125,8 @@
                         android:paddingRight="5dp"
                         android:text=""
                         android:textColor="@color/black"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
+                        android:textSize="@dimen/smalltext"
+                        android:textStyle="normal" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -183,8 +184,8 @@
                         android:paddingLeft="5dp"
                         android:text="Talktime"
                         android:textColor="@color/black"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
+                        android:textSize="@dimen/largetext"
+                        android:textStyle="normal" />
 
 
                 </LinearLayout>
@@ -210,7 +211,7 @@
                         android:padding="5dp"
                         android:text="Talktime"
                         android:textColor="@color/colorpink"
-                        android:textSize="16sp" />
+                        android:textSize="@dimen/largetext" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -223,7 +224,7 @@
                 android:paddingLeft="10dp"
                 android:text="Talktime"
                 android:textColor="@color/black"
-                android:textSize="16sp" />
+                android:textSize="@dimen/largetext" />
 
             <View
                 android:layout_width="match_parent"
@@ -242,7 +243,7 @@
                 android:paddingLeft="10dp"
                 android:text="In case of any queries/certifications"
                 android:textColor="@color/black"
-                android:textSize="16sp" />
+                android:textSize="@dimen/largetext" />
 
 
             <TextView
@@ -258,7 +259,7 @@
                 android:text="Phone-: +91-8571038063"
                 android:textColor="@color/colorAccent"
                 android:textColorHint="@color/black"
-                android:textSize="16sp" />
+                android:textSize="@dimen/largetext" />
 
             <TextView
                 android:id="@+id/txt_mail"
@@ -274,7 +275,7 @@
                 android:text="Email-: info@mysolutions4u.in"
                 android:textColor="@color/colorAccent"
                 android:textColorHint="@color/black"
-                android:textSize="16sp" />
+                android:textSize="@dimen/largetext" />
 
         </LinearLayout>
     </ScrollView>

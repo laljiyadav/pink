@@ -54,6 +54,7 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback {
     Animation a, a1;
     TextView gotit;
     ImageView imageView;
+    
 
 
     /**

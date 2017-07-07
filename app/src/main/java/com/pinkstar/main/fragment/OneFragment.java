@@ -369,10 +369,10 @@ public class OneFragment extends Fragment implements View.OnClickListener {
 
                 if(jsonObject.getJSONObject("uData").equals("1")) {
 
-                    String result = jsonObject.getString("result");
+                   /* String result = jsonObject.getString("result");
                     JSONObject object = new JSONObject(result);
                     String error = object.getString("message").replace("\r", "").replace(" ", "");
-                    Log.e("error", error);
+                    Log.e("error", error);*/
                     String msg = "Recharge successfully";
 
                    /* JSONArray jso_error = new JSONArray(Apis.json_error);
@@ -390,10 +390,10 @@ public class OneFragment extends Fragment implements View.OnClickListener {
                     Dialogs.showCenterToast(getActivity(), msg);
                 }
                 else if(jsonObject.getJSONObject("uData").equals("2")) {
-                    String result = jsonObject.getString("result");
+                    /*String result = jsonObject.getString("result");
                     JSONObject object = new JSONObject(result);
                     String error = object.getString("message").replace("\r", "").replace(" ", "");
-                    Log.e("error", error);
+                    Log.e("error", error);*/
                     String msg = "Recharge successfully";
 
                    /* JSONArray jso_error = new JSONArray(Apis.json_error);

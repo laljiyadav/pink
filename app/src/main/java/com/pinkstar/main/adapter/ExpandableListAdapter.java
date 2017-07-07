@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.pinkstar.main.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -58,8 +59,22 @@ public class ExpandableListAdapter extends BaseAdapter {
 
         city.setText(map.get(position).get("name"));
         //count.setText(map.get(position).get("citycount"));
-        icon.setImageResource(Integer.parseInt(map.get(position).get("image")));
+        //icon.setImageResource(Integer.parseInt(map.get(position).get("image")));
 
+        Picasso.with(c)
+                .load(map.get(position).get("image"))
+                .into(icon, new com.squareup.picasso.Callback() {
+                    @Override
+                    public void onSuccess() {
+
+                    }
+
+                    @Override
+                    public void onError() {
+
+
+                    }
+                });
 
         return row;
 

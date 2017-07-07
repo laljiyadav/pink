@@ -15,9 +15,6 @@
         android:paddingLeft="20dp"
         android:paddingRight="20dp">
 
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="40dp" />
 
         <TextView
             android:layout_width="match_parent"
@@ -25,17 +22,17 @@
             android:layout_marginBottom="20dp"
             android:gravity="center"
             android:singleLine="true"
-            android:text="Varification Code"
+            android:text="Verification Code"
             android:textColor="@color/colorpink"
             android:textColorHint="@color/input_hint"
-            android:textSize="40sp" />
+            android:textSize="@dimen/headertext" />
 
 
         <android.support.design.widget.TextInputLayout
             android:id="@+id/input_layout_password"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_marginLeft="10dp">
+            >
 
             <EditText
                 android:id="@+id/ed_otp"
@@ -43,13 +40,14 @@
                 android:layout_height="match_parent"
                 android:background="@color/white"
                 android:gravity="center"
-                android:layout_marginRight="10dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginLeft="30dp"
                 android:hint="Enter OTP"
                 android:inputType="numberPassword"
                 android:letterSpacing="0.40"
                 android:singleLine="true"
                 android:textColor="@color/black"
-                android:textSize="20sp" />
+                android:textSize="@dimen/largetext" />
 
         </android.support.design.widget.TextInputLayout>
 
@@ -71,10 +69,10 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:singleLine="true"
-            android:text="We,ve send a varification code"
+            android:text="We,ve send a verification code"
             android:textColor="@color/black"
             android:textColorHint="@color/input_hint"
-            android:textSize="20sp"
+            android:textSize="@dimen/largetext"
              />
 
         <TextView
@@ -87,7 +85,7 @@
             android:text="+91-9718858541"
             android:textColor="@color/black"
             android:textColorHint="@color/input_hint"
-            android:textSize="20sp"
+            android:textSize="@dimen/largetext"
             />
 
         <TextView
@@ -101,7 +99,7 @@
             android:text="Enter it within 2 minutes and sign in"
             android:textColor="@color/black"
             android:textColorHint="@color/input_hint"
-            android:textSize="20sp"
+            android:textSize="@dimen/largetext"
             />
 
 
@@ -112,10 +110,10 @@
             android:layout_marginBottom="20dp"
             android:gravity="center"
             android:singleLine="false"
-            android:text="Resend OTP?"
+            android:text="Resend Verification Code?"
             android:textColor="@color/colorpink"
             android:textColorHint="@color/input_hint"
-            android:textSize="18sp"
+            android:textSize="@dimen/headertext"
             android:textStyle="bold" />
 
 

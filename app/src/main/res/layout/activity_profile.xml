@@ -11,6 +11,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="250dp"
+        android:visibility="visible"
         android:background="@color/colorpink">
 
         <LinearLayout
@@ -37,8 +38,8 @@
                 android:paddingLeft="5dp"
                 android:paddingTop="5dp"
                 android:text=""
-                android:textColor="@color/black"
-                android:textSize="16sp" />
+                android:textColor="@color/white"
+                android:textSize="@dimen/largetext" />
 
             <EditText
                 android:id="@+id/ed_last"
@@ -56,8 +57,8 @@
                 android:paddingRight="5dp"
                 android:paddingTop="5dp"
                 android:text=""
-                android:textColor="@color/black"
-                android:textSize="16sp" />
+                android:textColor="@color/white"
+                android:textSize="@dimen/largetext" />
 
         </LinearLayout>
 
@@ -72,14 +73,14 @@
             android:layout_marginTop="10dp"
             android:text="Save"
             android:textColor="@color/white"
-            android:textSize="24sp" />
+            android:textSize="@dimen/headertext" />
 
         <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/img"
             android:layout_width="140dp"
             android:layout_height="140dp"
             android:layout_centerInParent="true"
-            android:src="@drawable/prodef" />
+            android:src="@drawable/user" />
 
         <ProgressBar
             android:id="@+id/progressBar"
@@ -162,7 +163,7 @@
                     <EditText
                         android:id="@+id/ed_number"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="40dp"
                         android:layout_marginLeft="5dp"
                         android:layout_marginRight="5dp"
                         android:background="@color/white"
@@ -171,10 +172,11 @@
                         android:hint="Mobile No"
                         android:inputType="number"
                         android:maxLength="10"
+                        android:enabled="false"
                         android:padding="5dp"
                         android:text="9718858541"
-                        android:textColor="@color/input_hint"
-                        android:textSize="16sp" />
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/largetext" />
 
                     <View
                         android:layout_width="match_parent"
@@ -185,18 +187,19 @@
                     <EditText
                         android:id="@+id/ed_email"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="40dp"
                         android:layout_marginLeft="5dp"
                         android:layout_marginRight="5dp"
                         android:background="@color/white"
                         android:drawableLeft="@drawable/email"
                         android:drawablePadding="10dp"
                         android:hint="Email"
+                        android:enabled="false"
                         android:inputType="textEmailAddress"
                         android:padding="5dp"
                         android:text="sudhirkumar6892@gmail.com"
-                        android:textColor="@color/input_hint"
-                        android:textSize="16sp" />
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/largetext" />
 
 
                     <View
@@ -208,7 +211,7 @@
                     <TextView
                         android:id="@+id/txt_birth"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="40dp"
                         android:layout_marginLeft="5dp"
                         android:layout_marginRight="5dp"
                         android:background="@color/white"
@@ -218,8 +221,8 @@
                         android:hint="Birth Date"
                         android:padding="5dp"
                         android:text=""
-                        android:textColor="@color/input_hint"
-                        android:textSize="16sp" />
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/largetext" />
 
                     <View
                         android:layout_width="match_parent"
@@ -229,7 +232,7 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="40dp"
                         android:background="@color/white"
                         android:orientation="horizontal"
                         android:weightSum="1">
@@ -242,13 +245,13 @@
                             android:layout_marginRight="5dp"
                             android:layout_weight="1"
                             android:background="@color/white"
-                            android:drawableLeft="@drawable/gender"
+                            android:drawableLeft="@drawable/gender_icon"
                             android:drawablePadding="10dp"
                             android:gravity="center_vertical"
                             android:hint="Female"
                             android:padding="5dp"
-                            android:textColor="@color/input_hint"
-                            android:textSize="16sp" />
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/largetext" />
 
                         <ToggleButton
                             android:id="@+id/toggleButton1"
@@ -272,17 +275,17 @@
                     <TextView
                         android:id="@+id/txt_anneversary"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="40dp"
                         android:layout_marginLeft="5dp"
                         android:layout_marginRight="5dp"
                         android:background="@color/white"
-                        android:drawableLeft="@drawable/anniversary"
+                        android:drawableLeft="@drawable/aniversory"
                         android:drawablePadding="10dp"
                         android:gravity="center_vertical"
                         android:padding="5dp"
                         android:text="Anneversary Date"
-                        android:textColor="@color/input_hint"
-                        android:textSize="16sp"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/largetext"
                         android:visibility="visible" />
 
                     <View
@@ -300,13 +303,13 @@
                         android:layout_marginLeft="20dp"
                         android:layout_marginRight="20dp"
                         android:layout_marginTop="40dp"
-                        android:background="@color/colorPrimary"
-                        android:gravity="center_vertical"
+                        android:background="@drawable/btn"
+                        android:gravity="center"
                         android:padding="5dp"
                         android:text="Logout"
                         android:textColor="@color/white"
                         android:textSize="16sp"
-                        android:visibility="visible" />
+                        android:visibility="gone" />
 
 
                 </LinearLayout>

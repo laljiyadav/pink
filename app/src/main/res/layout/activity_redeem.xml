@@ -12,9 +12,8 @@
         android:layout_height="50dp"
         android:background="@color/colorpink"
         android:text="Notification"
-        android:textStyle="bold"
         android:textColor="@color/white"
-        android:textSize="22dp"
+        android:textSize="@dimen/headertext"
         android:gravity="center"/>
 
 

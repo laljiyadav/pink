@@ -1,11 +1,17 @@
 package com.pinkstar.main;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -31,18 +37,19 @@ import java.util.HashMap;
 
 public class MyWallet extends Activity implements View.OnClickListener {
 
-    TextView txt_total, txt_read, txt_name;
+    TextView txt_name, txt_total, txt_redeem;
     ImageView star_img, show_img;
     ProgressBar progress;
     Button btn_add;
-    static EditText ed_stae;
+    //static EditText ed_stae;
     String get_star;
     LinearLayout lin_add;
     boolean flag = true;
     JSONObject jsonObject;
     String udata, url = Apis.Base;
     ArrayList<HashMap<String, String>> offerList = new ArrayList<HashMap<String, String>>();
-    ListView listView;
+    CountDownTimer downTimer;
+    int page = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,30 +62,44 @@ public class MyWallet extends Activity implements View.OnClickListener {
     public void inIt() {
         star_img = (ImageView) findViewById(R.id.star_img);
         show_img = (ImageView) findViewById(R.id.img);
-        txt_total = (TextView) findViewById(R.id.txt_total);
-        txt_read = (TextView) findViewById(R.id.txt_read);
         txt_name = (TextView) findViewById(R.id.name);
+        txt_redeem = (TextView) findViewById(R.id.txt_redeem);
+        txt_total = (TextView) findViewById(R.id.txt_total);
         progress = (ProgressBar) findViewById(R.id.progressBar);
         btn_add = (Button) findViewById(R.id.btn_add);
-        ed_stae = (EditText) findViewById(R.id.ed_star);
-        lin_add = (LinearLayout) findViewById(R.id.lin_add);
-        listView = (ListView) findViewById(R.id.list);
 
-        txt_total.setText("" + (Integer.parseInt(SaveSharedPreference.getTotal(MyWallet.this))));
-        txt_read.setText(SaveSharedPreference.getBalStar(MyWallet.this));
 
         txt_name.setText(SaveSharedPreference.getUserName(MyWallet.this) + " " + SaveSharedPreference.getLastName(MyWallet.this));
+        txt_total.setText(getResources().getString(R.string.rs)+" "+SaveSharedPreference.getTotal(MyWallet.this)+"\n"+"Total Stars");
+        txt_redeem.setText(getResources().getString(R.string.rs)+" "+SaveSharedPreference.getBalStar(MyWallet.this)+"\n"+"Redeemable Stras");
+
 
         btn_add.setOnClickListener(this);
 
         star_img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Dialogs.star_dialog(MyWallet.this);
+                Dialogs.star_dialog(MyWallet.this, true);
             }
         });
 
         Dialogs.Touch(MyWallet.this, star_img);
+
+
+        downTimer = new CountDownTimer(86400, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+
+                //int abc = Integer.parseInt(txt_read.getText().toString());
+
+            }
+
+            @Override
+            public void onFinish() {
+
+            }
+        };
+        downTimer.start();
 
         if (SaveSharedPreference.getUserIMAGE(MyWallet.this).equals("")) {
             progress.setVisibility(View.GONE);
@@ -101,116 +122,65 @@ public class MyWallet extends Activity implements View.OnClickListener {
                     });
         }
 
-        new AttempOfer().execute();
-    }
-
-    public static void setText(String value) {
-
-        ed_stae.setText(value);
     }
 
 
-    private class AttempOfer extends AsyncTask<Void, Integer, String> {
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-
-            Dialogs.showProDialog(MyWallet.this, "Wait...");
-        }
-
-        @Override
-        protected String doInBackground(Void... params) {
-
-            ArrayList<NameValuePair> strBuilder = new ArrayList<NameValuePair>();
-            strBuilder.add(new BasicNameValuePair("mobile", SaveSharedPreference.getMobile(MyWallet.this)));
-            strBuilder.add(new BasicNameValuePair("rquest", "starOffer"));
-            strBuilder.add(new BasicNameValuePair("api_token", Apis.Api_Token));
-            strBuilder.add(new BasicNameValuePair("token_id", "" + SaveSharedPreference.getUSERAuth(MyWallet.this)));
+    public void alertDialog() {
 
 
-            try {
+        final Dialog dialog2 = new Dialog(MyWallet.this);
+        dialog2.requestWindowFeature(Window.FEATURE_NO_TITLE); //before
+        dialog2.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        dialog2.setContentView(R.layout.dialog_amount);
+        dialog2.setCancelable(true);
+        WindowManager.LayoutParams lp = dialog2.getWindow().getAttributes();
+        Window window = dialog2.getWindow();
+        lp.copyFrom(window.getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        window.setAttributes(lp);
+        lp.gravity = Gravity.CENTER;
 
-                Parser perser = new Parser();
-                jsonObject = perser.getJSONFromUrl(url, strBuilder);
-                Log.e("Log_tag", "" + strBuilder.toString());
-               // Log.e("Log_tag", "" + jsonObject);
-
-                udata = jsonObject.getString("uData");
-
-
-                if (udata.equals("1")) {
-
-                    JSONArray js = jsonObject.getJSONArray("result");
-                    HashMap<String, String> map1;
-                    for (int i = 0; i < js.length(); i++) {
-                        map1 = new HashMap<String, String>();
-                        JSONObject object = js.getJSONObject(i);
-                        if (object.has("star")) {
-                            map1.put("star", object.getString("star"));
-                            map1.put("amount", object.getString("amount"));
-                            map1.put("offer_details", object.getString("offer_details"));
-                            map1.put("start_date", object.getString("start_date"));
-                            map1.put("end_date", object.getString("end_date"));
+        final EditText txt_stars=(EditText)dialog2.findViewById(R.id.ed_stars);
+        Button brn_add=(Button)dialog2.findViewById(R.id.btn_add);
 
 
-                            offerList.add(map1);
+        brn_add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
-                        }
-                    }
+                String star=txt_stars.getText().toString();
+                if(star.trim().equals(""))
+                {
+                    txt_stars.setError("Enter Stars");
+                }
+                else {
+                    startActivity(new Intent(MyWallet.this,WebView_Activity.class).putExtra("star",star));
+                    dialog2.dismiss();
                 }
 
-            } catch (Exception e) {
-                Log.e("Log_Exception", e.toString());
-
             }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(String args) {
-            Dialogs.dismissDialog();
-
-            if (udata.equals("1")) {
-
-                listView.setAdapter(new StarOfferAdapter(MyWallet.this, offerList));
-            }
+        });
 
 
-        }
+        dialog2.show();
+
     }
 
-    @Override
+        @Override
     public void onClick(View v) {
 
-        if (v == btn_add) {
-            if (flag) {
-                lin_add.setVisibility(View.VISIBLE);
-                flag = false;
-            } else {
-
-                if (valid()) {
-
-                    Intent in = new Intent(MyWallet.this, WebView_Activity.class);
-                    in.putExtra("star", get_star);
-                    startActivity(in);
-
-                }
-
+            if(v==btn_add)
+            {
+                alertDialog();
             }
-        }
 
     }
 
-    public boolean valid() {
 
-        get_star = ed_stae.getText().toString();
-        if (get_star.equals("")) {
-            ed_stae.setError("Enter Star");
-            return false;
-        } else {
-            return true;
-
-        }
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        downTimer.cancel();
     }
 }

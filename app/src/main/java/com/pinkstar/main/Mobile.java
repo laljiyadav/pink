@@ -252,6 +252,7 @@ public class Mobile extends Activity implements View.OnClickListener {
                         SaveSharedPreference.setUSERSSN(Mobile.this, json.getString("otp"));
                         SaveSharedPreference.setMobile(Mobile.this, "" + std_code + "-" + mobile);
                     }
+                    finish();
                 }
                 if (udata.equals("17")) {
                     startActivity(new Intent(Mobile.this, OTP.class));
@@ -259,11 +260,14 @@ public class Mobile extends Activity implements View.OnClickListener {
                         SaveSharedPreference.setUSERSSN(Mobile.this, json.getString("otp"));
                         SaveSharedPreference.setMobile(Mobile.this, "" + std_code + "-" + mobile);
                     }
+                    finish();
                 }
                 if (udata.equals("5")) {
                     startActivity(new Intent(Mobile.this, Password.class));
                     SaveSharedPreference.setMobile(Mobile.this, "" + std_code + "-" + mobile);
+                    finish();
                 }
+
 
             } catch (Exception e) {
                 Log.e("Log_Exception", e.toString());

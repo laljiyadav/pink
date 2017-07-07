@@ -135,6 +135,7 @@ public class Password extends Activity {
                     startActivity(new Intent(Password.this, MainActivity.class));
                     SaveSharedPreference.setUserID(Password.this, json.getJSONObject("result").getString("id"));
                     SaveSharedPreference.setUSERAuth(Password.this, json.getString("token_id"));
+                    finish();
                 } else if (udata.equals("13")) {
                     Dialogs.showDialog(Password.this, "" + json.getJSONObject("result").getString("message"));
                 } else if (udata.equals("14")) {

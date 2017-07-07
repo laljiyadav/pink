@@ -67,9 +67,10 @@
 
             <ImageView
                 android:id="@+id/mob_contact"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:layout_gravity="right|bottom"
+                android:layout_marginBottom="5dp"
                 android:adjustViewBounds="true"
                 android:scaleType="fitXY"
                 android:src="@drawable/contact" />
@@ -86,13 +87,13 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/mob_operater"
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginTop="5dp"
                 android:background="@color/white"
                 android:drawableRight="@drawable/forword"
@@ -114,7 +115,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:orientation="horizontal"
             android:weightSum="1">
 
@@ -147,16 +148,16 @@
                     android:gravity="right"
                     android:text="Browse Plans"
                     android:textColor="#1212FF"
-                    android:textSize="18dp" />
+                    android:textSize="16dp" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.4"
                     android:gravity="right"
-                    android:text="for all operater"
+                    android:text="for All operaters"
                     android:textColor="@color/input_hint"
-                    android:textSize="12dp" />
+                    android:textSize="10dp" />
 
             </LinearLayout>
 
@@ -170,16 +171,16 @@
         <Button
             android:id="@+id/mob_proceed"
             android:layout_width="fill_parent"
-            android:layout_height="50dp"
+            android:layout_height="40dp"
             android:layout_marginLeft="20dip"
             android:layout_marginRight="20dip"
             android:layout_marginTop="20dip"
             android:background="@drawable/btn"
             android:text="Proceed"
-            android:textAllCaps="false"
+            android:textAllCaps="true"
             android:textColor="@color/white"
-            android:textSize="22sp"
-            android:textStyle="bold" />
+            android:textSize="16sp"
+            android:textStyle="normal" />
 
     </LinearLayout>
 

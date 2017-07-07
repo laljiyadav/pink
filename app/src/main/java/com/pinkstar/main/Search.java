@@ -63,7 +63,7 @@ public class Search extends Activity {
         star_img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Dialogs.star_dialog(Search.this);
+                Dialogs.star_dialog(Search.this,true);
             }
         });
 

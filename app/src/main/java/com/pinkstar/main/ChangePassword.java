@@ -62,7 +62,7 @@ public class ChangePassword extends Activity implements View.OnClickListener {
             }
         }
         if (v == star_img) {
-            Dialogs.star_dialog(ChangePassword.this);
+            Dialogs.star_dialog(ChangePassword.this,true);
         }
 
     }

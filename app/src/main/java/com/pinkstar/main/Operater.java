@@ -76,7 +76,7 @@ public class Operater extends Activity {
                 HashMap<String, String> map = new HashMap<String, String>();
                 map.put("name", jsonArray.getJSONObject(i).getString("Operator"));
                 map.put("code", jsonArray.getJSONObject(i).getString("Code"));
-                map.put("image", "" + images[i]);
+                map.put("image", jsonArray.getJSONObject(i).getString("image"));
 
                 oprators_list.add(map);
             }

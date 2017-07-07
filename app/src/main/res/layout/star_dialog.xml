@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_marginLeft="30dp"
-    android:layout_marginRight="30dp"
-    android:paddingTop="10dp">
+    android:id="@+id/rel_star"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp">
 
 
     <ImageView
@@ -13,7 +18,6 @@
         android:layout_height="300dp"
         android:layout_centerHorizontal="true"
         android:layout_centerInParent="true"
-        android:layout_marginLeft="13dp"
         android:layout_marginTop="0dp"
         android:background="@drawable/icon_3003x" />
 
@@ -34,7 +38,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/imageView"
-        android:layout_alignStart="@+id/imageView"
         android:layout_alignTop="@+id/star_search"
         android:layout_marginTop="-30dp"
         android:drawableTop="@drawable/web"
@@ -50,7 +53,7 @@
         android:layout_alignEnd="@+id/imageView"
         android:layout_alignRight="@+id/imageView"
         android:layout_alignTop="@+id/star_home"
-        android:drawableTop="@drawable/near"
+        android:drawableTop="@drawable/redeem"
         android:text="Redeem"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
@@ -63,7 +66,7 @@
         android:layout_marginRight="05dp"
         android:layout_toLeftOf="@+id/star_redeem"
         android:layout_toStartOf="@+id/star_redeem"
-        android:drawableTop="@drawable/near"
+        android:drawableTop="@drawable/wallet"
         android:text="Wallet"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
@@ -86,5 +89,7 @@
         android:layout_height="60dp"
         android:layout_centerInParent="true"
         android:src="@drawable/search" />
+
+    </RelativeLayout>
 
 </RelativeLayout>

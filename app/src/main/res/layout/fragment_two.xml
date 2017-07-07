@@ -53,14 +53,14 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:orientation="vertical">
 
             <EditText
                 android:id="@+id/dth_samart"
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_height="match_parent"
+                android:layout_marginTop="0dp"
                 android:background="@color/white"
                 android:gravity="center_vertical"
                 android:hint="Smart Card Number"
@@ -68,7 +68,7 @@
                 android:singleLine="true"
                 android:textColor="@color/black"
                 android:textColorHint="@color/input_hint"
-                android:textSize="18sp" />
+                android:textSize="16sp" />
 
         </LinearLayout>
 
@@ -80,7 +80,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:orientation="horizontal"
             android:weightSum="1">
 
@@ -137,16 +137,16 @@
         <Button
             android:id="@+id/dth_proceed"
             android:layout_width="fill_parent"
-            android:layout_height="50dp"
+            android:layout_height="40dp"
             android:layout_marginLeft="20dip"
             android:layout_marginRight="20dip"
             android:layout_marginTop="20dip"
             android:background="@drawable/btn"
             android:text="Proceed"
-            android:textAllCaps="false"
+            android:textAllCaps="true"
             android:textColor="@color/white"
-            android:textSize="22sp"
-            android:textStyle="bold" />
+            android:textSize="16sp"
+            android:textStyle="normal" />
 
 
     </LinearLayout>

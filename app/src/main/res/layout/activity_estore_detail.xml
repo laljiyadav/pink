@@ -313,7 +313,7 @@
         android:layout_height="40dp"
         android:background="@drawable/btn_rectangle"
         android:text="Book Now        $40"
-        android:textAllCaps="false"
+        android:textAllCaps="true"
         android:textColor="@color/white"
         android:textSize="18sp"
         android:layout_marginBottom="5dp"

@@ -103,11 +103,13 @@ public class MainActivity extends Activity {
         FirebaseMessaging.getInstance().subscribeToTopic("PinkStar");
         token = FirebaseInstanceId.getInstance().getToken();
 
-        Log.e("token","abc"+ token);
+        Log.e("token", "abc" + token);
 
         if (!SaveSharedPreference.gethomefirst(MainActivity.this).equals("1")) {
             dialog();
         }
+
+
 
 
         subcat.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -145,6 +147,7 @@ public class MainActivity extends Activity {
                 in.putExtra("company", venderList.get(position).get("company_display_name"));
                 in.putExtra("img_array", venderList.get(position).get("img_array"));
                 in.putExtra("unique_id", venderList.get(position).get("unique_id"));
+                in.putExtra("amount", venderList.get(position).get("discount_amount"));
 
                 startActivity(in);
             }
@@ -159,6 +162,7 @@ public class MainActivity extends Activity {
                 in.putExtra("company", venderList1.get(position).get("company_display_name"));
                 in.putExtra("img_array", venderList1.get(position).get("img_array"));
                 in.putExtra("unique_id", venderList1.get(position).get("unique_id"));
+                in.putExtra("amount", venderList1.get(position).get("discount_amount"));
                 startActivity(in);
             }
 
@@ -168,7 +172,7 @@ public class MainActivity extends Activity {
         star_img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Dialogs.star_dialog(MainActivity.this);
+                Dialogs.star_dialog(MainActivity.this,true);
             }
         });
 
@@ -208,7 +212,20 @@ public class MainActivity extends Activity {
             }
         }
 
+        //Log.e("return",""+isPalindrome("pop"));
 
+
+    }
+
+
+    public static boolean isPalindrome(String val){
+        if(val.length()==0 || val.length()==1){
+            return true;
+        }
+        if(val.charAt(0)==val.charAt(val.length()-1)){
+            return isPalindrome(val.substring(1-val.length()));
+        }
+        return false;
     }
 
 
@@ -255,6 +272,7 @@ public class MainActivity extends Activity {
                 if (json.getString("uData").equals("6")) {
                     Intent intent = new Intent(MainActivity.this, Mobile.class);
                     startActivity(intent);
+                    finish();
                 } else {
                     new AttempProfile().execute();
                 }
@@ -661,7 +679,7 @@ public class MainActivity extends Activity {
                 product.setGravity(Gravity.CENTER);
                 product.setPadding(10, 0, 10, 0);
                 product.setTextColor(ContextCompat.getColor(MainActivity.this, R.color.black));
-                product.setTextSize(16);
+                product.setTextSize(14);
 
                 ll.addView(product);
 
@@ -680,7 +698,7 @@ public class MainActivity extends Activity {
                         cate_name = cate_list.get(index).get("name");
                         if (cate_name.equalsIgnoreCase("Featured")) {
                             cate_id = "";
-
+                            subcat.setVisibility(View.INVISIBLE);
                             venderList.clear();
                             venderList1.clear();
                             page = 0;
@@ -693,6 +711,7 @@ public class MainActivity extends Activity {
                             page = 0;
                             new AttempCateVender().execute();
                             subcat.setAdapter(new SubcatAdapter(MainActivity.this, subArray.get(cate_list.get(index).get("name"))));
+                            subcat.setVisibility(View.VISIBLE);
                         }
                     }
                 });

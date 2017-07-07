@@ -25,6 +25,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,6 +37,10 @@ import com.pinkstar.main.Profile;
 import com.pinkstar.main.R;
 import com.pinkstar.main.Recharge;
 import com.pinkstar.main.Search;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Created by sudhir on 4/12/2016.
@@ -155,7 +160,7 @@ public class Dialogs {
         dist = Math.acos(dist);
         dist = rad2deg(dist);
         dist = dist * 60 * 1.1515;
-        return Float.parseFloat(""+dist);
+        return Float.parseFloat("" + dist);
     }
 
     public static double deg2rad(double deg) {
@@ -248,6 +253,24 @@ public class Dialogs {
 
     }
 
+    public static String parseDateToddMMyyyy(String time) {
+        String inputPattern = "yyyy-MM-dd";
+        String outputPattern = "dd MMM yyyy";
+        SimpleDateFormat inputFormat = new SimpleDateFormat(inputPattern);
+        SimpleDateFormat outputFormat = new SimpleDateFormat(outputPattern);
+
+        Date date = null;
+        String str = null;
+
+        try {
+            date = inputFormat.parse(time);
+            str = outputFormat.format(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return str;
+    }
+
     public static void hideSystemUI(View mDecorView, Context context) {
         // Set the IMMERSIVE flag.
         // Set the content to appear under the system bars so that the content
@@ -271,7 +294,7 @@ public class Dialogs {
                         | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
     }
 
-    public static void star_dialog(final Context context) {
+    public static void star_dialog(final Context context ,boolean check) {
         final Dialog dialog2 = new Dialog(context);
         dialog2.requestWindowFeature(Window.FEATURE_NO_TITLE); //before
         dialog2.getWindow().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#50ffffff")));
@@ -285,7 +308,7 @@ public class Dialogs {
         window.setAttributes(lp);
         lp.gravity = Gravity.CENTER;
 
-
+        RelativeLayout layout = (RelativeLayout) dialog2.findViewById(R.id.rel_star);
         TextView star_near = (TextView) dialog2.findViewById(R.id.star_near);
         TextView star_home = (TextView) dialog2.findViewById(R.id.star_home);
         TextView star_redeem = (TextView) dialog2.findViewById(R.id.star_redeem);
@@ -295,6 +318,13 @@ public class Dialogs {
         GPSTracker gpsTracker = new GPSTracker(context);
         final Location location = gpsTracker.getLocation();
 
+
+        layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog2.dismiss();
+            }
+        });
 
         star_search.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -364,7 +394,9 @@ public class Dialogs {
         });
 
 
-        dialog2.show();
+        if(check) {
+            dialog2.show();
+        }
     }
 
 

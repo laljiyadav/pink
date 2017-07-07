@@ -1,8 +1,10 @@
 package com.pinkstar.main;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -115,17 +117,28 @@ public class Profile extends Activity implements View.OnClickListener {
         if (SaveSharedPreference.getGender(Profile.this).equalsIgnoreCase("Female")) {
             toggleButton.setChecked(false);
             txt_gender.setText("Female");
+            toggleButton.setEnabled(false);
 
-        } else {
+        } else if (SaveSharedPreference.getGender(Profile.this).equalsIgnoreCase("Male")) {
             toggleButton.setChecked(true);
             txt_gender.setText("Male");
+            toggleButton.setEnabled(false);
+        } else {
+            toggleButton.setEnabled(true);
         }
 
-        if (!SaveSharedPreference.getBirth(Profile.this).equalsIgnoreCase("0000-00-00")) {
-            txt_birth.setText(SaveSharedPreference.getBirth(Profile.this));
+        if (SaveSharedPreference.getBirth(Profile.this).equalsIgnoreCase("0000-00-00")) {
+            txt_birth.setEnabled(true);
+        } else {
+            txt_birth.setText(Dialogs.parseDateToddMMyyyy(SaveSharedPreference.getBirth(Profile.this)));
+            txt_birth.setEnabled(false);
         }
-        if (!SaveSharedPreference.getAnnversary(Profile.this).equalsIgnoreCase("0000-00-00")) {
-            txt_annversary.setText(SaveSharedPreference.getAnnversary(Profile.this));
+
+        if (SaveSharedPreference.getAnnversary(Profile.this).equalsIgnoreCase("0000-00-00")) {
+            txt_annversary.setEnabled(true);
+        } else {
+            txt_annversary.setText(Dialogs.parseDateToddMMyyyy(SaveSharedPreference.getAnnversary(Profile.this)));
+            txt_annversary.setEnabled(false);
         }
 
         toggleButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -157,6 +170,7 @@ public class Profile extends Activity implements View.OnClickListener {
                         @Override
                         public void onError() {
 
+                            profileimage.setImageResource(R.drawable.user);
 
                         }
                     });
@@ -226,7 +240,7 @@ public class Profile extends Activity implements View.OnClickListener {
         }
         if (v == txt_logout) {
 
-            new AttempLogout().execute();
+            // open();
         }
 
 
@@ -562,63 +576,5 @@ public class Profile extends Activity implements View.OnClickListener {
         }
     }
 
-    private class AttempLogout extends AsyncTask<Void, Integer, String> {
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-
-            Dialogs.showProDialog(Profile.this, "Wait...");
-        }
-
-        @Override
-        protected String doInBackground(Void... params) {
-
-            ArrayList<NameValuePair> strBuilder = new ArrayList<NameValuePair>();
-            strBuilder.add(new BasicNameValuePair("token_id", SaveSharedPreference.getUSERAuth(Profile.this)));
-            strBuilder.add(new BasicNameValuePair("rquest", "logout"));
-            strBuilder.add(new BasicNameValuePair("mobile", SaveSharedPreference.getMobile(Profile.this)));
-            strBuilder.add(new BasicNameValuePair("api_token", Apis.Api_Token));
-
-
-            // Create an array
-            Parser perser = new Parser();
-            json = perser.getJSONFromUrl(url, strBuilder);
-
-            Log.e("url", "" + strBuilder.toString());
-            try {
-
-                udata = json.getString("uData");
-
-
-            } catch (Exception e) {
-                Log.e("Log_Exception", e.toString());
-
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(String args) {
-            Dialogs.dismissDialog();
-
-            if (udata.equals("6")) {
-                startActivity(new Intent(Profile.this, Mobile.class));
-                SaveSharedPreference.setUserID(Profile.this, "");
-                SaveSharedPreference.setfirst(Profile.this, "");
-                SaveSharedPreference.setLastName(Profile.this, "");
-                SaveSharedPreference.setUserIMAGE(Profile.this, "");
-                SaveSharedPreference.setUserEMAIL(Profile.this, "");
-                SaveSharedPreference.setBirth(Profile.this, "");
-                SaveSharedPreference.setAnnversary(Profile.this, "");
-                SaveSharedPreference.setUSERAuth(Profile.this, "");
-                SaveSharedPreference.setGender(Profile.this, "");
-
-            } else {
-                Dialogs.showCenterToast(Profile.this, "Try Again");
-            }
-
-        }
-    }
 
 }

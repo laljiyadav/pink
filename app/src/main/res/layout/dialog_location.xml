@@ -18,8 +18,8 @@
         android:singleLine="false"
         android:text="Allow &quot;Pink Star&quot; to access your location while you use this app?"
         android:textColor="@color/black"
-        android:textSize="20sp"
-        android:textStyle="bold" />
+        android:textSize="@dimen/headertext"
+        android:textStyle="normal" />
 
     <TextView
         android:id="@+id/txt_text1"
@@ -29,10 +29,10 @@
         android:layout_marginRight="20dp"
         android:layout_marginTop="10dp"
         android:gravity="center"
-        android:singleLine="false"
+        android:lines="1"
         android:text="Location is required"
         android:textColor="@color/black"
-        android:textSize="16sp"
+        android:textSize="@dimen/largetext"
         android:textStyle="normal" />
 
     <View
@@ -58,7 +58,7 @@
             android:text="Don't Allow"
             android:textAllCaps="false"
             android:textColor="#6AAFFC"
-            android:textSize="20sp" />
+            android:textSize="@dimen/headertext" />
 
         <Button
             android:id="@+id/allow"
@@ -69,7 +69,7 @@
             android:text="Allow"
             android:textAllCaps="false"
             android:textColor="#6AAFFC"
-            android:textSize="20sp" />
+            android:textSize="@dimen/headertext" />
 
 
     </LinearLayout>

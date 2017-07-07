@@ -59,7 +59,7 @@ public class OrderActivity extends Activity {
         star_img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Dialogs.star_dialog(OrderActivity.this);
+                Dialogs.star_dialog(OrderActivity.this,true);
             }
         });
         Dialogs.Touch(OrderActivity.this, star_img);

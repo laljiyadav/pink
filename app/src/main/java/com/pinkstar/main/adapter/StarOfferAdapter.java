@@ -57,17 +57,17 @@ public class StarOfferAdapter extends BaseAdapter {
         TextView stars = (TextView) convertView.findViewById(R.id.txt_star);
         String re = context.getResources().getString(R.string.rs);
 
-        amount.setText(re + "" + citynearArrayList.get(position).get("amount"));
-        stars.setText(citynearArrayList.get(position).get("star") + " star");
+        amount.setText(re + "" + citynearArrayList.get(position).get("star"));
+        stars.setText(citynearArrayList.get(position).get("expendature_type") );
         details.setText(citynearArrayList.get(position).get("offer_details"));
 
-        amount.setOnClickListener(new View.OnClickListener() {
+       /* amount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 MyWallet.setText(citynearArrayList.get(position).get("amount"));
             }
-        });
+        });*/
 
         return convertView;
     }

@@ -35,7 +35,7 @@
             android:text="Enter your Mobile No."
             android:textColor="@color/colorpink"
             android:textColorHint="@color/input_hint"
-            android:textSize="25sp" />
+            android:textSize="@dimen/headertext" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -54,7 +54,7 @@
                 android:text="+91"
                 android:textColor="@color/black"
                 android:textColorHint="@color/black"
-                android:textSize="20sp" />
+                android:textSize="@dimen/largetext" />
 
             <View
                 android:layout_width="1dp"
@@ -80,7 +80,7 @@
                     android:inputType="number"
                     android:singleLine="true"
                     android:textColor="@color/black"
-                    android:textSize="20sp" />
+                    android:textSize="@dimen/largetext" />
 
             </android.support.design.widget.TextInputLayout>
         </LinearLayout>
@@ -106,6 +106,7 @@
         android:layout_alignParentRight="true"
         android:layout_margin="10dp"
         android:text="Skip"
+        android:visibility="gone"
         android:textColor="@color/colorpink"
         android:textSize="18sp" />
 
@@ -116,8 +117,8 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_margin="10dp"
-        android:text="By logging in,I agree to all T &amp; C"
-        android:textColor="#dd8f8b8b"
-        android:textSize="18sp" />
+        android:text="By logging in,I agree to all Term &amp; Conditions"
+        android:textColor="@color/colorpink"
+        android:textSize="@dimen/largetext" />
 
 </RelativeLayout>

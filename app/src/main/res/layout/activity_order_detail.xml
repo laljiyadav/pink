@@ -22,8 +22,8 @@
                 android:gravity="center"
                 android:text="Order History"
                 android:textColor="@color/white"
-                android:textSize="20dp"
-                android:textStyle="bold" />
+                android:textSize="@dimen/headertext"
+                android:textStyle="normal" />
 
 
             <TextView
@@ -37,8 +37,7 @@
                 android:paddingRight="5dp"
                 android:text="Order Number"
                 android:textColor="@color/black"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+                android:textSize="@dimen/largetext" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -65,8 +64,8 @@
                         android:paddingLeft="5dp"
                         android:text="Order Number"
                         android:textColor="@color/black"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
+                        android:textSize="@dimen/largetext"
+                        android:textStyle="normal" />
 
                     <TextView
                         android:id="@+id/txt_order_number"
@@ -77,8 +76,8 @@
                         android:paddingLeft="5dp"
                         android:text="Order Number"
                         android:textColor="@color/black"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
+                        android:textSize="@dimen/largetext"
+                        android:textStyle="normal" />
 
                     <TextView
                         android:id="@+id/time_date"
@@ -89,7 +88,7 @@
                         android:paddingLeft="5dp"
                         android:text=""
                         android:textColor="@color/input_hint"
-                        android:textSize="14sp" />
+                        android:textSize="@dimen/smalltext" />
                 </LinearLayout>
 
 
@@ -111,8 +110,7 @@
                         android:paddingRight="5dp"
                         android:text="Amount"
                         android:textColor="@color/black"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
+                        android:textSize="@dimen/largetext" />
 
                     <TextView
                         android:id="@+id/txt_repee"
@@ -124,8 +122,7 @@
                         android:paddingRight="5dp"
                         android:text=""
                         android:textColor="@color/black"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
+                        android:textSize="@dimen/smalltext" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -134,8 +131,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginLeft="10dp"
-                android:layout_marginTop="5dp"
                 android:layout_marginRight="10dp"
+                android:layout_marginTop="5dp"
                 android:background="@color/gray"></View>
 
             <LinearLayout
@@ -184,8 +181,7 @@
                         android:paddingLeft="5dp"
                         android:text="Talktime"
                         android:textColor="@color/black"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
+                        android:textSize="@dimen/largetext" />
 
 
                 </LinearLayout>
@@ -224,7 +220,7 @@
                 android:paddingLeft="10dp"
                 android:text="Talktime"
                 android:textColor="@color/black"
-                android:textSize="16sp" />
+                android:textSize="@dimen/largetext" />
 
             <TextView
                 android:id="@+id/payment_type"
@@ -235,7 +231,7 @@
                 android:paddingLeft="10dp"
                 android:text="Talktime"
                 android:textColor="@color/black"
-                android:textSize="16sp" />
+                android:textSize="@dimen/largetext" />
 
             <View
                 android:layout_width="match_parent"
@@ -254,7 +250,7 @@
                 android:paddingLeft="10dp"
                 android:text="Summary"
                 android:textColor="@color/black"
-                android:textSize="16sp" />
+                android:textSize="@dimen/largetext" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -271,7 +267,7 @@
                     android:paddingLeft="10dp"
                     android:text="Order Total"
                     android:textColor="@color/black"
-                    android:textSize="16sp" />
+                    android:textSize="@dimen/largetext" />
 
                 <TextView
                     android:id="@+id/txt_price"
@@ -282,7 +278,7 @@
                     android:paddingRight="10dp"
                     android:text=""
                     android:textColor="@color/black"
-                    android:textSize="16sp" />
+                    android:textSize="@dimen/largetext" />
 
             </LinearLayout>
 
@@ -301,7 +297,7 @@
                     android:paddingLeft="10dp"
                     android:text="Shipping"
                     android:textColor="@color/black"
-                    android:textSize="16sp" />
+                    android:textSize="@dimen/largetext" />
 
                 <TextView
                     android:id="@+id/txt_shi_price"
@@ -312,7 +308,7 @@
                     android:paddingRight="10dp"
                     android:text=""
                     android:textColor="@color/black"
-                    android:textSize="16sp" />
+                    android:textSize="@dimen/largetext" />
 
             </LinearLayout>
 
@@ -331,7 +327,7 @@
                     android:paddingLeft="10dp"
                     android:text="Taxes"
                     android:textColor="@color/black"
-                    android:textSize="16sp" />
+                    android:textSize="@dimen/largetext" />
 
                 <TextView
                     android:id="@+id/txt_tex_price"
@@ -339,10 +335,10 @@
                     android:layout_height="wrap_content"
                     android:gravity="left|center"
                     android:paddingLeft="10dp"
-                    android:text=""
                     android:paddingRight="10dp"
+                    android:text=""
                     android:textColor="@color/black"
-                    android:textSize="16sp" />
+                    android:textSize="@dimen/largetext" />
 
             </LinearLayout>
 
@@ -358,37 +354,37 @@
                 android:id="@+id/txt_total_price"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
                 android:gravity="right"
                 android:paddingLeft="10dp"
-                android:layout_marginTop="5dp"
-                android:text=""
                 android:paddingRight="10dp"
+                android:text=""
                 android:textColor="@color/black"
-                android:textSize="16sp" />
+                android:textSize="@dimen/largetext" />
 
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:gravity="left"
                 android:paddingLeft="10dp"
-                android:layout_marginTop="10dp"
-                android:text="Delivery Address"
                 android:paddingRight="10dp"
+                android:text="Delivery Address"
                 android:textColor="@color/black"
-                android:textSize="16sp" />
+                android:textSize="@dimen/largetext" />
 
             <TextView
                 android:id="@+id/txt_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:gravity="left"
                 android:paddingLeft="10dp"
-                android:layout_marginTop="10dp"
-                android:text="Delivery Address"
                 android:paddingRight="10dp"
+                android:text="Delivery Address"
                 android:textColor="@color/black"
-                android:textSize="14sp" />
+                android:textSize="@dimen/largetext" />
 
             <TextView
                 android:id="@+id/txt_address"
@@ -396,10 +392,10 @@
                 android:layout_height="wrap_content"
                 android:gravity="left"
                 android:paddingLeft="10dp"
-                android:text="Delivery Address"
                 android:paddingRight="10dp"
+                android:text="Delivery Address"
                 android:textColor="@color/black"
-                android:textSize="14sp" />
+                android:textSize="@dimen/largetext" />
 
             <View
                 android:layout_width="match_parent"
@@ -418,7 +414,7 @@
                 android:paddingLeft="10dp"
                 android:text="In case of any queries/certifications"
                 android:textColor="@color/black"
-                android:textSize="16sp" />
+                android:textSize="@dimen/headertext" />
 
 
             <TextView
@@ -434,7 +430,7 @@
                 android:text="Phone-: +91-8571038063"
                 android:textColor="@color/colorAccent"
                 android:textColorHint="@color/black"
-                android:textSize="16sp" />
+                android:textSize="@dimen/largetext" />
 
             <TextView
                 android:id="@+id/txt_mail"
@@ -450,7 +446,7 @@
                 android:text="Email-: info@mysolutions4u.in"
                 android:textColor="@color/colorAccent"
                 android:textColorHint="@color/black"
-                android:textSize="16sp" />
+                android:textSize="@dimen/largetext" />
 
         </LinearLayout>
     </ScrollView>

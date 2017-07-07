@@ -7,29 +7,28 @@
     android:orientation="vertical"
     tools:context="com.pinkstar.main.Sendstar">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/colorpink"
+        android:gravity="center"
+        android:text="Send Stars"
+        android:textColor="@color/white"
+        android:textSize="@dimen/headertext"
+        android:textStyle="normal" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
         android:orientation="vertical">
-
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@color/colorpink"
-            android:gravity="center"
-            android:text="Send Stars"
-            android:textColor="@color/white"
-            android:textSize="22dp"
-            android:textStyle="bold" />
 
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:layout_marginLeft="50dp"
+            android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:layout_marginTop="70dp"
             android:orientation="horizontal"
             android:weightSum="1">
 
@@ -53,16 +52,17 @@
                     android:singleLine="true"
                     android:textColor="@color/black"
                     android:textColorHint="@color/input_hint"
-                    android:textSize="16sp" />
+                    android:textSize="@dimen/largetext" />
             </android.support.design.widget.TextInputLayout>
 
             <ImageView
                 android:id="@+id/send_contact"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:layout_gravity="right|bottom"
                 android:adjustViewBounds="true"
                 android:scaleType="fitXY"
+                android:layout_marginBottom="5dp"
                 android:src="@drawable/contact" />
 
 
@@ -71,16 +71,16 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_marginLeft="50dp"
-            android:layout_marginRight="80dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
             android:background="@color/input_hint" />
 
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_marginLeft="60dp"
-            android:layout_marginRight="80dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
             android:layout_marginTop="20dp">
 
             <EditText
@@ -96,30 +96,30 @@
                 android:singleLine="true"
                 android:textColor="@color/black"
                 android:textColorHint="@color/input_hint"
-                android:textSize="16sp" />
+                android:textSize="@dimen/largetext" />
         </android.support.design.widget.TextInputLayout>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_marginLeft="50dp"
-            android:layout_marginRight="80dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
             android:background="@color/input_hint" />
 
 
         <Button
             android:id="@+id/send_btn"
             android:layout_width="fill_parent"
-            android:layout_height="50dp"
-            android:layout_marginLeft="50dip"
-            android:layout_marginRight="50dip"
-            android:layout_marginTop="30dip"
-            android:background="@drawable/btn_rectangle"
+            android:layout_height="40dp"
+            android:layout_marginLeft="30dip"
+            android:layout_marginRight="30dip"
+            android:layout_marginTop="50dip"
+            android:background="@drawable/btn"
             android:text="Send"
-            android:textAllCaps="false"
+            android:textAllCaps="true"
             android:textColor="@color/white"
-            android:textSize="22sp"
-            android:textStyle="bold" />
+            android:textSize="@dimen/largetext"
+            android:textStyle="normal" />
 
     </LinearLayout>
 
